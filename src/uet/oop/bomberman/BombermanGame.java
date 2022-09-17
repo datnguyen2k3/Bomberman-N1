@@ -15,6 +15,7 @@ import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +24,14 @@ public class BombermanGame extends Application {
         Application.launch(BombermanGame.class);
     }
 
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
+    public static final int WIDTH = 31;
+    public static final int HEIGHT = 13;
     private GraphicsContext gc; // window
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
 
     private List<Entity> stillObjects = new ArrayList<>();
-
+    private String[] map = new String[HEIGHT];
 
     @Override
     public void start(Stage stage) {
@@ -66,16 +67,37 @@ public class BombermanGame extends Application {
         entities.add(bomberman);
     }
 
-    public void createMap() {
+    private void createDiagramMap() {
+        try {
+            BufferedReader bufferreader = new BufferedReader(new FileReader("res\\map.txt"));
+            String line;
+            int indexLine = 0;
+
+            while ((line = bufferreader.readLine()) != null) {
+                map[indexLine] = line;
+                indexLine++;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void createMap() {
+        createDiagramMap();
+
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT; j++) {
                 Entity object;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
+                char diagram = map[j].charAt(i);
+
+                if (diagram == '#') {
                     object = new Wall(i, j, Sprite.wall.getFxImage());
-                }
-                else {
+                } else if (diagram == '*') {
+                    object = new Wall(i, j, Sprite.brick.getFxImage());
+                } else {
                     object = new Grass(i, j, Sprite.grass.getFxImage());
                 }
+
                 stillObjects.add(object);
             }
         }
