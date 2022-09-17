@@ -31,7 +31,7 @@ public class BombermanGame extends Application {
     private List<Entity> entities = new ArrayList<>();
 
     private List<Entity> stillObjects = new ArrayList<>();
-    private String[] map = new String[HEIGHT];
+    private String[] diagramMap = new String[HEIGHT];
 
     @Override
     public void start(Stage stage) {
@@ -74,7 +74,7 @@ public class BombermanGame extends Application {
             int indexLine = 0;
 
             while ((line = bufferreader.readLine()) != null) {
-                map[indexLine] = line;
+                diagramMap[indexLine] = line;
                 indexLine++;
             }
         } catch (IOException ex) {
@@ -88,11 +88,11 @@ public class BombermanGame extends Application {
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT; j++) {
                 Entity object;
-                char diagram = map[j].charAt(i);
+                char currentDiagramObject = diagramMap[j].charAt(i);
 
-                if (diagram == '#') {
+                if (currentDiagramObject == '#') {
                     object = new Wall(i, j, Sprite.wall.getFxImage());
-                } else if (diagram == '*') {
+                } else if (currentDiagramObject == '*') {
                     object = new Wall(i, j, Sprite.brick.getFxImage());
                 } else {
                     object = new Grass(i, j, Sprite.grass.getFxImage());
