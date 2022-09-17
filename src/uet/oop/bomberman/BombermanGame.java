@@ -90,9 +90,10 @@ public class BombermanGame extends Application {
                 Entity object;
                 char currentDiagramObject = diagramMap[j].charAt(i);
 
-                if (currentDiagramObject == '#') {
+                if (currentDiagramObject == '#' ) {
                     object = new Wall(i, j, Sprite.wall.getFxImage());
-                } else if (currentDiagramObject == '*') {
+                } else if (currentDiagramObject == '*'|| currentDiagramObject == 'x' || currentDiagramObject == 'f'
+                        || currentDiagramObject == 'b' || currentDiagramObject == 's') {
                     object = new Wall(i, j, Sprite.brick.getFxImage());
                 } else {
                     object = new Grass(i, j, Sprite.grass.getFxImage());
