@@ -9,10 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.*;
@@ -31,7 +28,7 @@ public class BombermanGame extends Application {
     private List<Entity> entities = new ArrayList<>();
 
     private List<Entity> stillObjects = new ArrayList<>();
-    private String[] diagramMap = new String[HEIGHT];
+    public static final char[][] diagramMap = new char[HEIGHT][WIDTH];
 
     @Override
     public void start(Stage stage) {
@@ -74,7 +71,7 @@ public class BombermanGame extends Application {
             int indexLine = 0;
 
             while ((line = bufferreader.readLine()) != null) {
-                diagramMap[indexLine] = line;
+                diagramMap[indexLine] = line.toCharArray();
                 indexLine++;
             }
         } catch (IOException ex) {
@@ -88,13 +85,12 @@ public class BombermanGame extends Application {
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT; j++) {
                 Entity object;
-                char currentDiagramObject = diagramMap[j].charAt(i);
+                char currentDiagramObject = diagramMap[j][i];
 
-                if (currentDiagramObject == '#' ) {
+                if (Wall.isWall(currentDiagramObject)) {
                     object = new Wall(i, j, Sprite.wall.getFxImage());
-                } else if (currentDiagramObject == '*'|| currentDiagramObject == 'x' || currentDiagramObject == 'f'
-                        || currentDiagramObject == 'b' || currentDiagramObject == 's') {
-                    object = new Wall(i, j, Sprite.brick.getFxImage());
+                } else if (Brick.isBrick(currentDiagramObject)) {
+                    object = new Brick(i, j, Sprite.brick.getFxImage());
                 } else {
                     object = new Grass(i, j, Sprite.grass.getFxImage());
                 }

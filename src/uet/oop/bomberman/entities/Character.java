@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Character extends Entity {
 
@@ -53,9 +55,14 @@ public abstract class Character extends Entity {
             }
         });
 
-        if (goNorth) y -= 1;
-        if (goSouth) y += 1;
-        if (goEast)  x += 1;
-        if (goWest)  x -= 1;
+        if (goNorth && x % Sprite.SCALED_SIZE == 0 && Grass.isGrass(x, y - speed)) y -= speed;
+        if (goSouth && x % Sprite.SCALED_SIZE == 0 && Grass.isGrass(x, y + Sprite.SCALED_SIZE)) y += speed;
+        if (goEast && y % Sprite.SCALED_SIZE == 0  && Grass.isGrass(x + Sprite.SCALED_SIZE, y))  x += speed;
+        if (goWest && y % Sprite.SCALED_SIZE == 0 && Grass.isGrass(x - speed, y))  x -= speed;
+
+
+
+        //System.out.println(x + " " + y);
+
     }
 }
