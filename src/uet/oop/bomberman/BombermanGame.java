@@ -11,7 +11,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,6 @@ public class BombermanGame extends Application {
     private GraphicsContext gc; // window
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
-
     private List<Entity> stillObjects = new ArrayList<>();
     public static final char[][] diagramMap = new char[HEIGHT][WIDTH];
 
@@ -107,7 +105,7 @@ public class BombermanGame extends Application {
     public void updateInput(Scene scene) {
         for (Entity entity : entities) {
             if (entity instanceof Bomber) {
-                ((Bomber) entity).updateCoordinate(scene);
+                ((Bomber) entity).updateInput(scene);
             }
         }
     }

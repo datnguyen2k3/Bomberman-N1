@@ -25,7 +25,6 @@ public class Grass extends Entity {
     }
     public static boolean isGrass(int x, int y) {
         char currentDiagram = BombermanGame.diagramMap[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE];
-        System.out.println(x / Sprite.SCALED_SIZE + " " + currentDiagram + " " + y / Sprite.SCALED_SIZE);
         return isGrass(currentDiagram);
     }
 }
