@@ -28,8 +28,5 @@ public abstract class Character extends Entity {
         if (goWest && y % Sprite.SCALED_SIZE == 0 && Grass.isGrass(x - speed, y))  x -= speed;
 
 
-
-        //System.out.println(x + " " + y);
-
     }
 }

@@ -88,7 +88,7 @@ public class BombermanGame extends Application {
                 if (Wall.isWall(currentDiagramObject)) {
                     object = new Wall(i, j, Sprite.wall.getFxImage());
                 } else if (Brick.isBrick(currentDiagramObject)) {
-                    object = new Brick(i, j, Sprite.brick.getFxImage());
+                    object = new Brick(i, j, Sprite.brick.getFxImage(), currentDiagramObject);
                 } else {
                     object = new Grass(i, j, Sprite.grass.getFxImage());
                 }
@@ -100,6 +100,13 @@ public class BombermanGame extends Application {
 
     public void update() {
         entities.forEach(Entity::update);
+
+        Bomber bomber = (Bomber) entities.get(0);
+        for (Entity entity : stillObjects) {
+            if (entity instanceof Brick) {
+                ((Brick) entity).update(bomber);
+            }
+        }
     }
 
     public void updateInput(Scene scene) {

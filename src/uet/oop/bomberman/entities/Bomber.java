@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomber extends Character {
-    Bomb bomb = new Bomb(0, 0, Sprite.bomb.getFxImage());
+    public Bomb bomb = new Bomb(0, 0, Sprite.bomb.getFxImage());
     public Bomber(int x, int y, Image img) {
         super( x, y, img);
     }

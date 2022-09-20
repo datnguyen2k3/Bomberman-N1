@@ -5,9 +5,10 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Grass extends Entity {
-    private static char[] diagramGrasses = new char[]{'p', '1', '2', ' '};
+    public static final char diagramGrass = ' ';
     public Grass(int x, int y, Image img) {
         super(x, y, img);
+        BombermanGame.diagramMap[get_yUnit()][get_xUnit()] = ' ';
     }
 
     @Override
@@ -16,15 +17,10 @@ public class Grass extends Entity {
     }
 
     public static boolean isGrass(char diagram) {
-        for (char d : diagramGrasses) {
-            if (diagram == d)
-                return true;
-        }
-
-        return false;
+        return diagram != Wall.diagramWall && diagram != Brick.diagramBrick;
     }
     public static boolean isGrass(int x, int y) {
-        char currentDiagram = BombermanGame.diagramMap[y / Sprite.SCALED_SIZE][x / Sprite.SCALED_SIZE];
+        char currentDiagram = BombermanGame.diagramMap[get_yUnit(y)][get_xUnit(x)];
         return isGrass(currentDiagram);
     }
 }

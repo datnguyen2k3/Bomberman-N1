@@ -20,7 +20,12 @@ public abstract class Entity {
     public int get_yUnit() {
         return y / Sprite.SCALED_SIZE;
     }
-
+    public static int get_xUnit(int x) {
+        return x / Sprite.SCALED_SIZE;
+    }
+    public static int get_yUnit(int y) {
+        return y / Sprite.SCALED_SIZE;
+    }
     protected Image img;
 
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
