@@ -13,6 +13,16 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Character extends Entity {
 
+    enum State {
+        GO_NORTH,
+        GO_SOUTH,
+        GO_WEST,
+        GO_EAST,
+        IDLE,
+        DEAD
+    }
+
+    protected State previousState;
     protected int speed = 2;
     protected boolean running, goNorth, goSouth, goEast, goWest;
 

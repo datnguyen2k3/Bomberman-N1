@@ -12,9 +12,16 @@ import javafx.scene.paint.Color;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomber extends Character {
+    public static final int TIME_ANIMATION_RUNNING = 30;
+    public static final int TIME_ANIMATION_DEAD = 100;
+    private Sprite _sprite;
+    private State _state;
     public Bomb bomb = new Bomb(0, 0, Sprite.bomb.getFxImage());
+
     public Bomber(int x, int y, Image img) {
-        super( x, y, img);
+        super(x, y, img);
+        _sprite = Sprite.player_right;
+        _state = State.GO_EAST;
     }
 
     public void updateInput(Scene scene) {
@@ -23,14 +30,24 @@ public class Bomber extends Character {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                     case W:
-                    case UP:    goNorth = true; break;
+                    case UP:
+                        goNorth = true;
+                        break;
                     case S:
-                    case DOWN:  goSouth = true; break;
+                    case DOWN:
+                        goSouth = true;
+                        break;
                     case A:
-                    case LEFT:  goWest  = true; break;
+                    case LEFT:
+                        goWest = true;
+                        break;
                     case D:
-                    case RIGHT: goEast  = true; break;
-                    case SHIFT: running = true; break;
+                    case RIGHT:
+                        goEast = true;
+                        break;
+                    case SHIFT:
+                        running = true;
+                        break;
                 }
 
                 if (event.getCode() == KeyCode.SPACE) {
@@ -45,30 +62,105 @@ public class Bomber extends Character {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                     case W:
-                    case UP:    goNorth = false; break;
+                    case UP:
+                        goNorth = false;
+                        previousState = State.GO_NORTH;
+                        break;
                     case S:
-                    case DOWN:  goSouth = false; break;
+                    case DOWN:
+                        previousState = State.GO_SOUTH;
+                        goSouth = false;
+                        break;
                     case A:
-                    case LEFT:  goWest  = false; break;
+                    case LEFT:
+                        previousState = State.GO_WEST;
+                        goWest = false;
+                        break;
                     case D:
-                    case RIGHT: goEast  = false; break;
-                    case SHIFT: running = false; break;
+                    case RIGHT:
+                        previousState = State.GO_EAST;
+                        goEast = false;
+                        break;
+                    case SHIFT:
+                        running = false;
+                        break;
                 }
             }
         });
 
     }
 
+    private void updateCurrentState() {
+        if (goNorth) _state = State.GO_NORTH;
+        else if (goEast) _state = State.GO_EAST;
+        else if (goSouth) _state = State.GO_SOUTH;
+        else if (goWest) _state = State.GO_WEST;
+        else _state = State.IDLE;
+
+    }
+
+    private void choosingSprite() {
+        updateCurrentState();
+        switch (_state) {
+            case GO_NORTH: {
+                _sprite = Sprite.player_up;
+                _sprite = Sprite.movingSprite(Sprite.player_up_1,
+                        Sprite.player_up_2, _animate, TIME_ANIMATION_RUNNING);
+                break;
+            }
+            case GO_SOUTH: {
+                _sprite = Sprite.player_down;
+                _sprite = Sprite.movingSprite(Sprite.player_down_1,
+                        Sprite.player_down_2, _animate, TIME_ANIMATION_RUNNING);
+                break;
+            }
+            case GO_EAST: {
+                _sprite = Sprite.player_right;
+                _sprite = Sprite.movingSprite(Sprite.player_right_1,
+                        Sprite.player_right_2, _animate, TIME_ANIMATION_RUNNING);
+                break;
+            }
+            case GO_WEST: {
+                _sprite = Sprite.player_left;
+                _sprite = Sprite.movingSprite(Sprite.player_left_1,
+                        Sprite.player_left_2, _animate, TIME_ANIMATION_RUNNING);
+                break;
+            }
+            case DEAD: {
+                _sprite = Sprite.player_dead1;
+                _sprite = Sprite.movingSprite(Sprite.player_dead1,
+                        Sprite.player_dead2, Sprite.player_dead3, _animate, TIME_ANIMATION_DEAD);
+                break;
+            }
+            case IDLE: {
+                if (previousState == State.GO_NORTH) {
+                    _sprite = Sprite.player_up;
+                }
+                else if (previousState == State.GO_SOUTH) {
+                    _sprite = Sprite.player_down;
+                }
+                else if (previousState == State.GO_EAST) {
+                    _sprite = Sprite.player_right;
+                }
+                else if (previousState == State.GO_WEST) {
+                    _sprite = Sprite.player_left;
+                }
+            }
+        }
+    }
+
     @Override
     public void update() {
+        animate();
         updateCoordinate();
         bomb.update();
     }
 
     @Override
     public void render(GraphicsContext gc) {
+        choosingSprite();
         bomb.render(gc);
-        super.render(gc);
+        gc.drawImage(_sprite.getFxImage(), x, y);
     }
 
 }

@@ -8,6 +8,10 @@ import javafx.scene.paint.Color;
 import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Entity {
+
+    protected int _animate = 0;
+    public static final int MAX_ANIMATION = 7500;
+
     //Tọa độ X tính từ góc trái trên trong Canvas
     protected int x;
 
@@ -38,6 +42,14 @@ public abstract class Entity {
     public void setCoordinate(int xUnit, int yUnit) {
         this.x = xUnit * Sprite.SCALED_SIZE;
         this.y = yUnit * Sprite.SCALED_SIZE;
+    }
+
+    public void animate() {
+        if (_animate < MAX_ANIMATION) {
+            _animate++;
+        } else {
+            _animate = 0;
+        }
     }
 
     public void render(GraphicsContext gc) {
