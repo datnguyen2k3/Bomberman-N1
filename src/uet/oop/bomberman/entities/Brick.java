@@ -5,10 +5,11 @@ import javafx.scene.image.Image;
 import javafx.util.Pair;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
+
 import java.lang.Character;
 import java.util.HashMap;
 
-public class Brick extends Entity{
+public class Brick extends Entity {
     public static final char diagramBrick = '*';
     private char item = '*';
     private boolean isDestroyed = false;
@@ -37,9 +38,11 @@ public class Brick extends Entity{
         }
         return false;
     }
+
     public static boolean isBrick(int xUnit, int yUnit) {
         return isBrick(BombermanGame.diagramMap[yUnit][xUnit]);
     }
+
     private void createHashMapItemImg() {
         getItemImg.put(' ', Sprite.grass.getFxImage());
         getItemImg.put('x', Sprite.portal.getFxImage());
@@ -52,19 +55,26 @@ public class Brick extends Entity{
         this.isDestroyed = true;
         BombermanGame.diagramMap[get_yUnit()][get_xUnit()] = item;
     }
+
     public void updateGetDamage(Bomber bomber) {
         if (isDestroyed)
             return;
-        for(Pair<Integer, Integer> coordinate : bomber.bomb.destroyedBricks) {
+        for (Pair<Integer, Integer> coordinate : bomber.bomb.destroyedBricks) {
             if (coordinate.equals(new Pair<>(get_xUnit(), get_yUnit()))) {
                 setDestroyed();
                 break;
             }
         }
     }
+
     @Override
     public void update() {
 
+    }
+
+    @Override
+    public boolean pointIsOnEntityArea(Point p) {
+        return false;
     }
 
     public void update(Bomber bomber) {
@@ -73,7 +83,7 @@ public class Brick extends Entity{
 
     @Override
     public void render(GraphicsContext gc) {
-        if(isDestroyed) {
+        if (isDestroyed) {
             gc.drawImage(Sprite.grass.getFxImage(), x, y);
             gc.drawImage(getItemImg.get(item), x, y);
             return;

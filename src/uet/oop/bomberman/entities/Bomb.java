@@ -9,7 +9,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bomb extends Entity{
+public class Bomb extends Entity {
     private int explodedLength = 1;
     private boolean isActivated = false;
     private boolean isWaitedToExploding = false;
@@ -29,9 +29,11 @@ public class Bomb extends Entity{
     public boolean isWaitedToExploding() {
         return isWaitedToExploding;
     }
+
     public boolean isExploded() {
         return isExploded;
     }
+
     public boolean isActivated() {
         return isActivated;
     }
@@ -92,22 +94,22 @@ public class Bomb extends Entity{
         setExplodedCell(get_xUnit(), get_yUnit());
 
         for (int j = get_xUnit() + 1; j <= get_xUnit() + explodedLength; j++) {
-            if(!setExplodedCell(j, get_yUnit()))
+            if (!setExplodedCell(j, get_yUnit()))
                 break;
         }
 
         for (int j = get_xUnit() - 1; j >= get_xUnit() - explodedLength; j--) {
-            if(!setExplodedCell(j, get_yUnit()))
+            if (!setExplodedCell(j, get_yUnit()))
                 break;
         }
 
         for (int i = get_yUnit() + 1; i <= get_yUnit() + explodedLength; i++) {
-            if(!setExplodedCell(get_xUnit(), i))
+            if (!setExplodedCell(get_xUnit(), i))
                 break;
         }
 
         for (int i = get_yUnit() - 1; i >= get_yUnit() - explodedLength; i--) {
-            if(!setExplodedCell(get_xUnit(), i))
+            if (!setExplodedCell(get_xUnit(), i))
                 break;
         }
 
@@ -117,6 +119,12 @@ public class Bomb extends Entity{
     public void update() {
         running();
     }
+
+    @Override
+    public boolean pointIsOnEntityArea(Point p) {
+        return false;
+    }
+
 
     @Override
     public void render(GraphicsContext gc) {

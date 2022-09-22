@@ -21,16 +21,23 @@ public abstract class Entity {
     public int get_xUnit() {
         return x / Sprite.SCALED_SIZE;
     }
+
     public int get_yUnit() {
         return y / Sprite.SCALED_SIZE;
     }
+
     public static int get_xUnit(int x) {
         return x / Sprite.SCALED_SIZE;
     }
+
     public static int get_yUnit(int y) {
         return y / Sprite.SCALED_SIZE;
     }
+
     protected Image img;
+
+    public Entity() {
+    }
 
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
     public Entity(int xUnit, int yUnit, Image img) {
@@ -52,8 +59,12 @@ public abstract class Entity {
         }
     }
 
+
     public void render(GraphicsContext gc) {
         gc.drawImage(img, x, y);
     }
+
     public abstract void update();
+
+    public abstract boolean pointIsOnEntityArea(Point p);
 }

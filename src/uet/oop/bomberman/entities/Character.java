@@ -13,6 +13,12 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Character extends Entity {
 
+    public static final int REAL_BOMBER_WIDTH = 12 * (Sprite.SCALED_SIZE / Sprite.DEFAULT_SIZE);
+    public static final int REAL_BOMBER_HEIGHT = 16 * (Sprite.SCALED_SIZE / Sprite.DEFAULT_SIZE);
+
+    public static final int epsilon = 5;
+
+
     enum State {
         GO_NORTH,
         GO_SOUTH,
@@ -23,7 +29,7 @@ public abstract class Character extends Entity {
     }
 
     protected State previousState;
-    protected int speed = 2;
+    protected int speed = 1;
     protected boolean running, goNorth, goSouth, goEast, goWest;
 
     public Character(int xUnit, int yUnit, Image img) {
@@ -31,12 +37,17 @@ public abstract class Character extends Entity {
     }
 
     public void updateCoordinate() {
-
-        if (goNorth && x % Sprite.SCALED_SIZE == 0 && Grass.isGrass(x, y - speed)) y -= speed;
-        if (goSouth && x % Sprite.SCALED_SIZE == 0 && Grass.isGrass(x, y + Sprite.SCALED_SIZE)) y += speed;
-        if (goEast && y % Sprite.SCALED_SIZE == 0  && Grass.isGrass(x + Sprite.SCALED_SIZE, y))  x += speed;
-        if (goWest && y % Sprite.SCALED_SIZE == 0 && Grass.isGrass(x - speed, y))  x -= speed;
-
-
+        if (goNorth && Grass.isGrass(x, y - speed) && Grass.isGrass(x + REAL_BOMBER_WIDTH - epsilon, y - speed)) {
+            y -= speed;
+        }
+        if (goSouth && Grass.isGrass(x, y + REAL_BOMBER_HEIGHT) && Grass.isGrass(x + REAL_BOMBER_WIDTH - epsilon, y + REAL_BOMBER_HEIGHT)) {
+            y += speed;
+        }
+        if (goEast && Grass.isGrass(x + REAL_BOMBER_WIDTH, y + epsilon) && Grass.isGrass(x + REAL_BOMBER_WIDTH - epsilon, y + REAL_BOMBER_HEIGHT - 5)) {
+            x += speed;
+        }
+        if (goWest && Grass.isGrass(x - epsilon, y + epsilon) && Grass.isGrass(x - epsilon, y + REAL_BOMBER_HEIGHT - epsilon)) {
+            x -= speed;
+        }
     }
 }

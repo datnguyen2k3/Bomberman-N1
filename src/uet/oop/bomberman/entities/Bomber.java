@@ -157,6 +157,11 @@ public class Bomber extends Character {
     }
 
     @Override
+    public boolean pointIsOnEntityArea(Point p) {
+        return false;
+    }
+
+    @Override
     public void render(GraphicsContext gc) {
         choosingSprite();
         bomb.render(gc);
