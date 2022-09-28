@@ -24,6 +24,51 @@ public class Bomber extends Character {
         _state = State.GO_EAST;
     }
 
+    public boolean cantMoveDownRight() {
+        if (!Grass.isGrass(x, y + REAL_BOMBER_HEIGHT) ) {
+            System.out.println("Cant move down");
+            return true;
+        }
+        return false;
+    }
+
+    public boolean cantMoveDownLeft() {
+        if (!Grass.isGrass(x +REAL_BOMBER_WIDTH, y + REAL_BOMBER_HEIGHT) ) {
+            System.out.println("Cant move down");
+            return true;
+        }
+        return false;
+    }
+
+
+    public void autoMoveRightWhenStandingOnEdge() {
+        if (cantMoveDownRight() && Grass.isGrass(x + epsilon * Sprite.SCALE, y + REAL_BOMBER_HEIGHT)) {
+            x += epsilon * Sprite.SCALE;
+        }
+    }
+
+    public void autoMoveLeftWhenStandingOnEdge() {
+        if (cantMoveDownLeft() && Grass.isGrass(x + REAL_BOMBER_WIDTH - epsilon * Sprite.SCALE, y + REAL_BOMBER_HEIGHT)) {
+            x -= epsilon * Sprite.SCALE;
+        }
+    }
+
+
+    public void updateCoordinate() {
+        if (goNorth && Grass.isGrass(x, y - speed) && Grass.isGrass(x + REAL_BOMBER_WIDTH - epsilon, y - speed)) {
+            y -= speed;
+        }
+        if (goSouth && Grass.isGrass(x, y + REAL_BOMBER_HEIGHT) && Grass.isGrass(x + REAL_BOMBER_WIDTH - epsilon, y + REAL_BOMBER_HEIGHT)) {
+            y += speed;
+        }
+        if (goEast && Grass.isGrass(x + REAL_BOMBER_WIDTH, y + epsilon) && Grass.isGrass(x + REAL_BOMBER_WIDTH - epsilon, y + REAL_BOMBER_HEIGHT - epsilon)) {
+            x += speed;
+        }
+        if (goWest && Grass.isGrass(x - epsilon, y + epsilon) && Grass.isGrass(x - epsilon, y + REAL_BOMBER_HEIGHT - epsilon)) {
+            x -= speed;
+        }
+    }
+
     public void updateInput(Scene scene) {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -36,7 +81,7 @@ public class Bomber extends Character {
                     case S:
                     case DOWN:
                         goSouth = true;
-                        break;
+                        
                     case A:
                     case LEFT:
                         goWest = true;
@@ -135,14 +180,11 @@ public class Bomber extends Character {
             case IDLE: {
                 if (previousState == State.GO_NORTH) {
                     _sprite = Sprite.player_up;
-                }
-                else if (previousState == State.GO_SOUTH) {
+                } else if (previousState == State.GO_SOUTH) {
                     _sprite = Sprite.player_down;
-                }
-                else if (previousState == State.GO_EAST) {
+                } else if (previousState == State.GO_EAST) {
                     _sprite = Sprite.player_right;
-                }
-                else if (previousState == State.GO_WEST) {
+                } else if (previousState == State.GO_WEST) {
                     _sprite = Sprite.player_left;
                 }
             }
