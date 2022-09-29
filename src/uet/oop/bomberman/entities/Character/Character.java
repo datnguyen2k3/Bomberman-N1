@@ -16,15 +16,10 @@ import java.util.Random;
 import uet.oop.bomberman.utils.State;
 
 public abstract class Character extends Entity {
-
-
     protected int worldX;
     protected int worldY;
-
-    protected int distanceRoundMove = Sprite.SCALED_SIZE / 4;
     public static final int TIME_ANIMATION_RUNNING = 50;
     public static final int TIME_ANIMATION_DEAD = 100;
-
 
     protected Sprite _sprite;
     protected State previousState;
@@ -48,8 +43,14 @@ public abstract class Character extends Entity {
         initState();
     }
 
-    protected abstract void initState();
+    public int get_xUnitCenter() {
+        return (x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE;
+    }
+    public int get_yUnitCenter() {
+        return (y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE;
+    }
 
+    protected abstract void initState();
 
     /**
      * Determine which sprite before render.
@@ -122,10 +123,6 @@ public abstract class Character extends Entity {
         }
 
         return false;
-    }
-
-    public int getSpeed() {
-        return speed;
     }
 
     @Override

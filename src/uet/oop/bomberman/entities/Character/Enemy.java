@@ -1,7 +1,6 @@
 package uet.oop.bomberman.entities.Character;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
 

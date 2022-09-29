@@ -19,6 +19,8 @@ public abstract class Entity implements IState {
     public static final int MAX_ANIMATION = 7500;
     protected int x; //Tọa độ X tính từ góc trái trên trong Canvas
     protected int y; //Tọa độ Y tính từ góc trái trên trong Canvas
+    protected int speed = 2;
+
     protected Image img;
 
     public Rectangle solidArea;
@@ -26,7 +28,6 @@ public abstract class Entity implements IState {
     public boolean isCollisionOn;
     protected BombermanGame game;
     public  Random rand = new Random();
-    protected  int speed = 1;
 
     public abstract void initSolidArea();
 
@@ -36,6 +37,9 @@ public abstract class Entity implements IState {
 
     public int getY() {
         return y;
+    }
+    public int getSpeed() {
+        return speed;
     }
 
     protected State _state;
@@ -98,7 +102,4 @@ public abstract class Entity implements IState {
 
     public abstract void update();
 
-    public int getSpeed() {
-        return speed;
-    }
 }
