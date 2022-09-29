@@ -18,10 +18,20 @@ public class Bomber extends Character {
     private State _state;
     public Bomb bomb = new Bomb(0, 0, Sprite.bomb.getFxImage());
 
+    @Override
+    public void initSolidArea() {
+
+    }
+
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
         _sprite = Sprite.player_right;
         _state = State.GO_EAST;
+    }
+
+    @Override
+    protected void initSprite() {
+
     }
 
     public boolean cantMoveDownRight() {
@@ -198,7 +208,6 @@ public class Bomber extends Character {
         bomb.update();
     }
 
-    @Override
     public boolean pointIsOnEntityArea(Point p) {
         return false;
     }
@@ -210,4 +219,8 @@ public class Bomber extends Character {
         gc.drawImage(_sprite.getFxImage(), x, y);
     }
 
+    @Override
+    public int getVal() {
+        return 0;
+    }
 }

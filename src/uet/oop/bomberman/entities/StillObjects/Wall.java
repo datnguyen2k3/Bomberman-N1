@@ -1,7 +1,8 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.StillObjects;
 
-import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.graphics.Sprite;
 
 public class Wall extends Entity {
     public static final char diagramWall = '#';
@@ -11,13 +12,14 @@ public class Wall extends Entity {
 
     }
 
-    public Wall(int x, int y, Image img) {
-        super(x, y, img);
+    public Wall(int xUnit, int yUnit) {
+        super(xUnit, yUnit);
+        initSolidArea();
     }
 
     @Override
     protected void initSprite() {
-
+        img = Sprite.wall.getFxImage();
     }
 
     public static boolean isWall(char diagram) {
@@ -29,10 +31,6 @@ public class Wall extends Entity {
     @Override
     public void update() {
 
-    }
-
-    public boolean pointIsOnEntityArea(Point p){
-        return false;
     }
 
     @Override

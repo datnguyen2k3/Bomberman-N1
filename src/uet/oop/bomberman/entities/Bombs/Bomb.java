@@ -1,39 +1,42 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.Bombs;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.util.Pair;
-import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.StillObjects.Brick;
+import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.StillObjects.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bomb extends Entity {
-    private int explodedLength = 1;
-    private boolean isActivated = false;
+    private BombManagement bombManagement;
+    private boolean isEnd = false;
     private boolean isWaitedToExploding = false;
     private boolean isExploded = false;
     public static final int timeWaitToExploding = 60 * 2;
-    public static final int timeExploding = 60;
+    public static final int timeExploding = 30;
+    public static final int timeRefresh = Bomb.timeExploding + Bomb.timeWaitToExploding;
     private int currentTimeWaitToExploding = timeWaitToExploding;
     private int currentTimeExploding = timeExploding;
     public List<Pair<Integer, Integer>> explodedCells = new ArrayList<>();
     public List<Pair<Integer, Integer>> destroyedBricks = new ArrayList<>();
 
+    public Bomb(int xUnit, int yUnit, BombManagement bombManagement) {
+        super(xUnit, yUnit);
+        initSolidArea();
+        this.bombManagement = bombManagement;
+    }
 
     @Override
     public void initSolidArea() {
 
     }
 
-    public Bomb(int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img);
-    }
-
     @Override
     protected void initSprite() {
-
+        img = Sprite.bomb.getFxImage();
     }
 
     public boolean isWaitedToExploding() {
@@ -44,17 +47,8 @@ public class Bomb extends Entity {
         return isExploded;
     }
 
-    public boolean isActivated() {
-        return isActivated;
-    }
-
-    public void start(int xUnit, int yUnit) {
-        if (isActivated) {
-            return;
-        }
-        super.setCoordinate(xUnit, yUnit);
-        BombermanGame.diagramMap[yUnit][xUnit] = Wall.diagramWall;
-        isActivated = true;
+    public boolean isEnd() {
+        return isEnd;
     }
 
     private void waitToExploding() {
@@ -75,9 +69,6 @@ public class Bomb extends Entity {
     }
 
     private void running() {
-        if (!isActivated)
-            return;
-
         waitToExploding();
         if (currentTimeWaitToExploding > 0)
             return;
@@ -86,7 +77,7 @@ public class Bomb extends Entity {
         if (currentTimeExploding > 0)
             return;
 
-        reset();
+        isEnd = true;
     }
 
     private boolean setExplodedCell(int xUnit, int yUnit) {
@@ -103,22 +94,22 @@ public class Bomb extends Entity {
     private void setExplodedCells() {
         setExplodedCell(get_xUnit(), get_yUnit());
 
-        for (int j = get_xUnit() + 1; j <= get_xUnit() + explodedLength; j++) {
+        for (int j = get_xUnit() + 1; j <= get_xUnit() + bombManagement.getExplodedLength(); j++) {
             if (!setExplodedCell(j, get_yUnit()))
                 break;
         }
 
-        for (int j = get_xUnit() - 1; j >= get_xUnit() - explodedLength; j--) {
+        for (int j = get_xUnit() - 1; j >= get_xUnit() - bombManagement.getExplodedLength(); j--) {
             if (!setExplodedCell(j, get_yUnit()))
                 break;
         }
 
-        for (int i = get_yUnit() + 1; i <= get_yUnit() + explodedLength; i++) {
+        for (int i = get_yUnit() + 1; i <= get_yUnit() + bombManagement.getExplodedLength(); i++) {
             if (!setExplodedCell(get_xUnit(), i))
                 break;
         }
 
-        for (int i = get_yUnit() - 1; i >= get_yUnit() - explodedLength; i--) {
+        for (int i = get_yUnit() - 1; i >= get_yUnit() - bombManagement.getExplodedLength(); i--) {
             if (!setExplodedCell(get_xUnit(), i))
                 break;
         }
@@ -130,28 +121,13 @@ public class Bomb extends Entity {
         running();
     }
 
-    public boolean pointIsOnEntityArea(Point p) {
-        return false;
-    }
-
-
     @Override
     public void render(GraphicsContext gc) {
-        if (!isActivated)
+        if (isEnd)
             return;
         super.render(gc);
     }
 
-    public void reset() {
-        isActivated = false;
-        isExploded = false;
-        isWaitedToExploding = false;
-        currentTimeWaitToExploding = timeWaitToExploding;
-        currentTimeExploding = timeExploding;
-        BombermanGame.diagramMap[get_yUnit()][get_xUnit()] = ' ';
-        destroyedBricks.clear();
-        explodedCells.clear();
-    }
 
     @Override
     public int getVal() {

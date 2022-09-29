@@ -72,13 +72,22 @@ public class Brick extends Entity {
 
     }
 
-    @Override
     public boolean pointIsOnEntityArea(Point p) {
         return false;
     }
 
     public void update(Bomber bomber) {
         updateGetDamage(bomber);
+    }
+
+    @Override
+    public void initSolidArea() {
+
+    }
+
+    @Override
+    protected void initSprite() {
+
     }
 
     @Override
@@ -92,4 +101,8 @@ public class Brick extends Entity {
         super.render(gc);
     }
 
+    @Override
+    public int getVal() {
+        return 0;
+    }
 }

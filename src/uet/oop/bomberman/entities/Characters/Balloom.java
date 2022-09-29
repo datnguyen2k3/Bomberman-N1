@@ -1,17 +1,11 @@
-package uet.oop.bomberman.entities.Character;
+package uet.oop.bomberman.entities.Characters;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.utils.State;
 
 import java.awt.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class Balloom extends Enemy {
 
@@ -25,7 +19,7 @@ public class Balloom extends Enemy {
 
     @Override
     public void initSolidArea() {
-        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 15 * Sprite.SCALE , 15 * Sprite.SCALE);
+        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 13 * Sprite.SCALE , 13 * Sprite.SCALE);
     }
 
     public Balloom(int xUnit, int yUnit, Image img) {
