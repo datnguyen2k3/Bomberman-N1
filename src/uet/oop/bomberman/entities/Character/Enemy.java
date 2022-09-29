@@ -4,19 +4,25 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
 
+import java.util.Random;
+
 public abstract class Enemy extends Character {
 
-    public String type ;
+    public String type;
+    public int recentDistanceMoving;
+    public int distanceToChangeSpeed;
+
+
 
     public void setRandomState() {
         int choice = rand.nextInt(4);
         this._state = State.values()[choice];
     }
 
-    public  void setRandomSpeed() {
+    public void setRandomSpeed() {
         int randSpeed = rand.nextInt(3);
         speed = randSpeed;
-        if (speed == 0 ) {
+        if (speed == 0) {
             speed = 1;
         }
     }
@@ -46,17 +52,16 @@ public abstract class Enemy extends Character {
             }
             recentDistanceMoving += speed;
             if (recentDistanceMoving >= distanceToChangeSpeed) {
-                if ( type.equals("Oneal")) {
+                if (type.equals("Oneal")) {
                     setRandomSpeed();
                 }
                 recentDistanceMoving = 0;
-                distanceToChangeSpeed = rand.nextInt(200*Sprite.SCALE - 60*Sprite.SCALE) + 60*Sprite.SCALE;
+                distanceToChangeSpeed = rand.nextInt(200 * Sprite.SCALE - 60 * Sprite.SCALE) + 60 * Sprite.SCALE;
             }
         } else {
             if (type.equals("Balloom")) {
                 setRandomState();
-            }
-            else if (type.equals("Oneal")) {
+            } else if (type.equals("Oneal")) {
                 setRandomSpeed();
                 setRandomState();
             }

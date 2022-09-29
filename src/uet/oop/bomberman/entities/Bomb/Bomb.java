@@ -128,9 +128,4 @@ public class Bomb extends Entity {
         super.render(gc);
     }
 
-
-    @Override
-    public int getVal() {
-        return 0;
-    }
 }

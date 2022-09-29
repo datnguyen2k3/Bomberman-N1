@@ -43,13 +43,13 @@ public class Balloom extends Enemy {
     @Override
     protected void initSprite() {
 
-        this._sprite = Sprite.balloom_right1;
+        this._currentSprite = Sprite.balloom_right1;
 
         this.sprite_character_left = Sprite.balloom_left2;
         this.sprite_character_right = Sprite.balloom_right2;
 
-        this.last_sprite_left = Sprite.balloom_left3;
-        this.last_sprite_right = Sprite.balloom_right3;
+        this.last_currentSprite_left = Sprite.balloom_left3;
+        this.last_currentSprite_right = Sprite.balloom_right3;
 
 
         this.sprite_character_right_1 = Sprite.balloom_right1;
@@ -78,9 +78,4 @@ public class Balloom extends Enemy {
         super.render(gc);
     }
 
-
-    @Override
-    public int getVal() {
-        return 0;
-    }
 }

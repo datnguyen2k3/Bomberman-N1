@@ -2,7 +2,7 @@ package uet.oop.bomberman.entities.Item;
 
 import uet.oop.bomberman.graphics.Sprite;
 
-public class BombItem extends Item{
+public class BombItem extends Item {
     @Override
     public void initSolidArea() {
 
@@ -28,8 +28,5 @@ public class BombItem extends Item{
         itemDiagram = Item.bombItemDiagram;
     }
 
-    @Override
-    public int getVal() {
-        return 0;
-    }
+
 }

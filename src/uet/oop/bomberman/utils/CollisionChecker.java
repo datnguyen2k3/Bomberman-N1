@@ -41,7 +41,7 @@ public class CollisionChecker {
                 break;
             }
             case GO_SOUTH: {
-                entityBottomRow = (entityBottomY + e.getSpeed())/Sprite.SCALED_SIZE;
+                entityBottomRow = (entityBottomY + e.getSpeed()) / Sprite.SCALED_SIZE;
                 typeTileLeft = BombermanGame.diagramMap[entityBottomRow][entityLeftCol];
                 typeTileRight = BombermanGame.diagramMap[entityBottomRow][entityRightCol];
                 if (Brick.isBrick(typeTileLeft) || Wall.isWall(typeTileRight) || Brick.isBrick(typeTileRight) || Wall.isWall(typeTileLeft)) {
@@ -50,7 +50,7 @@ public class CollisionChecker {
                 break;
             }
             case GO_EAST: {
-                entityRightCol = (entityRightSideX + e.getSpeed())/Sprite.SCALED_SIZE;
+                entityRightCol = (entityRightSideX + e.getSpeed()) / Sprite.SCALED_SIZE;
                 typeTileUp = BombermanGame.diagramMap[entityTopRow][entityRightCol];
                 typeTileDown = BombermanGame.diagramMap[entityBottomRow][entityRightCol];
                 if (Brick.isBrick(typeTileUp) || Wall.isWall(typeTileDown) || Brick.isBrick(typeTileDown) || Wall.isWall(typeTileUp)) {
@@ -59,7 +59,7 @@ public class CollisionChecker {
                 break;
             }
             case GO_WEST: {
-                entityLeftCol = (entityLeftSideX - e.getSpeed())/Sprite.SCALED_SIZE;
+                entityLeftCol = (entityLeftSideX - e.getSpeed()) / Sprite.SCALED_SIZE;
                 typeTileUp = BombermanGame.diagramMap[entityTopRow][entityLeftCol];
                 typeTileDown = BombermanGame.diagramMap[entityBottomRow][entityLeftCol];
                 if (Brick.isBrick(typeTileUp) || Wall.isWall(typeTileDown) || Brick.isBrick(typeTileDown) || Wall.isWall(typeTileUp)) {

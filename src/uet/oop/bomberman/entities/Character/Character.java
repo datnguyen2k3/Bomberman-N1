@@ -21,16 +21,16 @@ public abstract class Character extends Entity {
     public static final int TIME_ANIMATION_RUNNING = 50;
     public static final int TIME_ANIMATION_DEAD = 100;
 
-    protected Sprite _sprite;
     protected State previousState;
-    protected Sprite sprite_character_left, sprite_character_left_1, sprite_character_left_2, sprite_character_left_3, last_sprite_left;
-    protected Sprite sprite_character_right, sprite_character_right_1, sprite_character_right_2, sprite_character_right_3, last_sprite_right;
+
+    protected Sprite _currentSprite;
+    protected Sprite sprite_character_left, sprite_character_left_1, sprite_character_left_2, sprite_character_left_3, last_currentSprite_left;
+    protected Sprite sprite_character_right, sprite_character_right_1, sprite_character_right_2, sprite_character_right_3, last_currentSprite_right;
     protected Sprite sprite_character_up, sprite_character_up_1, sprite_character_up_2;
     protected Sprite sprite_character_down, sprite_character_down_1, sprite_character_down_2;
     protected Sprite sprite_character_dead;
 
     protected boolean running, goNorth, goSouth, goEast, goWest;
-
 
     public Character(int xUnit, int yUnit, Image img, BombermanGame game) {
         this(xUnit, yUnit, img);
@@ -53,44 +53,44 @@ public abstract class Character extends Entity {
     protected abstract void initState();
 
     /**
-     * Determine which sprite before render.
+     * Determine which sprite before render to screen.
      */
     protected void choosingSprite() {
         switch (_state) {
             case GO_NORTH: {
-                _sprite = Sprite.movingSprite(sprite_character_up, sprite_character_up_1,
+                _currentSprite = Sprite.movingSprite(sprite_character_up, sprite_character_up_1,
                         sprite_character_up_2, _animate, TIME_ANIMATION_RUNNING);
                 break;
             }
             case GO_SOUTH: {
-                _sprite = Sprite.movingSprite(sprite_character_down, sprite_character_down_1,
+                _currentSprite = Sprite.movingSprite(sprite_character_down, sprite_character_down_1,
                         sprite_character_down_2, _animate, TIME_ANIMATION_RUNNING);
                 break;
             }
             case GO_EAST: {
-                _sprite = Sprite.movingSprite(sprite_character_right, sprite_character_right_1,
-                        last_sprite_right, _animate, TIME_ANIMATION_RUNNING);
+                _currentSprite = Sprite.movingSprite(sprite_character_right, sprite_character_right_1,
+                        last_currentSprite_right, _animate, TIME_ANIMATION_RUNNING);
                 break;
             }
             case GO_WEST: {
-                _sprite = Sprite.movingSprite(sprite_character_left, sprite_character_left_1,
-                        last_sprite_left, _animate, TIME_ANIMATION_RUNNING);
+                _currentSprite = Sprite.movingSprite(sprite_character_left, sprite_character_left_1,
+                        last_currentSprite_left, _animate, TIME_ANIMATION_RUNNING);
                 break;
             }
             case DEAD: {
-                _sprite = Sprite.movingSprite(Sprite.player_dead1,
+                _currentSprite = Sprite.movingSprite(Sprite.player_dead1,
                         Sprite.player_dead2, Sprite.player_dead3, _animate, TIME_ANIMATION_DEAD);
                 break;
             }
             case IDLE: {
                 if (previousState == State.GO_NORTH) {
-                    _sprite = sprite_character_up;
+                    _currentSprite = sprite_character_up;
                 } else if (previousState == State.GO_SOUTH) {
-                    _sprite = sprite_character_down;
+                    _currentSprite = sprite_character_down;
                 } else if (previousState == State.GO_EAST) {
-                    _sprite = sprite_character_right;
+                    _currentSprite = sprite_character_right;
                 } else if (previousState == State.GO_WEST) {
-                    _sprite = sprite_character_left;
+                    _currentSprite = sprite_character_left;
                 }
             }
         }
@@ -132,8 +132,7 @@ public abstract class Character extends Entity {
 
     @Override
     public void render(GraphicsContext gc) {
-        //updateCurrentState();
         choosingSprite();
-        gc.drawImage(_sprite.getFxImage(), x, y);
+        gc.drawImage(_currentSprite.getFxImage(), x, y);
     }
 }

@@ -52,9 +52,4 @@ public class Brick extends Entity {
     public void render(GraphicsContext gc) {
         super.render(gc);
     }
-
-    @Override
-    public int getVal() {
-        return 0;
-    }
 }

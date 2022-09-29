@@ -29,7 +29,7 @@ public class Bomber extends Character {
 
     @Override
     public void initSolidArea() {
-        solidArea = new Rectangle(4 * Sprite.SCALE, 4 * Sprite.SCALE, 6 * Sprite.SCALE, 10 * Sprite.SCALE);
+        solidArea = new Rectangle(4 * Sprite.SCALE, 4 * Sprite.SCALE, 6 * Sprite.SCALE, 9 * Sprite.SCALE);
     }
 
     public Bomber(int x, int y, Image img) {
@@ -49,8 +49,8 @@ public class Bomber extends Character {
     @Override
     protected void initSprite() {
 
-        this.last_sprite_left = Sprite.player_left_2;
-        this.last_sprite_right = Sprite.player_right_2;
+        this.last_currentSprite_left = Sprite.player_left_2;
+        this.last_currentSprite_right = Sprite.player_right_2;
 
         this.sprite_character_up = Sprite.player_up;
         this.sprite_character_up_1 = Sprite.player_up_1;
@@ -68,7 +68,7 @@ public class Bomber extends Character {
         this.sprite_character_right_1 = Sprite.player_right_1;
         this.sprite_character_right_2 = Sprite.player_right_2;
 
-        this._sprite = this.sprite_character_right;
+        this._currentSprite = this.sprite_character_right;
     }
 
     @Override
@@ -193,8 +193,5 @@ public class Bomber extends Character {
         super.render(gc);
     }
 
-    @Override
-    public int getVal() {
-        return 0;
-    }
+
 }

@@ -3,31 +3,29 @@ package uet.oop.bomberman.entities;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Character.Balloom;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.utils.IState;
 import uet.oop.bomberman.utils.State;
 
 import java.awt.*;
 import java.util.Random;
 
-public abstract class Entity implements IState {
-    public int recentDistanceMoving;
-    public int distanceToChangeSpeed; // change speed when reach this distance moving.
-    public int distanceToChangeDirection; // use for balloom.
+public abstract class Entity {
+
     protected int _animate = 0;
     public static final int MAX_ANIMATION = 7500;
     protected int x; //Tọa độ X tính từ góc trái trên trong Canvas
     protected int y; //Tọa độ Y tính từ góc trái trên trong Canvas
     protected int speed = 2;
-
+    protected Random rand = new Random();
     protected Image img;
 
     public Rectangle solidArea;
 
     public boolean isCollisionOn;
     protected BombermanGame game;
-    public  Random rand = new Random();
+
+
+    protected State _state;
 
     public abstract void initSolidArea();
 
@@ -38,19 +36,18 @@ public abstract class Entity implements IState {
     public int getY() {
         return y;
     }
+
     public int getSpeed() {
         return speed;
     }
 
-    protected State _state;
-
     public static int get_xUnit(int x) {
         return x / Sprite.SCALED_SIZE;
-    }
+    } // toạ độ theo cột (column)
 
     public static int get_yUnit(int y) {
         return y / Sprite.SCALED_SIZE;
-    }
+    } // toạ độ theo hàng (row)
 
     public static boolean isEqualsCoordinate(Entity e1, Entity e2) {
         return e1.get_xUnit() == e2.get_xUnit() && e1.get_yUnit() == e2.get_yUnit();

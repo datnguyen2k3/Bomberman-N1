@@ -12,7 +12,7 @@ public class Oneal extends Enemy {
 
     @Override
     public void initSolidArea() {
-        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 13 * Sprite.SCALE, 13 * Sprite.SCALE);
+        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 15 * Sprite.SCALE, 15 * Sprite.SCALE);
     }
 
     public Oneal(int xUnit, int yUnit, Image img) {
@@ -36,13 +36,13 @@ public class Oneal extends Enemy {
 
     @Override
     protected void initSprite() {
-        this._sprite = Sprite.oneal_right1;
+        this._currentSprite = Sprite.oneal_right1;
 
         this.sprite_character_left = Sprite.oneal_left2;
         this.sprite_character_right = Sprite.oneal_right2;
 
-        this.last_sprite_left = Sprite.oneal_left3;
-        this.last_sprite_right = Sprite.oneal_right3;
+        this.last_currentSprite_left = Sprite.oneal_left3;
+        this.last_currentSprite_right = Sprite.oneal_right3;
 
 
         this.sprite_character_right_1 = Sprite.oneal_right1;
@@ -62,12 +62,6 @@ public class Oneal extends Enemy {
         this.sprite_character_down_2 = Sprite.oneal_left3;
 
         this.sprite_character_dead = Sprite.oneal_dead;
-    }
-
-
-    @Override
-    public int getVal() {
-        return 0;
     }
 
 
