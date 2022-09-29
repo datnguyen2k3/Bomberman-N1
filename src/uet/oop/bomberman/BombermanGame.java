@@ -2,19 +2,28 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.*;
-import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import uet.oop.bomberman.entities.*;
+import uet.oop.bomberman.entities.Bomb.BombManagement;
+import uet.oop.bomberman.entities.Character.Balloom;
+import uet.oop.bomberman.entities.Character.Oneal;
+import uet.oop.bomberman.entities.Item.Item;
+import uet.oop.bomberman.entities.Item.ItemManagement;
+import uet.oop.bomberman.entities.StillObject.Brick;
+import uet.oop.bomberman.entities.StillObject.Grass;
+import uet.oop.bomberman.entities.StillObject.Wall;
+import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.entities.Character.Bomber;
+import uet.oop.bomberman.utils.CollisionChecker;
 
 public class BombermanGame extends Application {
     public static void main(String[] args) {
@@ -23,11 +32,20 @@ public class BombermanGame extends Application {
 
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
+
+    public CollisionChecker collisionChecker = new CollisionChecker(this);
     private GraphicsContext gc; // window
     private Canvas canvas;
+    private Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), this);
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
-    public static final char[][] diagramMap = new char[HEIGHT][WIDTH];
+    private ItemManagement itemManagement = new ItemManagement();
+
+
+    private Balloom bl = new Balloom(2, 2, Sprite.balloom_left1.getFxImage(), this);
+
+    private Oneal oneal = new Oneal(5, 1, Sprite.oneal_right1.getFxImage(), this);
+    ;
 
     @Override
     public void start(Stage stage) {
@@ -42,6 +60,7 @@ public class BombermanGame extends Application {
         // Tao scene
         Scene scene = new Scene(root);
 
+
         // Them scene vao stage
         stage.setScene(scene);
         stage.show();
@@ -53,15 +72,17 @@ public class BombermanGame extends Application {
                 render();
                 update();
                 updateInput(scene);
+                updateCombat(scene);
             }
         };
         timer.start();
 
         createMap();
 
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
-        entities.add(bomberman);
+
     }
+
+    public static final char[][] diagramMap = new char[HEIGHT][WIDTH];
 
     private void createDiagramMap() {
         try {
@@ -87,11 +108,14 @@ public class BombermanGame extends Application {
                 char currentDiagramObject = diagramMap[j][i];
 
                 if (Wall.isWall(currentDiagramObject)) {
-                    object = new Wall(i, j, Sprite.wall.getFxImage());
+                    object = new Wall(i, j);
                 } else if (Brick.isBrick(currentDiagramObject)) {
-                    object = new Brick(i, j, Sprite.brick.getFxImage(), currentDiagramObject);
+                    object = new Brick(i, j);
+                } else if (Item.isItem(currentDiagramObject)) {
+                    object = new Brick(i, j);
+                    itemManagement.add(i, j, currentDiagramObject);
                 } else {
-                    object = new Grass(i, j, Sprite.grass.getFxImage());
+                    object = new Grass(i, j);
                 }
 
                 stillObjects.add(object);
@@ -101,26 +125,46 @@ public class BombermanGame extends Application {
 
     public void update() {
         entities.forEach(Entity::update);
-
-        Bomber bomber = (Bomber) entities.get(0);
+        bomberman.update();
         for (Entity entity : stillObjects) {
             if (entity instanceof Brick) {
-                ((Brick) entity).update(bomber);
+                ((Brick) entity).update(bomberman);
             }
         }
+        itemManagement.update();
+        bl.update();
+        oneal.update();
     }
 
     public void updateInput(Scene scene) {
-        for (Entity entity : entities) {
-            if (entity instanceof Bomber) {
-                ((Bomber) entity).updateInput(scene);
+        bomberman.updateInput(scene);
+    }
+
+    public void updateCombat(Scene scene) {
+
+        // destroy brick
+        for (Entity e : stillObjects) {
+            if (e instanceof Brick) {
+                Brick brick = (Brick) e;
+                if (bomberman.getBombManagement().isDestroyBrick(brick)) {
+                    brick.setDestroyed();
+                    itemManagement.setItemIfBrickIsDestroyed(brick);
+                }
             }
         }
+
+        // Bomber take item
+        itemManagement.updateBomberTakeItem(bomberman);
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
+        itemManagement.render(gc);
+        bomberman.render(gc);
+        bl.render(gc);
+        oneal.render(gc);
+
     }
 }
