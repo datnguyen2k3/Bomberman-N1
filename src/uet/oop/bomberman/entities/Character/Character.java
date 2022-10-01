@@ -107,10 +107,10 @@ public abstract class Character extends Entity {
 
     public boolean isImpact(int startX, int startY) {
         List<Pair<Integer, Integer>> points = new ArrayList<>();
-        points.add(new Pair<>(x, y));
-        points.add(new Pair<>(x + Sprite.SCALED_SIZE, y));
-        points.add(new Pair<>(x, y + Sprite.SCALED_SIZE));
-        points.add(new Pair<>(x + Sprite.SCALED_SIZE, y + Sprite.SCALED_SIZE));
+        points.add(new Pair<>(solidArea.x, solidArea.y));
+        points.add(new Pair<>(solidArea.x + solidArea.width, solidArea.y));
+        points.add(new Pair<>(solidArea.x, solidArea.y + solidArea.height));
+        points.add(new Pair<>(solidArea.x + solidArea.width, solidArea.y + solidArea.height));
 
         for (Pair<Integer, Integer> point : points) {
             int xPoint = point.getKey();

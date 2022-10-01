@@ -1,17 +1,12 @@
-package uet.oop.bomberman.entities.Character;
+package uet.oop.bomberman.entities.Character.Enemy;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.utils.State;
 
 import java.awt.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class Balloom extends Enemy {
 

@@ -8,6 +8,7 @@ public abstract class Item extends Entity {
     public static final char flameItemDiagram = 'f';
     public static final char bombItemDiagram = 'b';
     public static final char speedItemDiagram = 's';
+    public static final char portalItemDiagram = 'x';
     protected char itemDiagram;
     protected boolean isActivate = false;
     protected boolean isTaken = false;
@@ -16,10 +17,15 @@ public abstract class Item extends Entity {
         return isActivate;
     }
 
+    public boolean isTaken() {
+        return isTaken;
+    }
+
     public static boolean isItem(char diagram) {
         return diagram == flameItemDiagram
                 || diagram == bombItemDiagram
-                || diagram == speedItemDiagram;
+                || diagram == speedItemDiagram
+                || diagram == portalItemDiagram;
     }
 
     public Item(int xUnit, int yUnit) {

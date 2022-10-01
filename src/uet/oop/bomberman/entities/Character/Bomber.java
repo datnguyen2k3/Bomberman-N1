@@ -21,6 +21,7 @@ import uet.oop.bomberman.utils.State;
 
 public class Bomber extends Character {
     private BombManagement bombManagement = new BombManagement();
+    private boolean isBombermanKillAllEnemies = false;
 
     public Bomber(int x, int y, Image img, BombermanGame game) {
         this(x, y, img);
@@ -74,6 +75,14 @@ public class Bomber extends Character {
     @Override
     protected void initState() {
         this._state = State.GO_EAST;
+    }
+
+    public boolean isBombermanKillAllEnemies() {
+        return isBombermanKillAllEnemies;
+    }
+
+    public void setBombermanKillAllEnemies() {
+        isBombermanKillAllEnemies = true;
     }
 
     public void updateInput(Scene scene) {
@@ -157,6 +166,10 @@ public class Bomber extends Character {
         }
     }
 
+    public void setBomberWin() {
+
+    }
+
     @Override
     public void update() {
         updateCurrentState();
@@ -181,6 +194,7 @@ public class Bomber extends Character {
                     break;
                 }
             }
+
         }
         super.update();
         bombManagement.update();

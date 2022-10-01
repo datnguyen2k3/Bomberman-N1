@@ -13,9 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uet.oop.bomberman.entities.*;
-import uet.oop.bomberman.entities.Bomb.BombManagement;
-import uet.oop.bomberman.entities.Character.Balloom;
-import uet.oop.bomberman.entities.Character.Oneal;
+import uet.oop.bomberman.entities.Character.Enemy.Balloom;
+import uet.oop.bomberman.entities.Character.Enemy.Enemy;
+import uet.oop.bomberman.entities.Character.Enemy.EnemyManagement;
+import uet.oop.bomberman.entities.Character.Enemy.Oneal;
 import uet.oop.bomberman.entities.Item.Item;
 import uet.oop.bomberman.entities.Item.ItemManagement;
 import uet.oop.bomberman.entities.StillObject.Brick;
@@ -40,12 +41,8 @@ public class BombermanGame extends Application {
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
     private ItemManagement itemManagement = new ItemManagement();
+    private EnemyManagement enemyManagement = new EnemyManagement();
 
-
-    private Balloom bl = new Balloom(2, 2, Sprite.balloom_left1.getFxImage(), this);
-
-    private Oneal oneal = new Oneal(5, 1, Sprite.oneal_right1.getFxImage(), this);
-    ;
 
     @Override
     public void start(Stage stage) {
@@ -114,6 +111,9 @@ public class BombermanGame extends Application {
                 } else if (Item.isItem(currentDiagramObject)) {
                     object = new Brick(i, j);
                     itemManagement.add(i, j, currentDiagramObject);
+                } else if (Enemy.isEnemy(currentDiagramObject)) {
+                    object = new Brick(i, j);
+                    enemyManagement.add(i, j, currentDiagramObject, this);
                 } else {
                     object = new Grass(i, j);
                 }
@@ -132,8 +132,7 @@ public class BombermanGame extends Application {
             }
         }
         itemManagement.update();
-        bl.update();
-        oneal.update();
+        enemyManagement.update();
     }
 
     public void updateInput(Scene scene) {
@@ -163,8 +162,7 @@ public class BombermanGame extends Application {
         entities.forEach(g -> g.render(gc));
         itemManagement.render(gc);
         bomberman.render(gc);
-        bl.render(gc);
-        oneal.render(gc);
+        enemyManagement.render(gc);
 
     }
 }

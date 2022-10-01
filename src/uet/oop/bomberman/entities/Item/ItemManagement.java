@@ -19,6 +19,9 @@ public class ItemManagement extends Management {
             case Item.speedItemDiagram:
                 list.add(new SpeedItem(xUnit, yUnit));
                 break;
+            case Item.portalItemDiagram:
+                list.add(new Portal(xUnit, yUnit));
+                break;
         }
     }
 
@@ -29,7 +32,7 @@ public class ItemManagement extends Management {
     public void removeItem(Bomber bomber) {
         for (Entity e : list) {
             Item item = (Item) e;
-            if (!item.isActivate() && Entity.isEqualsCoordinate(e, bomber)) {
+            if (!item.isTaken()) {
                 list.remove(item);
                 break;
             }
@@ -55,6 +58,13 @@ public class ItemManagement extends Management {
             }
 
             if (!item.isActivate()) {
+                continue;
+            }
+
+            if (item instanceof Portal) {
+                if (bomber.isBombermanKillAllEnemies()) {
+                    bomber.setBomberWin();
+                }
                 continue;
             }
 
