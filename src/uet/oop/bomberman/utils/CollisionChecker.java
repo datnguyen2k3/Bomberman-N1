@@ -29,7 +29,6 @@ public class CollisionChecker {
 
         char typeTileLeft, typeTileRight;
         char typeTileUp, typeTileDown;
-
         switch (e.get_state()) {
             case GO_NORTH: {
                 entityTopRow = (entityTopY - e.getSpeed()) / Sprite.SCALED_SIZE;

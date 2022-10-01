@@ -123,8 +123,9 @@ public class Bomb extends Entity {
 
     @Override
     public void render(GraphicsContext gc) {
-        if (isEnd)
+        if (isEnd) {
             return;
+        }
         super.render(gc);
     }
 

@@ -15,10 +15,10 @@ public abstract class Entity {
     public static final int MAX_ANIMATION = 7500;
     protected int x; //Tọa độ X tính từ góc trái trên trong Canvas
     protected int y; //Tọa độ Y tính từ góc trái trên trong Canvas
-    protected int speed = 2;
+    protected int speed = 1;
     protected Random rand = new Random();
     protected Image img;
-
+    protected Sprite _currentSprite;
     public Rectangle solidArea;
 
     public boolean isCollisionOn;

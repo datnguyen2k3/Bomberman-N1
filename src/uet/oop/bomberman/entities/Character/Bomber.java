@@ -46,6 +46,8 @@ public class Bomber extends Character {
         return bombManagement;
     }
 
+
+
     @Override
     protected void initSprite() {
 

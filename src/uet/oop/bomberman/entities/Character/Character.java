@@ -23,7 +23,7 @@ public abstract class Character extends Entity {
 
     protected State previousState;
 
-    protected Sprite _currentSprite;
+
     protected Sprite sprite_character_left, sprite_character_left_1, sprite_character_left_2, sprite_character_left_3, last_currentSprite_left;
     protected Sprite sprite_character_right, sprite_character_right_1, sprite_character_right_2, sprite_character_right_3, last_currentSprite_right;
     protected Sprite sprite_character_up, sprite_character_up_1, sprite_character_up_2;
