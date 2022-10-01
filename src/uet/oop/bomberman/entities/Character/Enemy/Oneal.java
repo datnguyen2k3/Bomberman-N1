@@ -13,7 +13,7 @@ public class Oneal extends Enemy {
 
     @Override
     public void initSolidArea() {
-        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 13 * Sprite.SCALE, 13 * Sprite.SCALE);
+        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 15 * Sprite.SCALE, 15 * Sprite.SCALE);
     }
 
     public Oneal(int xUnit, int yUnit, Image img) {

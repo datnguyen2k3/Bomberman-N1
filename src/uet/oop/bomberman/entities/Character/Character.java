@@ -20,7 +20,7 @@ public abstract class Character extends Entity {
     protected boolean isEnd = false;
     protected int worldX;
     protected int worldY;
-    public static final int TIME_ANIMATION_RUNNING = 50;
+    public static final int TIME_ANIMATION_RUNNING = 60;
     public static final int TIME_ANIMATION_DEAD = 90;
     public static final int TIME_DEAD = 90;
     protected int currentTimeDead = 0;
@@ -50,6 +50,7 @@ public abstract class Character extends Entity {
     public int get_xUnitCenter() {
         return (x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE;
     }
+
     public int get_yUnitCenter() {
         return (y + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE;
     }
@@ -136,7 +137,6 @@ public abstract class Character extends Entity {
         for (Pair<Integer, Integer> point : points) {
             int xPoint = point.getKey();
             int yPoint = point.getValue();
-
             if (startX <= xPoint && xPoint <= startX + Sprite.SCALED_SIZE
                     && startY <= yPoint && yPoint <= startY + Sprite.SCALED_SIZE) {
                 return true;
