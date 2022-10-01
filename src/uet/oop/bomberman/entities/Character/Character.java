@@ -16,10 +16,14 @@ import java.util.Random;
 import uet.oop.bomberman.utils.State;
 
 public abstract class Character extends Entity {
+    protected boolean isDead = false;
+    protected boolean isEnd = false;
     protected int worldX;
     protected int worldY;
     public static final int TIME_ANIMATION_RUNNING = 50;
-    public static final int TIME_ANIMATION_DEAD = 100;
+    public static final int TIME_ANIMATION_DEAD = 90;
+    public static final int TIME_DEAD = 90;
+    protected int currentTimeDead = 0;
 
     protected Sprite _sprite;
     protected State previousState;
@@ -27,7 +31,7 @@ public abstract class Character extends Entity {
     protected Sprite sprite_character_right, sprite_character_right_1, sprite_character_right_2, sprite_character_right_3, last_sprite_right;
     protected Sprite sprite_character_up, sprite_character_up_1, sprite_character_up_2;
     protected Sprite sprite_character_down, sprite_character_down_1, sprite_character_down_2;
-    protected Sprite sprite_character_dead;
+    protected Sprite sprite_character_dead, sprite_character_dead_1, sprite_character_dead_2;
 
     protected boolean running, goNorth, goSouth, goEast, goWest;
 
@@ -52,10 +56,18 @@ public abstract class Character extends Entity {
 
     protected abstract void initState();
 
+    public void setDead() {
+        isDead = true;
+        goEast = goNorth = goSouth = goWest = running = false;
+    }
+
     /**
      * Determine which sprite before render.
      */
     protected void choosingSprite() {
+        if (isEnd)
+            return;
+
         switch (_state) {
             case GO_NORTH: {
                 _sprite = Sprite.movingSprite(sprite_character_up, sprite_character_up_1,
@@ -78,8 +90,8 @@ public abstract class Character extends Entity {
                 break;
             }
             case DEAD: {
-                _sprite = Sprite.movingSprite(Sprite.player_dead1,
-                        Sprite.player_dead2, Sprite.player_dead3, _animate, TIME_ANIMATION_DEAD);
+                _sprite = Sprite.movingSprite(sprite_character_dead, sprite_character_dead_1,
+                        sprite_character_dead_2, _animate, TIME_ANIMATION_DEAD);
                 break;
             }
             case IDLE: {
@@ -97,20 +109,29 @@ public abstract class Character extends Entity {
     }
 
     protected void updateCurrentState() {
-        if (goNorth) _state = State.GO_NORTH;
+        if (isEnd)
+            return;
+
+        if (isDead) _state = State.DEAD;
+        else if (goNorth) _state = State.GO_NORTH;
         else if (goEast) _state = State.GO_EAST;
         else if (goSouth) _state = State.GO_SOUTH;
         else if (goWest) _state = State.GO_WEST;
         else _state = State.IDLE;
+
+        if (isDead)
+            currentTimeDead++;
+        if (currentTimeDead >= TIME_DEAD)
+            isEnd = true;
     }
 
 
-    public boolean isImpact(int startX, int startY) {
+    public boolean isImpact(int startX, int startY, int endX, int endY) {
         List<Pair<Integer, Integer>> points = new ArrayList<>();
-        points.add(new Pair<>(solidArea.x, solidArea.y));
-        points.add(new Pair<>(solidArea.x + solidArea.width, solidArea.y));
-        points.add(new Pair<>(solidArea.x, solidArea.y + solidArea.height));
-        points.add(new Pair<>(solidArea.x + solidArea.width, solidArea.y + solidArea.height));
+        points.add(new Pair<>(solidArea.x + x, solidArea.y + y));
+        points.add(new Pair<>(x + solidArea.x + solidArea.width, y + solidArea.y));
+        points.add(new Pair<>(x + solidArea.x, y + solidArea.y + solidArea.height));
+        points.add(new Pair<>(x + solidArea.x + solidArea.width, y + solidArea.y + solidArea.height));
 
         for (Pair<Integer, Integer> point : points) {
             int xPoint = point.getKey();
@@ -121,18 +142,20 @@ public abstract class Character extends Entity {
                 return true;
             }
         }
-
         return false;
     }
 
     @Override
     public void update() {
+        if (isEnd)
+            return;
         animate();
     }
 
     @Override
     public void render(GraphicsContext gc) {
-        //updateCurrentState();
+        if (isEnd)
+            return;
         choosingSprite();
         gc.drawImage(_sprite.getFxImage(), x, y);
     }

@@ -52,8 +52,9 @@ public class ItemManagement extends Management {
     public void updateBomberTakeItem(Bomber bomber) {
         for (Entity e : list) {
             Item item = (Item) e;
-            if (!bomber.isImpact(item.get_xUnit() * Sprite.SCALED_SIZE,
-                                item.get_yUnit() * Sprite.SCALED_SIZE)) {
+            if (!bomber.isImpact(item.getX(), item.getY(),
+                    item.getX() + Sprite.SCALED_SIZE,
+                    item.getY() + Sprite.SCALED_SIZE)) {
                 continue;
             }
 
@@ -70,6 +71,7 @@ public class ItemManagement extends Management {
 
             item.setTaken();
             bomber.takeItem(item);
+            bomber.setDead();
         }
     }
 

@@ -69,6 +69,11 @@ public class Bomber extends Character {
         this.sprite_character_right_1 = Sprite.player_right_1;
         this.sprite_character_right_2 = Sprite.player_right_2;
 
+        this.sprite_character_dead = Sprite.player_dead1;
+        this.sprite_character_dead_1 = Sprite.player_dead2;
+        this.sprite_character_dead_2 = Sprite.player_dead3;
+
+
         this._sprite = this.sprite_character_right;
     }
 
@@ -86,6 +91,9 @@ public class Bomber extends Character {
     }
 
     public void updateInput(Scene scene) {
+        if (isDead)
+            return;
+
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -155,6 +163,9 @@ public class Bomber extends Character {
     }
 
     public void takeItem(Item item) {
+        if (isDead)
+            return;
+
         switch (item.getDiagramItem()) {
             case Item.bombItemDiagram:
                 break;
@@ -172,10 +183,13 @@ public class Bomber extends Character {
 
     @Override
     public void update() {
+        if(isEnd)
+            return;
+
         updateCurrentState();
         isCollisionOn = false;
         game.collisionChecker.checkTile(this);
-        if (isCollisionOn == false) {
+        if (!isCollisionOn) {
             switch (_state) {
                 case GO_NORTH: {
                     y -= speed;
@@ -194,10 +208,10 @@ public class Bomber extends Character {
                     break;
                 }
             }
-
         }
         super.update();
         bombManagement.update();
+
     }
 
     @Override
