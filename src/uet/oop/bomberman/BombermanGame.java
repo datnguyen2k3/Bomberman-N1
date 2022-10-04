@@ -154,6 +154,11 @@ public class BombermanGame extends Application {
 
         // Bomber take item
         itemManagement.updateBomberTakeItem(bomberman);
+
+        // Bomb kill enemy
+        enemyManagement.updateEnemyIsKilledByBomb(bomberman.getBombManagement());
+
+        
     }
 
     public void render() {

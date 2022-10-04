@@ -1,9 +1,11 @@
 package uet.oop.bomberman.entities.Bomb;
 
 import javafx.util.Pair;
+import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Management;
+import uet.oop.bomberman.graphics.Sprite;
 
 public class BombManagement extends Management {
     private int currentTimeRefresh = 0;
@@ -53,6 +55,25 @@ public class BombManagement extends Management {
                 int bomb_yUnit = bombCoordinate.getValue();
                 if (bomb_xUnit == brick.get_xUnit() && bomb_yUnit == brick.get_yUnit())
                     return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isDestroyEnemy(Enemy enemy) {
+        for (Entity e : list) {
+            Bomb bomb = (Bomb) e;
+            for (Pair<Integer, Integer> bombCoordinate : bomb.explodedCells) {
+                int bomb_xUnit = bombCoordinate.getKey();
+                int bomb_yUnit = bombCoordinate.getValue();
+                if (enemy.isImpact(bomb_xUnit * Sprite.SCALED_SIZE,
+                                    bomb_yUnit * Sprite.SCALED_SIZE,
+                                    bomb_xUnit * Sprite.SCALED_SIZE + Sprite.SCALED_SIZE,
+                                    bomb_yUnit * Sprite.SCALED_SIZE + Sprite.SCALED_SIZE)) {
+                    // System.out.println(enemy.getX() + " " + enemy.getY());
+                    return true;
+                }
             }
         }
 

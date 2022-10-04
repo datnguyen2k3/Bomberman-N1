@@ -61,6 +61,14 @@ public abstract class Character extends Entity {
         goEast = goNorth = goSouth = goWest = running = false;
     }
 
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public boolean isEnd() {
+        return isEnd;
+    }
+
     /**
      * Determine which sprite before render.
      */
