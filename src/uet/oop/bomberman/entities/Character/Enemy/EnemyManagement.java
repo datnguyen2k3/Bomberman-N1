@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.Character.Enemy;
 
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Management;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -15,6 +16,18 @@ public class EnemyManagement extends Management {
     }
 
     public void updateEnemyIsKilledByBomb(BombManagement bombManagement) {
+        for (Entity e : list) {
+            Enemy enemy = (Enemy) e;
+            if (!enemy.isDead() && bombManagement.isDestroyEnemy(enemy)) {
+                enemy.setDead();
+            }
+        }
 
+        for (Entity e : list) {
+            Enemy enemy = (Enemy) e;
+            if (enemy.isEnd()) {
+                enemy.setDead();
+            }
+        }
     }
 }

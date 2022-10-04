@@ -63,6 +63,8 @@ public class Oneal extends Enemy {
         this.sprite_character_down_2 = Sprite.oneal_left3;
 
         this.sprite_character_dead = Sprite.oneal_dead;
+        this.sprite_character_dead_1 = Sprite.oneal_dead;
+        this.sprite_character_dead_2 = Sprite.oneal_dead;
     }
 
 

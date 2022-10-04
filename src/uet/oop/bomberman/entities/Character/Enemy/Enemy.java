@@ -21,16 +21,24 @@ public abstract class Enemy extends Character {
                 || diagram == onealDiagram;
     }
 
+    @Override
     public void setDead() {
-
+        isDead = true;
+        _state = State.DEAD;
     }
 
     public void setRandomState() {
+        if(isEnd)
+            return;
+
         int choice = rand.nextInt(4);
         this._state = State.values()[choice];
     }
 
     public  void setRandomSpeed() {
+        if (isEnd)
+            return;
+
         int randSpeed = rand.nextInt(3);
         speed = randSpeed;
         if (speed == 0 ) {
@@ -40,44 +48,55 @@ public abstract class Enemy extends Character {
 
     @Override
     public void update() {
-        isCollisionOn = false;
-        this.game.collisionChecker.checkTile(this);
-        if (isCollisionOn == false) {
-            switch (this._state) {
-                case GO_NORTH: {
-                    y -= speed;
-                    break;
+        if(isEnd)
+            return;
+
+        if (!isDead) {
+            isCollisionOn = false;
+            this.game.collisionChecker.checkTile(this);
+            if (isCollisionOn == false) {
+                switch (this._state) {
+                    case GO_NORTH: {
+                        y -= speed;
+                        break;
+                    }
+                    case GO_SOUTH: {
+                        y += speed;
+                        break;
+                    }
+                    case GO_EAST: {
+                        x += speed;
+                        break;
+                    }
+                    case GO_WEST: {
+                        x -= speed;
+                        break;
+                    }
                 }
-                case GO_SOUTH: {
-                    y += speed;
-                    break;
+                recentDistanceMoving += speed;
+                if (recentDistanceMoving >= distanceToChangeSpeed) {
+                    if (type.equals("Oneal")) {
+                        setRandomSpeed();
+                    }
+                    recentDistanceMoving = 0;
+                    distanceToChangeSpeed = rand.nextInt(200 * Sprite.SCALE - 60 * Sprite.SCALE) + 60 * Sprite.SCALE;
                 }
-                case GO_EAST: {
-                    x += speed;
-                    break;
-                }
-                case GO_WEST: {
-                    x -= speed;
-                    break;
-                }
-            }
-            recentDistanceMoving += speed;
-            if (recentDistanceMoving >= distanceToChangeSpeed) {
-                if ( type.equals("Oneal")) {
+            } else {
+                if (type.equals("Balloom")) {
+                    setRandomState();
+                } else if (type.equals("Oneal")) {
                     setRandomSpeed();
+                    setRandomState();
                 }
-                recentDistanceMoving = 0;
-                distanceToChangeSpeed = rand.nextInt(200*Sprite.SCALE - 60*Sprite.SCALE) + 60*Sprite.SCALE;
-            }
-        } else {
-            if (type.equals("Balloom")) {
-                setRandomState();
-            }
-            else if (type.equals("Oneal")) {
-                setRandomSpeed();
-                setRandomState();
             }
         }
+
+        if(isDead) {
+            currentTimeDead++;
+            if(currentTimeDead >= TIME_DEAD)
+                isEnd = true;
+        }
+
         super.update();
     }
 }

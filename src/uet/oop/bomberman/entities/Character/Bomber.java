@@ -9,6 +9,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.util.Pair;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
+import uet.oop.bomberman.entities.Character.Enemy.EnemyManagement;
 import uet.oop.bomberman.entities.Item.Item;
 import uet.oop.bomberman.entities.StillObject.Grass;
 import uet.oop.bomberman.graphics.Sprite;
@@ -89,6 +90,7 @@ public class Bomber extends Character {
     public void setBombermanKillAllEnemies() {
         isBombermanKillAllEnemies = true;
     }
+
 
     public void updateInput(Scene scene) {
         if (isDead)
