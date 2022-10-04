@@ -28,8 +28,5 @@ public class SpeedItem extends Item{
         itemDiagram = Item.speedItemDiagram;
     }
 
-    @Override
-    public int getVal() {
-        return 0;
-    }
+
 }

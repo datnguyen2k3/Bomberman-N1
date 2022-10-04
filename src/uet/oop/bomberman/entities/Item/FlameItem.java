@@ -28,8 +28,4 @@ public class FlameItem extends Item{
 
     }
 
-    @Override
-    public int getVal() {
-        return 0;
-    }
 }

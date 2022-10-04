@@ -4,13 +4,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.utils.IState;
 import uet.oop.bomberman.utils.State;
 
 import java.awt.*;
 import java.util.Random;
 
-public abstract class Entity implements IState {
+public abstract class Entity  {
     public int recentDistanceMoving;
     public int distanceToChangeSpeed; // change speed when reach this distance moving.
     public int distanceToChangeDirection; // use for balloom.

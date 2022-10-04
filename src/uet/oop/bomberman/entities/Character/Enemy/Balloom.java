@@ -76,8 +76,4 @@ public class Balloom extends Enemy {
     }
 
 
-    @Override
-    public int getVal() {
-        return 0;
-    }
 }

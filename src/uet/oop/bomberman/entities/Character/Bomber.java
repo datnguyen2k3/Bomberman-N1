@@ -31,7 +31,7 @@ public class Bomber extends Character {
 
     @Override
     public void initSolidArea() {
-        solidArea = new Rectangle(4 * Sprite.SCALE, 4 * Sprite.SCALE, 6 * Sprite.SCALE, 10 * Sprite.SCALE);
+        solidArea = new Rectangle(4 * Sprite.SCALE, 4 * Sprite.SCALE, 6 * Sprite.SCALE, 9 * Sprite.SCALE);
     }
 
     public Bomber(int x, int y, Image img) {
@@ -185,7 +185,7 @@ public class Bomber extends Character {
 
     @Override
     public void update() {
-        if(isEnd)
+        if (isEnd)
             return;
 
         updateCurrentState();
@@ -223,8 +223,5 @@ public class Bomber extends Character {
         super.render(gc);
     }
 
-    @Override
-    public int getVal() {
-        return 0;
-    }
+
 }

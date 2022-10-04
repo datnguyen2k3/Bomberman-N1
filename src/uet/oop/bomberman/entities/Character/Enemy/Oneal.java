@@ -68,10 +68,7 @@ public class Oneal extends Enemy {
     }
 
 
-    @Override
-    public int getVal() {
-        return 0;
-    }
+
 
 
 }

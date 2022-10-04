@@ -28,8 +28,4 @@ public class BombItem extends Item{
         itemDiagram = Item.bombItemDiagram;
     }
 
-    @Override
-    public int getVal() {
-        return 0;
-    }
 }

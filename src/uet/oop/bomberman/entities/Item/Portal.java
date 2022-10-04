@@ -33,8 +33,4 @@ public class Portal extends Item{
         this.itemDiagram = Item.portalItemDiagram;
     }
 
-    @Override
-    public int getVal() {
-        return 0;
-    }
 }

@@ -9,7 +9,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public class BombManagement extends Management {
     private int currentTimeRefresh = 0;
-    private int explodedLength = 1;
+    private int explodedLength = 4;
 
     public void powerUpFlameBomb() {
         this.explodedLength++;

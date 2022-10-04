@@ -36,8 +36,5 @@ public class Grass extends Entity {
         return isGrass(currentDiagram);
     }
 
-    @Override
-    public int getVal() {
-        return 0;
-    }
+
 }

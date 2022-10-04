@@ -34,8 +34,5 @@ public class Wall extends Entity {
 
     }
 
-    @Override
-    public int getVal() {
-        return 0;
-    }
+
 }
