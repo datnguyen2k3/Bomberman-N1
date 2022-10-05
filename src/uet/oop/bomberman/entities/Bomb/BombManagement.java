@@ -6,6 +6,7 @@ import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Management;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.entities.Character.Character;
 
 public class BombManagement extends Management {
     private int currentTimeRefresh = 0;
@@ -61,7 +62,7 @@ public class BombManagement extends Management {
         return false;
     }
 
-    public boolean isDestroyEnemy(Enemy enemy) {
+    public boolean isDestroyEnemy(Character enemy) {
         for (Entity e : list) {
             Bomb bomb = (Bomb) e;
             for (Pair<Integer, Integer> bombCoordinate : bomb.explodedCells) {

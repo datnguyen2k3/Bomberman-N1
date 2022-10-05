@@ -158,7 +158,16 @@ public class BombermanGame extends Application {
         // Bomb kill enemy
         enemyManagement.updateEnemyIsKilledByBomb(bomberman.getBombManagement());
 
-        
+        // Bomb kill bomber
+        if (bomberman.getBombManagement().isDestroyEnemy(bomberman)) {
+            bomberman.setDead();
+        }
+
+        // Enemy kill bomber
+        if (enemyManagement.isEnemyKillCharacter(bomberman)) {
+            bomberman.setDead();
+        }
+
     }
 
     public void render() {

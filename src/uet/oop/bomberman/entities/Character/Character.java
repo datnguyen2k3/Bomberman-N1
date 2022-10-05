@@ -134,6 +134,12 @@ public abstract class Character extends Entity {
             isEnd = true;
     }
 
+    public boolean isImpact(Character character) {
+        return isImpact(character.getX() + character.getSolidArea().x,
+                character.getY() + character.getSolidArea().y,
+                character.getX() + character.getSolidArea().x + character.getSolidArea().width,
+                character.getY() + character.getSolidArea().y + character.getSolidArea().height);
+    }
 
     public boolean isImpact(int startX, int startY, int endX, int endY) {
         List<Pair<Integer, Integer>> points = new ArrayList<>();
