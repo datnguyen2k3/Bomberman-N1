@@ -8,6 +8,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Pair;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
 import uet.oop.bomberman.entities.Character.Enemy.EnemyManagement;
 import uet.oop.bomberman.entities.Item.Item;
@@ -21,12 +22,13 @@ import java.util.List;
 import uet.oop.bomberman.utils.State;
 
 public class Bomber extends Character {
-    private BombManagement bombManagement = new BombManagement();
+    private BombManagement bombManagement ;
     private boolean isBombermanKillAllEnemies = false;
 
     public Bomber(int x, int y, Image img, BombermanGame game) {
         this(x, y, img);
         this.game = game;
+        bombManagement = new BombManagement(this.game);
     }
 
     @Override
@@ -126,7 +128,8 @@ public class Bomber extends Character {
                 }
 
                 if (event.getCode() == KeyCode.SPACE) {
-                    bombManagement.add(get_xUnitCenter(), get_yUnitCenter());
+                    Bomb b = new Bomb(get_xUnitCenter(), get_yUnitCenter(),bombManagement,game);
+                    bombManagement.add(b);
                 }
             }
         });

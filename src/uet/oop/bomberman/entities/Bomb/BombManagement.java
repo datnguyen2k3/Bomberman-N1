@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities.Bomb;
 
 import javafx.util.Pair;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.Entity;
@@ -8,8 +9,17 @@ import uet.oop.bomberman.entities.Management;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class BombManagement extends Management {
+    private BombermanGame game;
     private int currentTimeRefresh = 0;
-    private int explodedLength = 4;
+    private int explodedLength = 3;
+
+    public void setGame(BombermanGame game) {
+        this.game = game;
+    }
+
+    public BombManagement(BombermanGame game) {
+        this.game = game;
+    }
 
     public void powerUpFlameBomb() {
         this.explodedLength++;
@@ -19,11 +29,11 @@ public class BombManagement extends Management {
         return explodedLength;
     }
 
-    public void add(int xUnit, int yUnit) {
+    public void add( Bomb b) {
         if (currentTimeRefresh > 0)
             return;
 
-        list.add(new Bomb(xUnit, yUnit, this));
+        list.add(b);
         currentTimeRefresh = Bomb.timeRefresh;
     }
 

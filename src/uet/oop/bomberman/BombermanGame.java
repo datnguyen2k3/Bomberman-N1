@@ -37,7 +37,7 @@ public class BombermanGame extends Application {
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     private GraphicsContext gc; // window
     private Canvas canvas;
-    private Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), this);
+    public Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), this);
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
     private ItemManagement itemManagement = new ItemManagement();
