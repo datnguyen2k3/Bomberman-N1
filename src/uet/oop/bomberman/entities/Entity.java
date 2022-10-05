@@ -50,6 +50,10 @@ public abstract class Entity  {
         return y / Sprite.SCALED_SIZE;
     }
 
+    public Rectangle getSolidArea() {
+        return solidArea;
+    }
+
     public static boolean isEqualsCoordinate(Entity e1, Entity e2) {
         return e1.get_xUnit() == e2.get_xUnit() && e1.get_yUnit() == e2.get_yUnit();
     }
