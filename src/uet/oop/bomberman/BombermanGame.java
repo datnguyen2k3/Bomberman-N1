@@ -25,6 +25,7 @@ import uet.oop.bomberman.entities.StillObject.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.utils.CollisionChecker;
+import uet.oop.bomberman.entities.Bomb.BombManagement;
 
 public class BombermanGame extends Application {
     public static void main(String[] args) {
@@ -42,7 +43,7 @@ public class BombermanGame extends Application {
     private List<Entity> stillObjects = new ArrayList<>();
     private ItemManagement itemManagement = new ItemManagement();
     private EnemyManagement enemyManagement = new EnemyManagement();
-
+    private BombManagement bombManagement = bomberman.getBombManagement();
 
     @Override
     public void start(Stage stage) {

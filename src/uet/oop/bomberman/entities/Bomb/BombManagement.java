@@ -13,6 +13,7 @@ public class BombManagement extends Management {
     private BombermanGame game;
     private int currentTimeRefresh = 0;
     private int explodedLength = 3;
+    private int maxBomb = 1;
 
     public void setGame(BombermanGame game) {
         this.game = game;
@@ -25,17 +26,18 @@ public class BombManagement extends Management {
     public void powerUpFlameBomb() {
         this.explodedLength++;
     }
+    public void powerUpMaxBomb() {
+        maxBomb++;
+    }
 
     public int getExplodedLength() {
         return explodedLength;
     }
 
     public void add( Bomb b) {
-        if (currentTimeRefresh > 0)
+        if (list.size() == maxBomb)
             return;
-
         list.add(b);
-        currentTimeRefresh = Bomb.timeRefresh;
     }
 
     @Override

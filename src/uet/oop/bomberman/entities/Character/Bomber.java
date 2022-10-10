@@ -173,8 +173,10 @@ public class Bomber extends Character {
 
         switch (item.getDiagramItem()) {
             case Item.bombItemDiagram:
+                bombManagement.powerUpMaxBomb();
                 break;
             case Item.speedItemDiagram:
+                speed += 2;
                 break;
             case Item.flameItemDiagram:
                 bombManagement.powerUpFlameBomb();

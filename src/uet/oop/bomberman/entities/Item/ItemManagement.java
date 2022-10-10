@@ -71,7 +71,6 @@ public class ItemManagement extends Management {
 
             item.setTaken();
             bomber.takeItem(item);
-            bomber.setDead();
         }
     }
 
