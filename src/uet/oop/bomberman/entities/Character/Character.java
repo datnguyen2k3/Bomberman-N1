@@ -156,8 +156,8 @@ public abstract class Character extends Entity {
         for (Pair<Integer, Integer> point : points) {
             int xPoint = point.getKey();
             int yPoint = point.getValue();
-            if (startX <= xPoint && xPoint <= startX + Sprite.SCALED_SIZE
-                    && startY <= yPoint && yPoint <= startY + Sprite.SCALED_SIZE) {
+            if (startX < xPoint && xPoint < endX
+                    && startY < yPoint && yPoint < endY) {
                 return true;
             }
         }
