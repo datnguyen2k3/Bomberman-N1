@@ -17,7 +17,7 @@ public abstract class Entity  {
     public static final int MAX_ANIMATION = 7500;
     protected int x; //Tọa độ X tính từ góc trái trên trong Canvas
     protected int y; //Tọa độ Y tính từ góc trái trên trong Canvas
-    protected int speed = 2;
+    protected  int speed = 2;
 
     protected Image img;
 
@@ -36,7 +36,7 @@ public abstract class Entity  {
     public int getY() {
         return y;
     }
-    public int getSpeed() {
+    public  int getSpeed() {
         return speed;
     }
 

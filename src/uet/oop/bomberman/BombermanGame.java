@@ -125,12 +125,12 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
-         entities.forEach(Entity::update);
+        entities.forEach(Entity::update);
         bomberman.update();
         for (Entity entity : stillObjects) {
-//            if (entity instanceof Brick) {
-//                ((Brick) entity).update(bomberman);
-//            }
+            if (entity instanceof Brick) {
+                ((Brick) entity).update(bomberman);
+            }
             entity.update();
         }
         itemManagement.update();
@@ -146,9 +146,8 @@ public class BombermanGame extends Application {
         // destroy brick
         for (Entity e : stillObjects) {
             if (e instanceof Brick) {
-                //Brick brick = (Brick) e;
                 if (bomberman.getBombManagement().isDestroyBrick((Brick)e)) {
-                   //  brick .setDestroyed();
+                    ((Brick)e).setDestroyed();
                     itemManagement.setItemIfBrickIsDestroyed((Brick) e);
                 }
             }

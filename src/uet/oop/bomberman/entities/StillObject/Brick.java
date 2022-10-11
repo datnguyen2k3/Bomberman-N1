@@ -25,10 +25,7 @@ public class Brick extends Entity {
         initSolidArea();
         BombermanGame.diagramMap[get_yUnit()][get_xUnit()] = '*';
         _state = State.EXISTING;
-         // this._sprite = Sprite.brick;
     }
-
-
 
     public static boolean isBrick(char diagram) {
         return diagram == Brick.diagramBrick;
@@ -40,8 +37,8 @@ public class Brick extends Entity {
     public void setDestroyed() {
         this.isDestroyed = true;
         _state = State.BE_DESTROYING;
-        BombermanGame.diagramMap[get_yUnit()][get_xUnit()] = ' ';
-       // img = Sprite.grass.getFxImage();
+//        BombermanGame.diagramMap[get_yUnit()][get_xUnit()] = ' ';
+       img = Sprite.grass.getFxImage();
     }
 
 
@@ -59,16 +56,16 @@ public class Brick extends Entity {
 
     }
 
-    private void choseSprite() {
+    private void chooseSprite() {
 
         if ( _state == State.EXISTING) {
-            curSprite = Sprite.brick;
+            img = Sprite.brick.getFxImage();
         }
         else if ( _state == State.BE_DESTROYING) {
-            curSprite = Sprite.movingSprite(Sprite.brick_exploded,Sprite.brick_exploded1,Sprite.brick_exploded2,_animate,120);
+            img = Sprite.movingSprite(Sprite.brick_exploded,Sprite.brick_exploded1,Sprite.brick_exploded2,_animate,120).getFxImage();
         }
         else if (_state == State.BE_DESTROYED){
-            curSprite = Sprite.grass;
+           img = Sprite.grass.getFxImage();
         }
     }
 
@@ -106,7 +103,7 @@ public class Brick extends Entity {
     @Override
     public void render(GraphicsContext gc) {
         //doExplodingAnimation(gc);
-        choseSprite();
+         //chooseSprite();
         //gc.drawImage(curSprite.getFxImage(),x,y);
         super.render(gc);
     }

@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities.Character.Enemy;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Character.Enemy.Enemy;
@@ -67,4 +68,6 @@ public class Oneal extends Enemy {
         this.sprite_character_dead_1 = Sprite.mob_dead1;
         this.sprite_character_dead_2 = Sprite.mob_dead2;
     }
+
+
 }

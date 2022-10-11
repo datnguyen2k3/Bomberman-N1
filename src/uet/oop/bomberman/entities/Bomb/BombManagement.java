@@ -14,7 +14,7 @@ public class BombManagement extends Management {
     private int currentTimeRefresh = 0;
 
 //    private int explodedLength = 1;
-    private int explodedLength = 3;
+    private int explodedLength = 1;
     private int maxBomb = 1;
 
 
@@ -65,8 +65,8 @@ public class BombManagement extends Management {
 
     public boolean isDestroyBrick(Brick brick) {
         for (Entity e : list) {
-            Bomb bomb = (Bomb) e;
-            for (Pair<Integer, Integer> bombCoordinate : bomb.destroyedBricks) {
+            // Bomb bomb = (Bomb) e;
+            for (Pair<Integer, Integer> bombCoordinate : ((Bomb)e).destroyedBricks) {
                 int bomb_xUnit = bombCoordinate.getKey();
                 int bomb_yUnit = bombCoordinate.getValue();
                 if (bomb_xUnit == brick.get_xUnit() && bomb_yUnit == brick.get_yUnit())
