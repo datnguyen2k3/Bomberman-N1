@@ -12,7 +12,7 @@ import uet.oop.bomberman.entities.Character.Character;
 public class BombManagement extends Management {
     private BombermanGame game;
     private int currentTimeRefresh = 0;
-    private int explodedLength = 3;
+    private int explodedLength = 1;
 
     public void setGame(BombermanGame game) {
         this.game = game;

@@ -47,6 +47,10 @@ public abstract class Character extends Entity {
         initState();
     }
 
+    public Character(int xUnit, int yUnit) {
+        super(xUnit, yUnit);
+    }
+
     public int get_xUnitCenter() {
         return (x + Sprite.SCALED_SIZE / 2) / Sprite.SCALED_SIZE;
     }

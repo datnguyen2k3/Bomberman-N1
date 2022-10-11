@@ -18,6 +18,9 @@ import java.util.List;
 
 public class Bomb extends Entity {
 
+
+    List<Coordinate> explodedBrick = new ArrayList<>();
+
     private BombManagement bombManagement;
     private boolean isEnd = false;
     private boolean isWaitedToExploding = false;
@@ -89,7 +92,6 @@ public class Bomb extends Entity {
 
     private void waitToExploding() {
         if (!isWaitedToExploding) {
-
             img = Sprite.bomb.getFxImage();
             isWaitedToExploding = true;
             _state = State.WAITING_EXPLODING;
@@ -130,6 +132,10 @@ public class Bomb extends Entity {
         return true;
     }
 
+
+    private void getAllExplodedBrick() {
+
+    }
     // get the first brick to be destroyed, we need render from bomb location to this brick location, not render over.
     private Coordinate firstBrickToBeDestroyed(int startXUnit, int startYUnit, String direction) {
 
@@ -151,6 +157,8 @@ public class Bomb extends Entity {
                 if (Brick.isBrick(i, startYUnit)) {
                     res.setX(i - 1);
                     res.setY(startYUnit);
+                    Coordinate realBrick = new Coordinate(i,startYUnit);
+                    explodedBrick.add(realBrick);
                     return res;
                 }
             }
@@ -172,6 +180,8 @@ public class Bomb extends Entity {
                 if (Brick.isBrick(i, startYUnit)) {
                     res.setX(i + 1);
                     res.setY(startYUnit);
+                    Coordinate realBrick = new Coordinate(i,startYUnit);
+                    explodedBrick.add(realBrick);
                     return res;
                 }
             }
@@ -192,6 +202,8 @@ public class Bomb extends Entity {
                 if (Brick.isBrick(get_xUnit(), i)) {
                     res.setX(get_xUnit());
                     res.setY(i + 1);
+                    Coordinate realBrick = new Coordinate(get_xUnit(), i);
+                    explodedBrick.add(realBrick);
                     return res;
                 }
             }
@@ -212,6 +224,8 @@ public class Bomb extends Entity {
                 if (Brick.isBrick(get_xUnit(), i)) {
                     res.setX(get_xUnit());
                     res.setY(i - 1);
+                    Coordinate realBrick = new Coordinate(get_xUnit(), i);
+                    explodedBrick.add(realBrick);
                     return res;
                 }
             }
@@ -224,7 +238,6 @@ public class Bomb extends Entity {
 
     private void setExplodedCells() {
         setExplodedCell(get_xUnit(), get_yUnit());
-
         for (int j = get_xUnit() + 1; j <= get_xUnit() + bombManagement.getExplodedLength(); j++) {
             if (!setExplodedCell(j, get_yUnit()))
                 break;
@@ -315,6 +328,10 @@ public class Bomb extends Entity {
         }
     }
 
+    private void explodeAllBrick (GraphicsContext gc) {
+
+    }
+
     private void renderFlameDown(GraphicsContext gc, int yUnit, boolean isLast) {
         if (isLast) {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_vertical_down_last
@@ -360,7 +377,6 @@ public class Bomb extends Entity {
                     if (Wall.isWall(j, get_yUnit())) break;
                     else {
                         if (Brick.isBrick(j, get_yUnit())) {
-
                             renderFlameRight(gc, j, true);
                             break;
                         } else {

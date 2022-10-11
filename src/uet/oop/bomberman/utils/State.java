@@ -11,6 +11,7 @@ public enum State {
     DEAD,
     EXPLODING,
     WAITING_EXPLODING,
+    BE_DESTROYING,
     BE_DESTROYED,
     EXISTING;
 }

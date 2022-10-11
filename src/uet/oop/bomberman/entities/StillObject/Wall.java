@@ -10,7 +10,6 @@ public class Wall extends Entity {
 
     @Override
     public void initSolidArea() {
-
     }
 
     public Wall(int xUnit, int yUnit) {
@@ -29,6 +28,7 @@ public class Wall extends Entity {
     public static boolean isWall(int xUnit, int yUnit) {
         return isWall(BombermanGame.diagramMap[yUnit][xUnit]);
     }
+
     @Override
     public void update() {
 

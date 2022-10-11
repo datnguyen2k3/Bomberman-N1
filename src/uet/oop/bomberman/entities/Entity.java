@@ -102,6 +102,19 @@ public abstract class Entity  {
         gc.drawImage(img, x, y);
     }
 
+
+    public void chooseSpriteBrick() {
+        if(_state == State.BE_DESTROYING) {
+            img = Sprite.movingSprite(Sprite.brick_exploded,Sprite.brick_exploded1,Sprite.brick_exploded2,_animate,300).getFxImage();
+        }
+        else if ( _state == State.EXISTING) {
+            img = Sprite.brick.getFxImage();
+        }
+        else {
+            img = Sprite.grass.getFxImage();
+        }
+    }
+
     public abstract void update();
 
 }

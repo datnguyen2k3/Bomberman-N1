@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities.StillObject;
 import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Character.Bomber;
+import uet.oop.bomberman.entities.Character.Character;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
@@ -10,7 +11,9 @@ import uet.oop.bomberman.utils.State;
 public class Brick extends Entity {
     public static final char diagramBrick = '*';
     private boolean isDestroyed = false;
-    Sprite currentSprite = Sprite.brick;
+    public static int timeDead = 60;
+    private int currentTimeDead = 0;
+    private Sprite curSprite = Sprite.brick;
 
     @Override
     public void initSolidArea() {
@@ -22,7 +25,10 @@ public class Brick extends Entity {
         initSolidArea();
         BombermanGame.diagramMap[get_yUnit()][get_xUnit()] = '*';
         _state = State.EXISTING;
+         // this._sprite = Sprite.brick;
     }
+
+
 
     public static boolean isBrick(char diagram) {
         return diagram == Brick.diagramBrick;
@@ -33,28 +39,63 @@ public class Brick extends Entity {
 
     public void setDestroyed() {
         this.isDestroyed = true;
-        _state = State.BE_DESTROYED;
+        _state = State.BE_DESTROYING;
         BombermanGame.diagramMap[get_yUnit()][get_xUnit()] = ' ';
-        img = Sprite.grass.getFxImage();
+       // img = Sprite.grass.getFxImage();
     }
 
 
-    public void choosingSprite() {
-        if(_state == State.BE_DESTROYED) {
-            currentSprite = Sprite.movingSprite(Sprite.brick_exploded,Sprite.brick_exploded1,Sprite.brick_exploded2,_animate,30);
+    private void updateState() {
+        if (_state == State.BE_DESTROYED || _state == State.EXISTING) {
+            return;
+        }
+
+        if (_state == State.BE_DESTROYING) {
+            currentTimeDead++;
+        }
+
+        if (currentTimeDead >= timeDead)
+            _state = State.BE_DESTROYED;
+
+    }
+
+    private void choseSprite() {
+
+        if ( _state == State.EXISTING) {
+            curSprite = Sprite.brick;
+        }
+        else if ( _state == State.BE_DESTROYING) {
+            curSprite = Sprite.movingSprite(Sprite.brick_exploded,Sprite.brick_exploded1,Sprite.brick_exploded2,_animate,120);
+        }
+        else if (_state == State.BE_DESTROYED){
+            curSprite = Sprite.grass;
+        }
+    }
+
+
+    private void doExplodingAnimation(GraphicsContext gc) {
+        if ( _state == State.BE_DESTROYING) {
+            gc.drawImage(Sprite.movingSprite(Sprite.brick_exploded,Sprite.brick_exploded1,Sprite.brick_exploded2,_animate,60).getFxImage(),x,y);
+        }
+        else if ( _state == State.EXISTING) {
+            gc.drawImage(Sprite.brick.getFxImage(),x,y);
         }
         else {
-            currentSprite = Sprite.brick;
+            gc.drawImage(Sprite.grass.getFxImage(), x,y);
         }
     }
+
+
     @Override
     public void update() {
-
+        updateState();
+        animate();
     }
 
     public void update(Bomber bomber) {
-        //updateGetDamage(bomber);
+        updateState();
         animate();
+        // System.out.println(_animate);
     }
 
     @Override
@@ -64,11 +105,9 @@ public class Brick extends Entity {
 
     @Override
     public void render(GraphicsContext gc) {
-        animate();
-        // choosingSprite();
-//        gc.drawImage(currentSprite.getFxImage(),x,y);
+        //doExplodingAnimation(gc);
+        choseSprite();
+        //gc.drawImage(curSprite.getFxImage(),x,y);
         super.render(gc);
     }
-
-
 }
