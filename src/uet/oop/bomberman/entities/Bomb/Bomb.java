@@ -77,6 +77,8 @@ public class Bomb extends Entity {
 //        log(firstBrickDown);
     }
 
+
+
     @Override
     public void initSolidArea() {
 
@@ -407,7 +409,6 @@ public class Bomb extends Entity {
                         }
                     }
                 } else {
-
                     if (Wall.isWall(j, get_yUnit())) break;
                     else {
                         if (Brick.isBrick(j, get_yUnit())) {

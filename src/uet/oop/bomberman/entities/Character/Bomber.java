@@ -11,8 +11,11 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
 import uet.oop.bomberman.entities.Character.Enemy.EnemyManagement;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Item.Item;
+import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.StillObject.Grass;
+import uet.oop.bomberman.entities.StillObject.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
@@ -25,10 +28,12 @@ public class Bomber extends Character {
     private BombManagement bombManagement;
     private boolean isBombermanKillAllEnemies = false;
 
-    //private static final int EPSILON = 2 * Sprite.SCALE;
+    private static final int EPSILON = 10 * Sprite.SCALE;
+
+    private int speedMoveAtEdgeDivideBy = 15;
 
     private int entityLeftSideX;
-    private int entityRightSideX ;
+    private int entityRightSideX;
     private int entityTopY;
     private int entityBottomY;
 
@@ -36,11 +41,12 @@ public class Bomber extends Character {
         this(x, y, img);
         this.game = game;
         bombManagement = new BombManagement(this.game);
+
     }
 
     @Override
     public void initSolidArea() {
-        solidArea = new Rectangle(4 * Sprite.SCALE, 4 * Sprite.SCALE, 6 * Sprite.SCALE, 9 * Sprite.SCALE);
+        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 10 * Sprite.SCALE, 14 * Sprite.SCALE);
     }
 
     public Bomber(int x, int y, Image img) {
@@ -50,24 +56,13 @@ public class Bomber extends Character {
         this.worldY = y;
         initSprite();
         initState();
-//        entityLeftSideX = getX() + solidArea.x;
-//        entityRightSideX = entityLeftSideX + solidArea.width;
-//        entityTopY = getY() + solidArea.y;
-//        entityBottomY = entityTopY + solidArea.height;
+
     }
 
     public BombManagement getBombManagement() {
         return bombManagement;
     }
 
-
-//    private void setCoordinateWhenAtEdge(String dir) {
-//        if ( dir.equals("GO SOUTH")) {
-//            isCollisionOn = false;
-//            this.game.collisionChecker.checkTile(this);
-//
-//        }
-//    }
 
     @Override
     protected void initSprite() {
@@ -208,8 +203,92 @@ public class Bomber extends Character {
 
     }
 
+    private boolean isBrickOrWall(int x, int y) {
+        return (Wall.isWall(get_xUnit(x), get_yUnit(y))
+                || Brick.isBrick(get_xUnit(x), get_yUnit(y)));
+    }
+
+    private void smoothMovement() {
+        //  Brick brick = new Brick(0, 0);
+        if (isCollisionOn == true) {
+
+            // down
+            if (_state == State.GO_SOUTH
+                    && Grass.isGrass(entityLeftSideX + EPSILON, entityTopY + Sprite.SCALED_SIZE + EPSILON)
+                    && Grass.isGrass(entityLeftSideX + EPSILON, entityTopY + EPSILON)
+                    && isBrickOrWall(entityLeftSideX, entityBottomY + EPSILON)) {
+
+                this.x += EPSILON / speedMoveAtEdgeDivideBy;
+                return;
+            }
+            if (_state == State.GO_SOUTH
+                    && Grass.isGrass(entityRightSideX - EPSILON, entityTopY + Sprite.SCALED_SIZE + EPSILON)
+                    && Grass.isGrass(entityRightSideX - EPSILON, entityTopY + EPSILON)
+                    && isBrickOrWall(entityRightSideX, entityBottomY + EPSILON)) {
+
+                this.x -= EPSILON / speedMoveAtEdgeDivideBy;
+                return;
+            }
+
+            // up
+            if (_state == State.GO_NORTH
+                    && Grass.isGrass(entityLeftSideX + EPSILON, entityTopY - EPSILON)
+                    && Grass.isGrass(entityLeftSideX + EPSILON, entityTopY)
+                    && isBrickOrWall(entityLeftSideX, entityTopY - EPSILON)) {
+
+                this.x += EPSILON / speedMoveAtEdgeDivideBy;
+                return;
+            }
+
+            if (_state == State.GO_NORTH
+                    && Grass.isGrass(entityRightSideX - EPSILON, entityTopY - EPSILON)
+                    && Grass.isGrass(entityRightSideX - EPSILON, entityTopY)
+                    && isBrickOrWall(entityRightSideX, entityTopY - EPSILON)) {
+
+                this.x -= EPSILON / speedMoveAtEdgeDivideBy;
+                return;
+            }
+
+            // right
+            if (_state == State.GO_EAST
+                    && Grass.isGrass(entityRightSideX + EPSILON, entityBottomY - EPSILON)
+                    && Grass.isGrass(entityRightSideX, entityBottomY - EPSILON)
+                    && isBrickOrWall(entityRightSideX + EPSILON, entityBottomY)) {
+
+                this.y -= EPSILON / speedMoveAtEdgeDivideBy;
+                return;
+            } else if (_state == State.GO_EAST
+                    && Grass.isGrass(entityRightSideX + EPSILON, entityTopY + EPSILON)
+                    && Grass.isGrass(entityRightSideX, entityTopY + EPSILON)
+                    && isBrickOrWall(entityRightSideX + EPSILON, entityTopY)) {
+
+                this.y += EPSILON / speedMoveAtEdgeDivideBy;
+                return;
+            }
+
+            // left
+            if (_state == State.GO_WEST
+                    && Grass.isGrass(entityLeftSideX - EPSILON, entityBottomY - EPSILON)
+                    && Grass.isGrass(entityLeftSideX, entityBottomY - EPSILON)
+                    && isBrickOrWall(entityLeftSideX - EPSILON, entityBottomY)) {
+                this.y -= EPSILON / speedMoveAtEdgeDivideBy;
+                return;
+            } else if (_state == State.GO_WEST
+                    && Grass.isGrass(entityLeftSideX - EPSILON, entityTopY + EPSILON)
+                    && Grass.isGrass(entityLeftSideX, entityTopY + EPSILON)
+                    && isBrickOrWall(entityLeftSideX - EPSILON, entityTopY)) {
+                this.y += EPSILON / speedMoveAtEdgeDivideBy;
+                return;
+            }
+        }
+    }
+
     @Override
     public void update() {
+        entityLeftSideX = x + solidArea.x;
+        entityRightSideX = entityLeftSideX + solidArea.width;
+        entityTopY = y + solidArea.y;
+        entityBottomY = entityTopY + solidArea.height;
         if (isEnd)
             return;
 
@@ -236,6 +315,7 @@ public class Bomber extends Character {
                 }
             }
         }
+        smoothMovement();
         super.update();
         bombManagement.update();
 
