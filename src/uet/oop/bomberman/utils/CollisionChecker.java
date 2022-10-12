@@ -1,13 +1,10 @@
 package uet.oop.bomberman.utils;
 
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.StillObject.Wall;
 import uet.oop.bomberman.graphics.Sprite;
-
-import java.awt.*;
-
+import uet.oop.bomberman.BombermanGame;
 public class CollisionChecker {
     BombermanGame game;
 

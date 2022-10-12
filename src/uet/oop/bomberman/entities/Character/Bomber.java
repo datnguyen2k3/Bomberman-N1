@@ -6,24 +6,24 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.util.Pair;
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
+
 import uet.oop.bomberman.entities.Character.Enemy.EnemyManagement;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Item.Item;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.StillObject.Grass;
 import uet.oop.bomberman.entities.StillObject.Wall;
+
+import uet.oop.bomberman.entities.Item.Item;
+
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import uet.oop.bomberman.utils.State;
-
+import uet.oop.bomberman.BombermanGame;
 public class Bomber extends Character {
     private BombManagement bombManagement;
     private boolean isBombermanKillAllEnemies = false;

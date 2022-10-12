@@ -1,17 +1,14 @@
 package uet.oop.bomberman.entities.Bomb;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.CornerRadii;
 import javafx.util.Pair;
-import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.StillObject.Grass;
 import uet.oop.bomberman.entities.StillObject.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.Coordinate;
 import uet.oop.bomberman.utils.State;
+import uet.oop.bomberman.BombermanGame;
 
 import java.util.ArrayList;
 import java.util.List;

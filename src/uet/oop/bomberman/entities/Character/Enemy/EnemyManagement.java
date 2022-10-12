@@ -1,11 +1,11 @@
 package uet.oop.bomberman.entities.Character.Enemy;
 
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
 import uet.oop.bomberman.entities.Character.Character;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Management;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.BombermanGame;
 
 public class EnemyManagement extends Management {
     public void add(int xUnit, int yUnit, char enemyDiagram, BombermanGame game) {

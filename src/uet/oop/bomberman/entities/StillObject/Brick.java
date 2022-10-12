@@ -1,13 +1,11 @@
 package uet.oop.bomberman.entities.StillObject;
 
 import javafx.scene.canvas.GraphicsContext;
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Character.Bomber;
-import uet.oop.bomberman.entities.Character.Character;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
-
+import uet.oop.bomberman.BombermanGame;
 public class Brick extends Entity {
     public static final char diagramBrick = '*';
     private boolean isDestroyed = false;

@@ -3,15 +3,11 @@ package uet.oop.bomberman.entities.Character;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.util.Pair;
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.StillObject.Grass;
 import uet.oop.bomberman.graphics.Sprite;
-
-import java.awt.*;
+import uet.oop.bomberman.BombermanGame;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import uet.oop.bomberman.utils.State;
 

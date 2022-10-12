@@ -1,13 +1,12 @@
 package uet.oop.bomberman.entities.Bomb;
 
 import javafx.util.Pair;
-import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Management;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.entities.Character.Character;
+import uet.oop.bomberman.BombermanGame;
 
 public class BombManagement extends Management {
     private BombermanGame game;

@@ -2,13 +2,10 @@ package uet.oop.bomberman.entities.Character.Enemy;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.utils.State;
 
 import java.awt.*;
-
+import uet.oop.bomberman.BombermanGame;
 public class Balloom extends Enemy {
 
 
