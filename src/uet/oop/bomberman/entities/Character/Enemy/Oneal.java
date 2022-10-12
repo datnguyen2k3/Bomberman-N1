@@ -1,14 +1,12 @@
 package uet.oop.bomberman.entities.Character.Enemy;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.graphics.Sprite;
 
 import uet.oop.bomberman.utils.State;
 
 import java.awt.*;
-
+import uet.oop.bomberman.BombermanGame;
 public class Oneal extends Enemy {
 
     @Override
@@ -28,6 +26,7 @@ public class Oneal extends Enemy {
         initSolidArea();
         distanceToChangeSpeed = rand.nextInt(30 * Sprite.SCALE - 10 * Sprite.SCALE) + 10 * Sprite.SCALE;
         type = "Oneal";
+        // _state = State.DEAD;
     }
 
     @Override
@@ -63,12 +62,9 @@ public class Oneal extends Enemy {
         this.sprite_character_down_2 = Sprite.oneal_left3;
 
         this.sprite_character_dead = Sprite.oneal_dead;
-        this.sprite_character_dead_1 = Sprite.oneal_dead;
-        this.sprite_character_dead_2 = Sprite.oneal_dead;
+        this.sprite_character_dead_1 = Sprite.mob_dead1;
+        this.sprite_character_dead_2 = Sprite.mob_dead2;
     }
-
-
-
 
 
 }

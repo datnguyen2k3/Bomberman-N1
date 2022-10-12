@@ -1,6 +1,5 @@
 package uet.oop.bomberman.entities.StillObject;
 
-import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
@@ -10,7 +9,6 @@ public class Wall extends Entity {
 
     @Override
     public void initSolidArea() {
-
     }
 
     public Wall(int xUnit, int yUnit) {
@@ -29,6 +27,7 @@ public class Wall extends Entity {
     public static boolean isWall(int xUnit, int yUnit) {
         return isWall(BombermanGame.diagramMap[yUnit][xUnit]);
     }
+
     @Override
     public void update() {
 

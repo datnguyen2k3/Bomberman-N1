@@ -1,19 +1,21 @@
 package uet.oop.bomberman.entities.Bomb;
 
 import javafx.util.Pair;
-import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Management;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.entities.Character.Character;
+import uet.oop.bomberman.BombermanGame;
 
 public class BombManagement extends Management {
     private BombermanGame game;
     private int currentTimeRefresh = 0;
-    private int explodedLength = 3;
+
+//    private int explodedLength = 1;
+    private int explodedLength = 1;
     private int maxBomb = 1;
+
 
     public void setGame(BombermanGame game) {
         this.game = game;
@@ -62,8 +64,8 @@ public class BombManagement extends Management {
 
     public boolean isDestroyBrick(Brick brick) {
         for (Entity e : list) {
-            Bomb bomb = (Bomb) e;
-            for (Pair<Integer, Integer> bombCoordinate : bomb.destroyedBricks) {
+            // Bomb bomb = (Bomb) e;
+            for (Pair<Integer, Integer> bombCoordinate : ((Bomb)e).destroyedBricks) {
                 int bomb_xUnit = bombCoordinate.getKey();
                 int bomb_yUnit = bombCoordinate.getValue();
                 if (bomb_xUnit == brick.get_xUnit() && bomb_yUnit == brick.get_yUnit())

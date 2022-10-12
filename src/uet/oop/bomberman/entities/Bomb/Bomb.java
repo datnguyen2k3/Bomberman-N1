@@ -1,23 +1,30 @@
 package uet.oop.bomberman.entities.Bomb;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.CornerRadii;
 import javafx.util.Pair;
-import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.StillObject.Grass;
 import uet.oop.bomberman.entities.StillObject.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.Coordinate;
 import uet.oop.bomberman.utils.State;
+import uet.oop.bomberman.BombermanGame;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bomb extends Entity {
 
+
+    List<Coordinate> explodedBrick = new ArrayList<>();
+    private int countBricksRemain;
+
+    private int explodingCounter = 0;
+    private int brickDestroyCounterRight = 0;
+    private int brickDestroyCounterDown = 0;
+    private int brickDestroyCounterTop = 0;
+    private int brickDestroyCounterLeft = 0;
+    private int canDestroyBrick = 0;
     private BombManagement bombManagement;
     private boolean isEnd = false;
     private boolean isWaitedToExploding = false;
@@ -27,12 +34,13 @@ public class Bomb extends Entity {
     public static final int timeRefresh = Bomb.TIME_EXPLODING + Bomb.TIME_WAIT_TO_EXPLODING;
     private int currentTimeWaitToExploding = TIME_WAIT_TO_EXPLODING;
     private int currentTimeExploding = TIME_EXPLODING;
+
+
     public List<Pair<Integer, Integer>> explodedCells = new ArrayList<>();
     public List<Pair<Integer, Integer>> destroyedBricks = new ArrayList<>();
 
     private Sprite currentSprite = Sprite.bomb;
     private Sprite curFlameSprite = Sprite.explosion_vertical;
-
 
     private Sprite bomb = Sprite.bomb;
     private Sprite bomb1 = Sprite.bomb_1;
@@ -63,6 +71,7 @@ public class Bomb extends Entity {
         firstBrickLeft = firstBrickToBeDestroyed(get_xUnit(), get_yUnit(), "left");
         firstBrickTop = firstBrickToBeDestroyed(get_xUnit(), get_yUnit(), "top");
         firstBrickDown = firstBrickToBeDestroyed(get_xUnit(), get_yUnit(), "down");
+//        log(firstBrickDown);
     }
 
     @Override
@@ -89,7 +98,6 @@ public class Bomb extends Entity {
 
     private void waitToExploding() {
         if (!isWaitedToExploding) {
-
             img = Sprite.bomb.getFxImage();
             isWaitedToExploding = true;
             _state = State.WAITING_EXPLODING;
@@ -116,7 +124,10 @@ public class Bomb extends Entity {
         if (currentTimeExploding > 0)
             return;
 
-        isEnd = true;
+        if (explodedBrick.isEmpty()) {
+            isEnd = true;
+        }
+
     }
 
     private boolean setExplodedCell(int xUnit, int yUnit) {
@@ -128,6 +139,11 @@ public class Bomb extends Entity {
         }
         explodedCells.add(new Pair<>(xUnit, yUnit));
         return true;
+    }
+
+
+    private void getAllExplodedBrick() {
+
     }
 
     // get the first brick to be destroyed, we need render from bomb location to this brick location, not render over.
@@ -147,10 +163,16 @@ public class Bomb extends Entity {
                     res.setX(i);
                     break;
                 }
-
+                if (Wall.isWall(i, startYUnit)) {
+                    res.setX(i - 1);
+                    res.setY(startYUnit);
+                    return res;
+                }
                 if (Brick.isBrick(i, startYUnit)) {
                     res.setX(i - 1);
                     res.setY(startYUnit);
+                    Coordinate realBrick = new Coordinate(i, startYUnit);
+                    explodedBrick.add(realBrick);
                     return res;
                 }
             }
@@ -169,9 +191,16 @@ public class Bomb extends Entity {
                     break;
                 }
 
+                if (Wall.isWall(i, startYUnit)) {
+                    res.setX(i + 1);
+                    res.setY(startYUnit);
+                    return res;
+                }
                 if (Brick.isBrick(i, startYUnit)) {
                     res.setX(i + 1);
                     res.setY(startYUnit);
+                    Coordinate realBrick = new Coordinate(i, startYUnit);
+                    explodedBrick.add(realBrick);
                     return res;
                 }
             }
@@ -189,9 +218,16 @@ public class Bomb extends Entity {
                     res.setY(i);
                     break;
                 }
+                if (Wall.isWall(get_xUnit(), i)) {
+                    res.setX(get_xUnit());
+                    res.setY(i + 1);
+                    return res;
+                }
                 if (Brick.isBrick(get_xUnit(), i)) {
                     res.setX(get_xUnit());
                     res.setY(i + 1);
+                    Coordinate realBrick = new Coordinate(get_xUnit(), i);
+                    explodedBrick.add(realBrick);
                     return res;
                 }
             }
@@ -209,9 +245,16 @@ public class Bomb extends Entity {
                     res.setY(i);
                     break;
                 }
+                if (Wall.isWall(get_xUnit(), i)) {
+                    res.setX(get_xUnit());
+                    res.setY(i - 1);
+                    return res;
+                }
                 if (Brick.isBrick(get_xUnit(), i)) {
                     res.setX(get_xUnit());
                     res.setY(i - 1);
+                    Coordinate realBrick = new Coordinate(get_xUnit(), i);
+                    explodedBrick.add(realBrick);
                     return res;
                 }
             }
@@ -224,7 +267,6 @@ public class Bomb extends Entity {
 
     private void setExplodedCells() {
         setExplodedCell(get_xUnit(), get_yUnit());
-
         for (int j = get_xUnit() + 1; j <= get_xUnit() + bombManagement.getExplodedLength(); j++) {
             if (!setExplodedCell(j, get_yUnit()))
                 break;
@@ -315,7 +357,12 @@ public class Bomb extends Entity {
         }
     }
 
+    private void explodeAllBrick(GraphicsContext gc) {
+
+    }
+
     private void renderFlameDown(GraphicsContext gc, int yUnit, boolean isLast) {
+
         if (isLast) {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_vertical_down_last
                     , Sprite.explosion_vertical_down_last1
@@ -345,8 +392,9 @@ public class Bomb extends Entity {
             //right flame.
             for (int j = get_xUnit() + 1; j <= firstBrickRight.getX(); j++) {
                 if (j != firstBrickRight.getX()) {
-                    if (Wall.isWall(j, get_yUnit())) break;
-                    else {
+                    if (Wall.isWall(j, get_yUnit())) {
+                        break;
+                    } else {
                         if (Brick.isBrick(j, get_yUnit())) {
                             renderFlameRight(gc, j, false);
                             break;
@@ -360,16 +408,15 @@ public class Bomb extends Entity {
                     if (Wall.isWall(j, get_yUnit())) break;
                     else {
                         if (Brick.isBrick(j, get_yUnit())) {
-
                             renderFlameRight(gc, j, true);
                             break;
                         } else {
                             renderFlameRight(gc, j, true);
-
                         }
                     }
                 }
             }
+
 
             //left flame
             for (int j = get_xUnit() - 1; j >= firstBrickLeft.getX(); j--) {
@@ -437,7 +484,6 @@ public class Bomb extends Entity {
                             break;
                         } else {
                             renderFlameDown(gc, j, false);
-
                         }
                     }
                 } else {
@@ -472,6 +518,112 @@ public class Bomb extends Entity {
             return;
         gc.drawImage(currentSprite.getFxImage(), x, y);
         draw4SideFlame(gc);
+        // _animate=0;
+        renderExplodeBrick(gc);
+
+    }
+
+
+    public void renderExplodeBrick(GraphicsContext gc) {
+
+        if (_state == State.EXPLODING) {
+            Sprite curBrickSprite;
+            log(firstBrickDown);
+            System.out.println(get_yUnit());
+            if (firstBrickDown.getY() + 1 < BombermanGame.HEIGHT
+                    && Brick.isBrick(firstBrickDown.getX(), firstBrickDown.getY() + 1)
+                    && firstBrickDown.getY() + 1 <= get_yUnit() + bombManagement.getExplodedLength()) {
+
+                curBrickSprite = Sprite.movingSprite(Sprite.brick_exploded,
+                        Sprite.brick_exploded1,
+                        Sprite.brick_exploded2, _animate, 100);
+
+                gc.drawImage(curBrickSprite.getFxImage(),
+                        firstBrickDown.getX() * Sprite.SCALED_SIZE,
+                        (firstBrickDown.getY() + 1) * Sprite.SCALED_SIZE);
+
+                brickDestroyCounterDown++;
+
+                if (brickDestroyCounterDown == 50) {
+                    brickDestroyCounterDown = 0;
+                    BombermanGame.diagramMap[firstBrickDown.getY() + 1][firstBrickDown.getX()] = ' ';
+                    if (!explodedBrick.isEmpty()) explodedBrick.remove(0);
+                    canDestroyBrick = 1;
+                }
+            }
+
+            if (firstBrickRight.getX() + 1 < BombermanGame.WIDTH
+                    && Brick.isBrick(firstBrickRight.getX() + 1, firstBrickRight.getY())
+                    && firstBrickRight.getX() + 1 <= get_xUnit() + bombManagement.getExplodedLength()) {
+
+                curBrickSprite = Sprite.movingSprite(Sprite.brick_exploded,
+                        Sprite.brick_exploded1,
+                        Sprite.brick_exploded2, _animate, 100);
+
+                gc.drawImage(curBrickSprite.getFxImage(),
+                        (firstBrickRight.getX() + 1) * Sprite.SCALED_SIZE,
+                        (firstBrickRight.getY()) * Sprite.SCALED_SIZE);
+
+                brickDestroyCounterRight++;
+
+                if (brickDestroyCounterRight == 50) {
+                    brickDestroyCounterRight = 0;
+                    BombermanGame.diagramMap[firstBrickRight.getY()][firstBrickRight.getX() + 1] = ' ';
+                    if (!explodedBrick.isEmpty()) explodedBrick.remove(0);
+                    canDestroyBrick = 1;
+                }
+
+            }
+
+            if (firstBrickLeft.getX() - 1 >= 0
+                    && Brick.isBrick(firstBrickLeft.getX() - 1, firstBrickLeft.getY())
+                    && firstBrickLeft.getX() - 1 >= get_xUnit() - bombManagement.getExplodedLength()) {
+
+                curBrickSprite = Sprite.movingSprite(Sprite.brick_exploded,
+                        Sprite.brick_exploded1,
+                        Sprite.brick_exploded2, _animate, 100);
+
+                gc.drawImage(curBrickSprite.getFxImage(),
+                        (firstBrickLeft.getX() - 1) * Sprite.SCALED_SIZE,
+                        (firstBrickLeft.getY()) * Sprite.SCALED_SIZE);
+
+                brickDestroyCounterLeft++;
+
+                if (brickDestroyCounterLeft == 50) {
+                    brickDestroyCounterLeft = 0;
+                    BombermanGame.diagramMap[firstBrickLeft.getY()][firstBrickLeft.getX() - 1] = ' ';
+                    if (!explodedBrick.isEmpty()) explodedBrick.remove(0);
+                    canDestroyBrick = 1;
+                }
+            }
+
+            if (firstBrickTop.getY() - 1 >= 0
+                    && Brick.isBrick(firstBrickTop.getX(), firstBrickTop.getY() - 1)
+                    && firstBrickTop.getY() - 1 >= get_yUnit() - bombManagement.getExplodedLength()) {
+
+                curBrickSprite = Sprite.movingSprite(Sprite.brick_exploded,
+                        Sprite.brick_exploded1,
+                        Sprite.brick_exploded2,
+                        _animate, 100);
+
+                gc.drawImage(curBrickSprite.getFxImage(),
+                        (firstBrickTop.getX()) * Sprite.SCALED_SIZE,
+                        (firstBrickTop.getY() - 1) * Sprite.SCALED_SIZE);
+
+                brickDestroyCounterTop++;
+
+                if (brickDestroyCounterTop == 50) {
+                    brickDestroyCounterTop = 0;
+                    BombermanGame.diagramMap[firstBrickTop.getY() - 1][firstBrickTop.getX()] = ' ';
+                    if (!explodedBrick.isEmpty()) explodedBrick.remove(0);
+                    canDestroyBrick = 1;
+                }
+            }
+        }
+        if (explodedBrick.size() == 0 && canDestroyBrick == 1) {
+            isEnd = true;
+        }
+
     }
 
 }

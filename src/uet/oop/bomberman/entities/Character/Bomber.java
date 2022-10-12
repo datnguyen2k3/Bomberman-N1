@@ -6,24 +6,25 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.util.Pair;
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
-import uet.oop.bomberman.entities.Character.Enemy.EnemyManagement;
 import uet.oop.bomberman.entities.Item.Item;
-import uet.oop.bomberman.entities.StillObject.Grass;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import uet.oop.bomberman.utils.State;
-
+import uet.oop.bomberman.BombermanGame;
 public class Bomber extends Character {
-    private BombManagement bombManagement ;
+    private BombManagement bombManagement;
     private boolean isBombermanKillAllEnemies = false;
+
+    //private static final int EPSILON = 2 * Sprite.SCALE;
+
+    private int entityLeftSideX;
+    private int entityRightSideX ;
+    private int entityTopY;
+    private int entityBottomY;
 
     public Bomber(int x, int y, Image img, BombermanGame game) {
         this(x, y, img);
@@ -43,12 +44,24 @@ public class Bomber extends Character {
         this.worldY = y;
         initSprite();
         initState();
-
+//        entityLeftSideX = getX() + solidArea.x;
+//        entityRightSideX = entityLeftSideX + solidArea.width;
+//        entityTopY = getY() + solidArea.y;
+//        entityBottomY = entityTopY + solidArea.height;
     }
 
     public BombManagement getBombManagement() {
         return bombManagement;
     }
+
+
+//    private void setCoordinateWhenAtEdge(String dir) {
+//        if ( dir.equals("GO SOUTH")) {
+//            isCollisionOn = false;
+//            this.game.collisionChecker.checkTile(this);
+//
+//        }
+//    }
 
     @Override
     protected void initSprite() {
@@ -95,6 +108,7 @@ public class Bomber extends Character {
 
 
     public void updateInput(Scene scene) {
+//        System.out.println(speed);
         if (isDead)
             return;
 
@@ -128,7 +142,7 @@ public class Bomber extends Character {
                 }
 
                 if (event.getCode() == KeyCode.SPACE) {
-                    Bomb b = new Bomb(get_xUnitCenter(), get_yUnitCenter(),bombManagement,game);
+                    Bomb b = new Bomb(get_xUnitCenter(), get_yUnitCenter(), bombManagement, game);
                     bombManagement.add(b);
                 }
             }

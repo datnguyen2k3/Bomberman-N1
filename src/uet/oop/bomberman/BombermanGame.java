@@ -27,7 +27,7 @@ import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.utils.CollisionChecker;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
 
-public class BombermanGame{
+public class BombermanGame {
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
 
@@ -42,8 +42,6 @@ public class BombermanGame{
     public BombermanGame() {
         createMap();
     }
-
-
 
     public static final char[][] diagramMap = new char[HEIGHT][WIDTH];
 
