@@ -6,12 +6,14 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import uet.oop.bomberman.UI.Board;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.Character.Enemy.Balloom;
 import uet.oop.bomberman.entities.Character.Enemy.Enemy;
@@ -31,6 +33,9 @@ public class BombermanGame {
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
 
+    private Canvas canvas;
+    private GraphicsContext gc;
+
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), this);
     private List<Entity> entities = new ArrayList<>();
@@ -38,9 +43,27 @@ public class BombermanGame {
     private ItemManagement itemManagement = new ItemManagement();
     private EnemyManagement enemyManagement = new EnemyManagement();
     private BombManagement bombManagement = bomberman.getBombManagement();
+    private boolean isRun = true;
+    private boolean isAdd = false;
+    private Board board = new Board();
+
+    public boolean isRun() {
+        return isRun;
+    }
 
     public BombermanGame() {
+        canvas = new Canvas(Sprite.SCALED_SIZE * BombermanGame.WIDTH, Sprite.SCALED_SIZE * BombermanGame.HEIGHT);
+        gc = canvas.getGraphicsContext2D();
+        gc.setFill(Color.BLACK);
         createMap();
+    }
+
+    public Bomber getBomberman() {
+        return bomberman;
+    }
+
+    public void setBomberman(int hp) {
+        this.bomberman.setHP(hp);
     }
 
     public static final char[][] diagramMap = new char[HEIGHT][WIDTH];
@@ -98,6 +121,7 @@ public class BombermanGame {
         }
         itemManagement.update();
         enemyManagement.update();
+        board.update(bomberman.getHP());
     }
 
     public void updateInput(Scene scene) {
@@ -109,8 +133,8 @@ public class BombermanGame {
         // destroy brick
         for (Entity e : stillObjects) {
             if (e instanceof Brick) {
-                if (bomberman.getBombManagement().isDestroyBrick((Brick) e)) {
-                    ((Brick) e).setDestroyed();
+                if (bomberman.getBombManagement().isDestroyBrick((Brick)e)) {
+                    ((Brick)e).setDestroyed();
                     itemManagement.setItemIfBrickIsDestroyed((Brick) e);
                 }
             }
@@ -143,10 +167,32 @@ public class BombermanGame {
         enemyManagement.render(gc);
     }
 
-    public void run(Canvas canvas, GraphicsContext gc, Scene scene) {
+    public void run(Canvas canvas, GraphicsContext gc, Scene scene, Group root) {
+        if (!isRun) {
+            return;
+        }
+
+        if (!isAdd) {
+            setAdd(root);
+        }
+
         render(canvas, gc);
         update();
         updateInput(scene);
         updateCombat(scene);
+
+        if (bomberman.isEnd()) {
+            setEnd(root);
+        }
+    }
+
+    private void setAdd(Group root) {
+        isAdd = true;
+        board.pushInRoot(root);
+    }
+
+    private void setEnd(Group root) {
+        board.popInRoot(root);
+        isRun = false;
     }
 }
