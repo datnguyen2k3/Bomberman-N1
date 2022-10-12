@@ -8,24 +8,28 @@ import uet.oop.bomberman.Game;
 
 public class LevelGameUI {
     public static final int TIME_RUN = 120;
-    private int currentTime = 0;
-    private int level = 1;
+    protected int currentTime = 0;
+    protected int level = 1;
     String title = "Stage ";
     Text text;
-    private boolean isAdd = false;
-    private boolean isRun = true;
+    protected boolean isAdd = false;
+    protected boolean isRun = true;
 
     public boolean isRun() {
         return isRun;
     }
 
-    public LevelGameUI(int level) {
-        this.level = level;
+    public LevelGameUI() {
         text = new Text(100, 100, title + level);
         text.setFont(Font.loadFont("file:res/Font/game_font.ttf", 60));
         text.setFill(Color.WHITE);
         text.setScaleX(1);
         text.setScaleY(1);
+    }
+
+    public LevelGameUI(int level) {
+        this();
+        this.level = level;
     }
 
     public Text getText() {

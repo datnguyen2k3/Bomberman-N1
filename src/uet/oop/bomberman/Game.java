@@ -8,6 +8,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import uet.oop.bomberman.UI.GameOver;
 import uet.oop.bomberman.UI.LevelGameUI;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -20,6 +21,7 @@ public class Game extends Application {
     private GraphicsContext gc;
     private BombermanGame bombermanGame = new BombermanGame();
     private LevelGameUI levelGameUI = new LevelGameUI(1);
+    private GameOver gameOver = new GameOver();
     @Override
     public void start(Stage stage) throws Exception {
         // Tao Canvas
@@ -53,6 +55,11 @@ public class Game extends Application {
 
                 if (bombermanGame.getBomberman().getHP() > 0) {
                     setNewGame(root);
+                } else if (gameOver.isRun()) {
+                    setEndGame(root);
+                    gameOver.run(root);
+                } else {
+                    stage.close();
                 }
             }
         };
@@ -71,6 +78,12 @@ public class Game extends Application {
 
         bombermanGame = newBombermanGame;
         levelGameUI = new LevelGameUI(1);
+        root.getChildren().remove(canvas);
+        setCanvas();
+        root.getChildren().add(canvas);
+    }
+
+    private void setEndGame(Group root) {
         root.getChildren().remove(canvas);
         setCanvas();
         root.getChildren().add(canvas);
