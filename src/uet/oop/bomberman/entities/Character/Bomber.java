@@ -9,6 +9,9 @@ import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
 import uet.oop.bomberman.entities.Item.Item;
+import uet.oop.bomberman.entities.StillObject.Brick;
+import uet.oop.bomberman.entities.StillObject.Grass;
+import uet.oop.bomberman.entities.StillObject.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
@@ -17,11 +20,14 @@ import uet.oop.bomberman.utils.State;
 import uet.oop.bomberman.BombermanGame;
 
 public class Bomber extends Character {
+    private static final int EPSILON = 10 * Sprite.SCALE;
+
+    private int speedMoveAtEdgeDivideBy = 15;
     private BombManagement bombManagement;
     private boolean isBombermanKillAllEnemies = false;
     private int hp = 3;
 
-    //private static final int EPSILON = 2 * Sprite.SCALE;
+
 
     private int entityLeftSideX;
     private int entityRightSideX ;
@@ -36,7 +42,7 @@ public class Bomber extends Character {
 
     @Override
     public void initSolidArea() {
-        solidArea = new Rectangle(4 * Sprite.SCALE, 4 * Sprite.SCALE, 6 * Sprite.SCALE, 9 * Sprite.SCALE);
+        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 10 * Sprite.SCALE, 14 * Sprite.SCALE);
     }
 
     public Bomber(int x, int y, Image img) {
@@ -51,6 +57,89 @@ public class Bomber extends Character {
 //        entityTopY = getY() + solidArea.y;
 //        entityBottomY = entityTopY + solidArea.height;
     }
+
+
+
+    private boolean isBrickOrWall(int x, int y) {
+        return (Wall.isWall(get_xUnit(x), get_yUnit(y))
+                || Brick.isBrick(get_xUnit(x), get_yUnit(y)));
+    }
+
+    private void smoothMovement() {
+        //  Brick brick = new Brick(0, 0);
+        if (isCollisionOn == true) {
+
+            // down
+            if (_state == State.GO_SOUTH
+                    && Grass.isGrass(entityLeftSideX + EPSILON, entityTopY + Sprite.SCALED_SIZE + EPSILON)
+                    && Grass.isGrass(entityLeftSideX + EPSILON, entityTopY + EPSILON)
+                    && isBrickOrWall(entityLeftSideX, entityBottomY + EPSILON)) {
+
+                this.x += EPSILON / speedMoveAtEdgeDivideBy;
+                return;
+            }
+            if (_state == State.GO_SOUTH
+                    && Grass.isGrass(entityRightSideX - EPSILON, entityTopY + Sprite.SCALED_SIZE + EPSILON)
+                    && Grass.isGrass(entityRightSideX - EPSILON, entityTopY + EPSILON)
+                    && isBrickOrWall(entityRightSideX, entityBottomY + EPSILON)) {
+
+                this.x -= EPSILON / speedMoveAtEdgeDivideBy;
+                return;
+            }
+
+            // up
+            if (_state == State.GO_NORTH
+                    && Grass.isGrass(entityLeftSideX + EPSILON, entityTopY - EPSILON)
+                    && Grass.isGrass(entityLeftSideX + EPSILON, entityTopY)
+                    && isBrickOrWall(entityLeftSideX, entityTopY - EPSILON)) {
+
+                this.x += EPSILON / speedMoveAtEdgeDivideBy;
+                return;
+            }
+
+            if (_state == State.GO_NORTH
+                    && Grass.isGrass(entityRightSideX - EPSILON, entityTopY - EPSILON)
+                    && Grass.isGrass(entityRightSideX - EPSILON, entityTopY)
+                    && isBrickOrWall(entityRightSideX, entityTopY - EPSILON)) {
+
+                this.x -= EPSILON / speedMoveAtEdgeDivideBy;
+                return;
+            }
+
+            // right
+            if (_state == State.GO_EAST
+                    && Grass.isGrass(entityRightSideX + EPSILON, entityBottomY - EPSILON)
+                    && Grass.isGrass(entityRightSideX, entityBottomY - EPSILON)
+                    && isBrickOrWall(entityRightSideX + EPSILON, entityBottomY)) {
+
+                this.y -= EPSILON / speedMoveAtEdgeDivideBy;
+                return;
+            } else if (_state == State.GO_EAST
+                    && Grass.isGrass(entityRightSideX + EPSILON, entityTopY + EPSILON)
+                    && Grass.isGrass(entityRightSideX, entityTopY + EPSILON)
+                    && isBrickOrWall(entityRightSideX + EPSILON, entityTopY)) {
+
+                this.y += EPSILON / speedMoveAtEdgeDivideBy;
+                return;
+            }
+
+            // left
+            if (_state == State.GO_WEST
+                    && Grass.isGrass(entityLeftSideX - EPSILON, entityBottomY - EPSILON)
+                    && Grass.isGrass(entityLeftSideX, entityBottomY - EPSILON)
+                    && isBrickOrWall(entityLeftSideX - EPSILON, entityBottomY)) {
+                this.y -= EPSILON / speedMoveAtEdgeDivideBy;
+                return;
+            } else if (_state == State.GO_WEST
+                    && Grass.isGrass(entityLeftSideX - EPSILON, entityTopY + EPSILON)
+                    && Grass.isGrass(entityLeftSideX, entityTopY + EPSILON)
+                    && isBrickOrWall(entityLeftSideX - EPSILON, entityTopY)) {
+                this.y += EPSILON / speedMoveAtEdgeDivideBy;
+                return;
+            }
+        }
+    }
+
 
     public BombManagement getBombManagement() {
         return bombManagement;
@@ -226,6 +315,11 @@ public class Bomber extends Character {
         if (isEnd)
             return;
 
+        entityLeftSideX = x + solidArea.x;
+        entityRightSideX = entityLeftSideX + solidArea.width;
+        entityTopY = y + solidArea.y;
+        entityBottomY = entityTopY + solidArea.height;
+
         updateCurrentState();
         isCollisionOn = false;
         game.collisionChecker.checkTile(this);
@@ -249,6 +343,7 @@ public class Bomber extends Character {
                 }
             }
         }
+        smoothMovement();
         super.update();
         bombManagement.update();
 
