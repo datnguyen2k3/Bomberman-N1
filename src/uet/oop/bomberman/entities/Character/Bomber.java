@@ -24,6 +24,7 @@ import java.awt.*;
 
 import uet.oop.bomberman.utils.State;
 import uet.oop.bomberman.BombermanGame;
+
 public class Bomber extends Character {
     private BombManagement bombManagement;
     private boolean isBombermanKillAllEnemies = false;

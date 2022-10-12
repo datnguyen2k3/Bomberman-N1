@@ -34,6 +34,7 @@ public class Bomb extends Entity {
     public static final int timeRefresh = Bomb.TIME_EXPLODING + Bomb.TIME_WAIT_TO_EXPLODING;
     private int currentTimeWaitToExploding = TIME_WAIT_TO_EXPLODING;
     private int currentTimeExploding = TIME_EXPLODING;
+    private int timeBrickCollapse = 100;
 
 
     public List<Pair<Integer, Integer>> explodedCells = new ArrayList<>();
@@ -537,7 +538,7 @@ public class Bomb extends Entity {
 
                 curBrickSprite = Sprite.movingSprite(Sprite.brick_exploded,
                         Sprite.brick_exploded1,
-                        Sprite.brick_exploded2, _animate, 100);
+                        Sprite.brick_exploded2, _animate, timeBrickCollapse);
 
                 gc.drawImage(curBrickSprite.getFxImage(),
                         firstBrickDown.getX() * Sprite.SCALED_SIZE,
@@ -559,7 +560,7 @@ public class Bomb extends Entity {
 
                 curBrickSprite = Sprite.movingSprite(Sprite.brick_exploded,
                         Sprite.brick_exploded1,
-                        Sprite.brick_exploded2, _animate, 100);
+                        Sprite.brick_exploded2, _animate, timeBrickCollapse);
 
                 gc.drawImage(curBrickSprite.getFxImage(),
                         (firstBrickRight.getX() + 1) * Sprite.SCALED_SIZE,
@@ -582,7 +583,7 @@ public class Bomb extends Entity {
 
                 curBrickSprite = Sprite.movingSprite(Sprite.brick_exploded,
                         Sprite.brick_exploded1,
-                        Sprite.brick_exploded2, _animate, 100);
+                        Sprite.brick_exploded2, _animate, timeBrickCollapse);
 
                 gc.drawImage(curBrickSprite.getFxImage(),
                         (firstBrickLeft.getX() - 1) * Sprite.SCALED_SIZE,
@@ -605,7 +606,7 @@ public class Bomb extends Entity {
                 curBrickSprite = Sprite.movingSprite(Sprite.brick_exploded,
                         Sprite.brick_exploded1,
                         Sprite.brick_exploded2,
-                        _animate, 100);
+                        _animate, timeBrickCollapse);
 
                 gc.drawImage(curBrickSprite.getFxImage(),
                         (firstBrickTop.getX()) * Sprite.SCALED_SIZE,
