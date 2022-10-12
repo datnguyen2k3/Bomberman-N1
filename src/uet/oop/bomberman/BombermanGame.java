@@ -27,17 +27,11 @@ import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.utils.CollisionChecker;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
 
-public class BombermanGame extends Application {
-    public static void main(String[] args) {
-        Application.launch(BombermanGame.class);
-    }
-
+public class BombermanGame{
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
 
     public CollisionChecker collisionChecker = new CollisionChecker(this);
-    private GraphicsContext gc; // window
-    private Canvas canvas;
     public Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), this);
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
@@ -45,40 +39,11 @@ public class BombermanGame extends Application {
     private EnemyManagement enemyManagement = new EnemyManagement();
     private BombManagement bombManagement = bomberman.getBombManagement();
 
-    @Override
-    public void start(Stage stage) {
-        // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
-        gc = canvas.getGraphicsContext2D();
-
-        // Tao root container
-        Group root = new Group();
-        root.getChildren().add(canvas);
-
-        // Tao scene
-        Scene scene = new Scene(root);
-
-
-        // Them scene vao stage
-        stage.setScene(scene);
-        stage.show();
-
-
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                render();
-                update();
-                updateInput(scene);
-                updateCombat(scene);
-            }
-        };
-        timer.start();
-
+    public BombermanGame() {
         createMap();
-
-
     }
+
+
 
     public static final char[][] diagramMap = new char[HEIGHT][WIDTH];
 
@@ -131,6 +96,7 @@ public class BombermanGame extends Application {
             if (entity instanceof Brick) {
                 ((Brick) entity).update(bomberman);
             }
+            entity.update();
         }
         itemManagement.update();
         enemyManagement.update();
@@ -145,10 +111,9 @@ public class BombermanGame extends Application {
         // destroy brick
         for (Entity e : stillObjects) {
             if (e instanceof Brick) {
-                Brick brick = (Brick) e;
-                if (bomberman.getBombManagement().isDestroyBrick(brick)) {
-                    brick.setDestroyed();
-                    itemManagement.setItemIfBrickIsDestroyed(brick);
+                if (bomberman.getBombManagement().isDestroyBrick((Brick) e)) {
+                    ((Brick) e).setDestroyed();
+                    itemManagement.setItemIfBrickIsDestroyed((Brick) e);
                 }
             }
         }
@@ -171,13 +136,19 @@ public class BombermanGame extends Application {
 
     }
 
-    public void render() {
+    public void render(Canvas canvas, GraphicsContext gc) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
         itemManagement.render(gc);
         bomberman.render(gc);
         enemyManagement.render(gc);
+    }
 
+    public void run(Canvas canvas, GraphicsContext gc, Scene scene) {
+        render(canvas, gc);
+        update();
+        updateInput(scene);
+        updateCombat(scene);
     }
 }
