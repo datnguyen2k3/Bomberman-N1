@@ -20,7 +20,7 @@ public class Board {
         rectangle.setY(0);
         rectangle.setWidth(Game.WIDTH - BombermanGame.WIDTH * Sprite.SCALED_SIZE);
         rectangle.setHeight(Game.HEIGHT);
-        rectangle.setFill(Color.GRAY);
+        rectangle.setFill(Color.DARKGREY);
 
         hpText = new Text(rectangle.getX() + Sprite.SCALED_SIZE / 2, rectangle.getY() + Sprite.SCALED_SIZE * 2, "HP: ");
         hpText.setFont(Font.loadFont("file:res/Font/game_font.ttf", 15));
