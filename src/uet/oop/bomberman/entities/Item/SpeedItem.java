@@ -10,7 +10,6 @@ public class SpeedItem extends Item{
 
     public SpeedItem(int xUnit, int yUnit) {
         super(xUnit, yUnit);
-        initSolidArea();
     }
 
     @Override

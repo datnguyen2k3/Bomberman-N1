@@ -10,7 +10,6 @@ public class FlameItem extends Item{
 
     public FlameItem(int xUnit, int yUnit) {
         super(xUnit, yUnit);
-        initSolidArea();
     }
 
     @Override

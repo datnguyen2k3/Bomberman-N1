@@ -30,6 +30,7 @@ public class LevelGameUI {
     public LevelGameUI(int level) {
         this();
         this.level = level;
+        text.setText(title + level);
     }
 
     public Text getText() {

@@ -32,7 +32,8 @@ import uet.oop.bomberman.entities.Bomb.BombManagement;
 public class BombermanGame {
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
-
+    public static final int TIME_WIN = 180;
+    private int currentTimeWin = 0;
     private Canvas canvas;
     private GraphicsContext gc;
 
@@ -45,17 +46,40 @@ public class BombermanGame {
     private BombManagement bombManagement = bomberman.getBombManagement();
     private boolean isRun = true;
     private boolean isAdd = false;
+    private boolean isWin = false;
+
     private Board board = new Board();
+    int level = 1;
 
     public boolean isRun() {
         return isRun;
     }
 
-    public BombermanGame() {
+    private void setWin() {
+        isWin = true;
+    }
+
+    public boolean isWin() {
+        return isWin;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setBomber(Bomber bomberman) {
+        this.bomberman.setHP(bomberman.getHP());
+        this.bomberman.setSpeed(bomberman.getSpeed());
+        this.bomberman.getBombManagement().setMaxBomb(bomberman.getBombManagement().getMaxBomb());
+        this.bomberman.getBombManagement().setFlame(bomberman.getBombManagement().getFlame());
+    }
+
+    public BombermanGame(int level) {
         canvas = new Canvas(Sprite.SCALED_SIZE * BombermanGame.WIDTH, Sprite.SCALED_SIZE * BombermanGame.HEIGHT);
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
-        createMap();
+        this.level = level;
+        createMap(level);
     }
 
     public Bomber getBomberman() {
@@ -68,9 +92,9 @@ public class BombermanGame {
 
     public static final char[][] diagramMap = new char[HEIGHT][WIDTH];
 
-    private void createDiagramMap() {
+    private void createDiagramMap(int level) {
         try {
-            BufferedReader bufferreader = new BufferedReader(new FileReader("res\\map.txt"));
+            BufferedReader bufferreader = new BufferedReader(new FileReader("res/Map/map" + level + ".txt"));
             String line;
             int indexLine = 0;
 
@@ -83,12 +107,12 @@ public class BombermanGame {
         }
     }
 
-    private void createMap() {
-        createDiagramMap();
+    private void createMap(int level) {
+        createDiagramMap(level);
 
         for (int i = 0; i < WIDTH; i++) {
             for (int j = 0; j < HEIGHT; j++) {
-                Entity object;
+                Entity object = null;
                 char currentDiagramObject = diagramMap[j][i];
 
                 if (Wall.isWall(currentDiagramObject)) {
@@ -99,7 +123,7 @@ public class BombermanGame {
                     object = new Brick(i, j);
                     itemManagement.add(i, j, currentDiagramObject);
                 } else if (Enemy.isEnemy(currentDiagramObject)) {
-                    object = new Brick(i, j);
+                    object = new Grass(i, j);
                     enemyManagement.add(i, j, currentDiagramObject, this);
                 } else {
                     object = new Grass(i, j);
@@ -121,7 +145,9 @@ public class BombermanGame {
         }
         itemManagement.update();
         enemyManagement.update();
-        board.update(bomberman.getHP());
+        board.update(bomberman.getHP(), enemyManagement.getNumEnemies(),
+                    bombManagement.getMaxBomb(), bombManagement.getFlame(),
+                    bomberman.getSpeed());
     }
 
     public void updateInput(Scene scene) {
@@ -156,6 +182,16 @@ public class BombermanGame {
             bomberman.setDead();
         }
 
+        // Bomber kill all enemies
+        if (enemyManagement.getNumEnemies() == 0) {
+            bomberman.setBombermanKillAllEnemies();
+        }
+
+        // Bomber win
+        if (bomberman.isWin()) {
+            setWin();
+        }
+
     }
 
     public void render(Canvas canvas, GraphicsContext gc) {
@@ -169,6 +205,15 @@ public class BombermanGame {
 
     public void run(Canvas canvas, GraphicsContext gc, Scene scene, Group root) {
         if (!isRun) {
+            return;
+        }
+
+        if (isWin) {
+            currentTimeWin++;
+            if (currentTimeWin > TIME_WIN) {
+                setEnd(root);
+            }
+
             return;
         }
 

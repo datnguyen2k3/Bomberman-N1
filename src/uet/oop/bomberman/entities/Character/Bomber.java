@@ -26,8 +26,7 @@ public class Bomber extends Character {
     private BombManagement bombManagement;
     private boolean isBombermanKillAllEnemies = false;
     private int hp = 3;
-
-
+    private boolean isWin;
 
     private int entityLeftSideX;
     private int entityRightSideX ;
@@ -57,8 +56,6 @@ public class Bomber extends Character {
 //        entityTopY = getY() + solidArea.y;
 //        entityBottomY = entityTopY + solidArea.height;
     }
-
-
 
     private boolean isBrickOrWall(int x, int y) {
         return (Wall.isWall(get_xUnit(x), get_yUnit(y))
@@ -140,7 +137,6 @@ public class Bomber extends Character {
         }
     }
 
-
     public BombManagement getBombManagement() {
         return bombManagement;
     }
@@ -151,6 +147,10 @@ public class Bomber extends Character {
 
     public void setHP(int hp) {
         this.hp = hp;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
 //    private void setCoordinateWhenAtEdge(String dir) {
@@ -298,16 +298,25 @@ public class Bomber extends Character {
                 bombManagement.powerUpMaxBomb();
                 break;
             case Item.speedItemDiagram:
-                speed += 2;
+                speed += 1;
                 break;
             case Item.flameItemDiagram:
                 bombManagement.powerUpFlameBomb();
+                break;
+            case Item.portalItemDiagram:
+                if (isBombermanKillAllEnemies()) {
+                    setBomberWin();
+                }
                 break;
         }
     }
 
     public void setBomberWin() {
+        isWin = true;
+    }
 
+    public boolean isWin() {
+        return isWin;
     }
 
     @Override
