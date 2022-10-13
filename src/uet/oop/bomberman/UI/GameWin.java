@@ -1,8 +1,12 @@
 package uet.oop.bomberman.UI;
 
-public class GameWin extends LevelGameUI {
+public class GameWin extends Intro {
     public GameWin() {
         super();
-        text.setText("You win!");
+    }
+
+    @Override
+    protected void initTitle() {
+        title = "You Win!";
     }
 }

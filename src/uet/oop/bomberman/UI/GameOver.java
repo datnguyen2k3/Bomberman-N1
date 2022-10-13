@@ -1,8 +1,12 @@
 package uet.oop.bomberman.UI;
 
-public class GameOver extends LevelGameUI{
+public class GameOver extends Intro{
     public GameOver() {
         super();
-        text.setText("Game Over!");
+    }
+
+    @Override
+    protected void initTitle() {
+        title = "Game Over!";
     }
 }
