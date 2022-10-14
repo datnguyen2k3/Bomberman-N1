@@ -81,7 +81,7 @@ public abstract class Character extends Entity {
         running = true;
         int maxSpeed = 2;
         speed = rand.nextInt(maxSpeed) % maxSpeed + 1;
-        //System.out.println(speed);
+        // System.out.println(speed);
     }
 
     protected void updateRunning() {
