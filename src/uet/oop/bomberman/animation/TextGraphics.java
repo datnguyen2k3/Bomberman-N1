@@ -12,11 +12,11 @@ public class TextGraphics {
 
     public TextGraphics(String text) {
         textGraphics = new Text(0, 0, text);
-        textGraphics.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        textGraphics.setFont(Font.loadFont("file:res/Font/game_font.ttf", 15));
     }
     public TextGraphics(double x, double y, String text) {
         textGraphics = new Text(x, y, text);
-        textGraphics.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        textGraphics.setFont(Font.loadFont("file:res/Font/game_font.ttf", 15));
     }
 
     public void setFont(Font font) {
