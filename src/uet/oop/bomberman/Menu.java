@@ -12,7 +12,11 @@ import javafx.stage.Stage;
 
 import uet.oop.bomberman.animation.AnimatedGraphic;
 import uet.oop.bomberman.animation.TextGraphics;
+import uet.oop.bomberman.animation.TextGraphicsList;
 import uet.oop.bomberman.graphics.Sprite;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Menu extends Application {
     public static void main(String[] args) {
@@ -25,28 +29,12 @@ public class Menu extends Application {
     private static final int HEIGHT = 13;
 
     private AnimatedGraphic animatedGraphic;
-//    private List<AnimatedGraphic> animatedGraphics;
-
-    private TextGraphics startText;
-    private TextGraphics exitText;
+    private TextGraphicsList textGraphicsList;
 
     @Override
     public void start(Stage stage) {
         int screenWidth = Sprite.SCALED_SIZE * WIDTH;
         int screenHeight = Sprite.SCALED_SIZE * HEIGHT;
-        String filepath = "file:res/textures/menu_logo.png";
-        animatedGraphic = new AnimatedGraphic(filepath,
-                screenWidth / 2 - 280 / 2, screenHeight / 2 - 146 / 2 - 100, 1288, 1683, 280, 146);
-
-        startText = new TextGraphics("START");
-        startText.setPos(screenWidth / 2 - startText.getWidth() / 2, screenHeight / 2 - startText.getHeight() / 2);
-        startText.setColor(Color.WHITE);
-        startText.setOpacity(1);
-
-        exitText = new TextGraphics("END");
-        exitText.setPos(screenWidth / 2 - exitText.getWidth() / 2, screenHeight / 2 - startText.getHeight() / 2 + 40);
-        exitText.setColor(Color.WHITE);
-        exitText.setOpacity(0.5);
 
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
@@ -59,13 +47,18 @@ public class Menu extends Application {
         // Tao scene
         Scene scene = new Scene(root);
 
-
         // Them scene vao stage
         stage.setScene(scene);
         stage.show();
 
-        startText.create(root);
-        exitText.create(root);
+        //Add animation
+        String filepath = "file:res/textures/menu_logo.png";
+        animatedGraphic = new AnimatedGraphic(filepath,
+                screenWidth / 2 - 280 / 2, screenHeight / 2 - 146 / 2 - 100,
+                1288, 1683, 280, 146);
+
+        String[] textList = {"START", "OPTIONS", "HIGHSCORE", "EXIT"};
+        textGraphicsList = new TextGraphicsList(textList, screenWidth, scene);
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -80,13 +73,14 @@ public class Menu extends Application {
 
     public void update() {
         animatedGraphic.update();
+        textGraphicsList.update();
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-
         animatedGraphic.render(gc);
+        textGraphicsList.render(gc);
     }
 }

@@ -1,30 +1,29 @@
 package uet.oop.bomberman.animation;
 
 import javafx.scene.Group;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+import static uet.oop.bomberman.animation.TextGraphicsList.defaultSize;
+
 public class TextGraphics {
     private Text textGraphics;
 
     public TextGraphics(String text) {
         textGraphics = new Text(0, 0, text);
-        textGraphics.setFont(Font.loadFont("file:res/Font/game_font.ttf", 15));
-    }
-    public TextGraphics(double x, double y, String text) {
-        textGraphics = new Text(x, y, text);
-        textGraphics.setFont(Font.loadFont("file:res/Font/game_font.ttf", 15));
-    }
-
-    public void setFont(Font font) {
-        textGraphics.setFont(font);
+        textGraphics.setFont(Font.loadFont("file:res/Font/game_font.ttf", defaultSize));
     }
 
     public void setColor(Color color) {
         textGraphics.setFill(color);
+    }
+
+    public void setSize(double size) {
+        textGraphics.setFont(Font.loadFont("file:res/Font/game_font.ttf", size));
     }
 
     public void setPos(double x, double y) {
@@ -32,10 +31,21 @@ public class TextGraphics {
         textGraphics.setY(y);
     }
 
-    public Text getText() {
-        return textGraphics;
+    public void setX(double x) {
+        textGraphics.setX(x);
     }
 
+    public void setY(double y) {
+        textGraphics.setY(y);
+    }
+
+    public void setCenterHorizontal(double screenWidth) {
+        textGraphics.setX(screenWidth / 2 - this.getWidth() / 2);
+    }
+
+    public void setOpacity(double opacity) {
+        textGraphics.setOpacity(opacity);
+    }
     public double getWidth() {
         return textGraphics.getLayoutBounds().getWidth();
     }
@@ -44,11 +54,24 @@ public class TextGraphics {
         return textGraphics.getLayoutBounds().getHeight();
     }
 
-    public void setOpacity(double opacity) {
-        textGraphics.setOpacity(opacity);
+    public double getY() {
+        return textGraphics.getY();
     }
+    public void render(GraphicsContext gc) {
+        //Set Color
+        gc.setFill(Color.WHITE);
 
-    public void create(Group root) {
-        root.getChildren().add(textGraphics);
+        //Set Font
+        gc.setFont(textGraphics.getFont());
+
+        //Set Opacity
+        double preAlpha = gc.getGlobalAlpha();
+        gc.setGlobalAlpha(textGraphics.getOpacity());
+
+        //Draw Text
+        gc.fillText(textGraphics.getText(), textGraphics.getX(), textGraphics.getY());
+
+        //Set to old opacity after draw
+        gc.setGlobalAlpha(preAlpha);
     }
 }
