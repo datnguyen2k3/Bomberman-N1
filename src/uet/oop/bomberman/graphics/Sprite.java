@@ -1,7 +1,9 @@
 package uet.oop.bomberman.graphics;
 
 import javafx.scene.image.*;
+import javafx.scene.image.Image;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.nio.IntBuffer;
 
@@ -14,11 +16,12 @@ public class Sprite {
 
 	public static final int DEFAULT_SIZE = 16;
 
-	public static final int SCALE = 3;
+	public static final int SCALE = 4;
 
 
 	public static final int SCALED_SIZE = DEFAULT_SIZE * SCALE;
     private static final int TRANSPARENT_COLOR = 0xffff00ff;
+	// private static final int TRANSPARENT_COLOR = 	0xffffffff;
 	public final int SIZE;
 	private int _x, _y;
 	public int[] _pixels;

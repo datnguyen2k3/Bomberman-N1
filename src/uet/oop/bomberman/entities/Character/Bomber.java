@@ -153,13 +153,6 @@ public class Bomber extends Character {
         this.speed = speed;
     }
 
-//    private void setCoordinateWhenAtEdge(String dir) {
-//        if ( dir.equals("GO SOUTH")) {
-//            isCollisionOn = false;
-//            this.game.collisionChecker.checkTile(this);
-//
-//        }
-//    }
 
     @Override
     protected void initSprite() {

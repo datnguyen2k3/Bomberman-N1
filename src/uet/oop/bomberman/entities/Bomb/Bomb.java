@@ -18,9 +18,6 @@ public class Bomb extends Entity {
 
     List<Coordinate> explodedBrick = new ArrayList<>();
 
-
-    private int explodingCounter = 0;
-
     private int brickDestroyCounterRight = 0;
     private int brickDestroyCounterDown = 0;
     private int brickDestroyCounterTop = 0;
@@ -60,11 +57,12 @@ public class Bomb extends Entity {
 
     public Bomb(int xUnit, int yUnit, BombManagement bombManagement, BombermanGame game) {
         super(xUnit, yUnit);
-        _state = State.WAITING_EXPLODING;
+        _state = State.BE_DESTROYING;
         initSolidArea();
         this.bombManagement = bombManagement;
         this.game = game;
         findFirstBrickAt4Side();
+        // active();
     }
 
 
@@ -120,7 +118,7 @@ public class Bomb extends Entity {
 
 
     private void active() {
-
+        _state = State.BE_DESTROYED;
     }
 
     private void running() {
@@ -133,8 +131,8 @@ public class Bomb extends Entity {
             return;
 
         if (explodedBrick.isEmpty()) {
-            // System.out.println("Destroy no bricks ");
             isEnd = true;
+            _state = State.BE_DESTROYED;
         }
 
     }
@@ -300,7 +298,8 @@ public class Bomb extends Entity {
 
         switch (_state) {
             case WAITING_EXPLODING: {
-                currentSprite = Sprite.movingSprite(bomb, bomb1, bomb2, _animate, TIME_WAIT_TO_EXPLODING / 2);
+               currentSprite = Sprite.movingSprite(bomb, bomb1, bomb2, _animate, TIME_WAIT_TO_EXPLODING / 2);
+                // currentSprite = Sprite.movingSprite(bombExploding, bombExploding1, bombExploding2, _animate, TIME_EXPLODING / 2);
                 break;
             }
             case EXPLODING: {
@@ -364,9 +363,6 @@ public class Bomb extends Entity {
         }
     }
 
-    private void explodeAllBrick(GraphicsContext gc) {
-
-    }
 
     private void renderFlameDown(GraphicsContext gc, int yUnit, boolean isLast) {
 
@@ -513,6 +509,7 @@ public class Bomb extends Entity {
 
     @Override
     public void update() {
+        System.out.println(_state);
         animate();
         running();
     }
@@ -629,6 +626,7 @@ public class Bomb extends Entity {
         if (explodedBrick.size() == 0 && canDestroyBrick == 1) {
             // System.out.println("Can destroy brick");
             isEnd = true;
+            _state = State.BE_DESTROYED;
         }
 
         // continuosly update brick at four side when render
