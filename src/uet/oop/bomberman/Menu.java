@@ -34,8 +34,7 @@ public class Menu extends Application {
     public void start(Stage stage) {
         int screenWidth = Sprite.SCALED_SIZE * WIDTH;
         int screenHeight = Sprite.SCALED_SIZE * HEIGHT;
-//        String filepath = "https://www.spriters-resource.com/resources/sheets/107/110015.png?updated=1539611896";
-        String filepath = "C:/Users/Tung/Downloads/Work/oop/Bomberman-N1/menu_logo.png";
+        String filepath = "file:res/textures/menu_logo.png";
         animatedGraphic = new AnimatedGraphic(filepath,
                 screenWidth / 2 - 280 / 2, screenHeight / 2 - 146 / 2 - 100, 1288, 1683, 280, 146);
 
