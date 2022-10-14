@@ -15,5 +15,4 @@ public enum State {
     BE_DESTROYING,
     BE_DESTROYED,
     EXISTING;
-
 }
