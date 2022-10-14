@@ -26,7 +26,7 @@ public class EnemyManagement extends Management {
     public boolean isEnemyKillCharacter(Character character) {
         for (Entity entity : list) {
             Enemy enemy = (Enemy) entity;
-            if (!enemy.isDead() && enemy.isImpact(character)) {
+            if (!enemy.isDead() && character.isImpact(enemy)) {
                 return true;
             }
         }
