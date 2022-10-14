@@ -321,8 +321,7 @@ public class Bomber extends Character {
 
     @Override
     public void update() {
-        if (isEnd)
-            return;
+        super.update();
 
         entityLeftSideX = x + solidArea.x;
         entityRightSideX = entityLeftSideX + solidArea.width;
@@ -330,32 +329,8 @@ public class Bomber extends Character {
         entityBottomY = entityTopY + solidArea.height;
 
         updateCurrentState();
-        isCollisionOn = false;
-        game.collisionChecker.checkTile(this);
-        if (!isCollisionOn) {
-            switch (_state) {
-                case GO_NORTH: {
-                    y -= speed;
-                    break;
-                }
-                case GO_SOUTH: {
-                    y += speed;
-                    break;
-                }
-                case GO_EAST: {
-                    x += speed;
-                    break;
-                }
-                case GO_WEST: {
-                    x -= speed;
-                    break;
-                }
-            }
-        }
         smoothMovement();
-        super.update();
         bombManagement.update();
-
     }
 
     @Override

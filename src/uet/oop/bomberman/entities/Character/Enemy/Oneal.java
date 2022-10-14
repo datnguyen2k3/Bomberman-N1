@@ -16,7 +16,6 @@ public class Oneal extends Enemy {
 
     public Oneal(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
-        distanceToChangeSpeed = rand.nextInt(30 * Sprite.SCALE - 10 * Sprite.SCALE) + 10 * Sprite.SCALE;
     }
 
     @Override
@@ -54,6 +53,12 @@ public class Oneal extends Enemy {
         this.sprite_character_dead = Sprite.oneal_dead;
         this.sprite_character_dead_1 = Sprite.mob_dead1;
         this.sprite_character_dead_2 = Sprite.mob_dead2;
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        updateRunning();
     }
 
 

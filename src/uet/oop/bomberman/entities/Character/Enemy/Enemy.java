@@ -46,68 +46,21 @@ public abstract class Enemy extends Character {
         this._state = State.values()[choice];
     }
 
-    public  void setRandomSpeed() {
-        if (isEnd)
-            return;
-
-        int randSpeed = rand.nextInt(3);
-        speed = randSpeed;
-        if (speed == 0 ) {
-            speed = 1;
-        }
-    }
-
     @Override
     public void update() {
-        if(isEnd)
-            return;
+        super.update();
 
-        if (!isDead) {
-            isCollisionOn = false;
-            this.game.collisionChecker.checkTile(this);
-            if (isCollisionOn == false) {
-                switch (this._state) {
-                    case GO_NORTH: {
-                        y -= speed;
-                        break;
-                    }
-                    case GO_SOUTH: {
-                        y += speed;
-                        break;
-                    }
-                    case GO_EAST: {
-                        x += speed;
-                        break;
-                    }
-                    case GO_WEST: {
-                        x -= speed;
-                        break;
-                    }
-                }
-                recentDistanceMoving += speed;
-                if (recentDistanceMoving >= distanceToChangeSpeed) {
-                    if (type.equals("Oneal")) {
-                        setRandomSpeed();
-                    }
-                    recentDistanceMoving = 0;
-                    distanceToChangeSpeed = rand.nextInt(200 * Sprite.SCALE - 60 * Sprite.SCALE) + 60 * Sprite.SCALE;
-                }
-            } else {
-                if (type.equals("Balloom")) {
-                    setRandomState();
-                } else if (type.equals("Oneal")) {
-                    setRandomSpeed();
-                    setRandomState();
-                }
-            }
+
+        if (isImpactWall()) {
+            setRandomState();
         }
 
         if(isDead) {
             currentTimeDead++;
-            if(currentTimeDead >= TIME_DEAD)
+            if(currentTimeDead >= TIME_DEAD) {
                 isEnd = true;
+            }
         }
 
-        super.update();
     }
 }
