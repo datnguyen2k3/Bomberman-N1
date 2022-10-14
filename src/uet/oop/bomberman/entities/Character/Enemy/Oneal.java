@@ -9,24 +9,8 @@ import java.awt.*;
 import uet.oop.bomberman.BombermanGame;
 public class Oneal extends Enemy {
 
-    @Override
-    public void initSolidArea() {
-        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 15 * Sprite.SCALE, 15 * Sprite.SCALE);
-    }
-
-    public Oneal(int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img);
-        initSprite();
-        initState();
-    }
-
     public Oneal(int xUnit, int yUnit, Image img, BombermanGame game) {
-        this(xUnit, yUnit, img);
-        this.game = game;
-        initSolidArea();
-        distanceToChangeSpeed = rand.nextInt(30 * Sprite.SCALE - 10 * Sprite.SCALE) + 10 * Sprite.SCALE;
-        type = "Oneal";
-        // _state = State.DEAD;
+        super(xUnit, yUnit, img, game);
     }
 
     @Override
@@ -64,6 +48,12 @@ public class Oneal extends Enemy {
         this.sprite_character_dead = Sprite.oneal_dead;
         this.sprite_character_dead_1 = Sprite.mob_dead1;
         this.sprite_character_dead_2 = Sprite.mob_dead2;
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        updateRunning();
     }
 
 

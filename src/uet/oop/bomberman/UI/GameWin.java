@@ -1,12 +1,12 @@
 package uet.oop.bomberman.UI;
 
-public class GameOver extends Intro{
-    public GameOver() {
+public class GameWin extends Intro {
+    public GameWin() {
         super();
     }
 
     @Override
     protected void initTitle() {
-        title = "Game Over!";
+        title = "You Win!";
     }
 }

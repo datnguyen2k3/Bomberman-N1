@@ -19,6 +19,8 @@ public abstract class Character extends Entity {
     public static final int TIME_ANIMATION_RUNNING = 60;
     public static final int TIME_ANIMATION_DEAD = 90;
     public static final int TIME_DEAD = 90;
+    public static final int TIME_RUNNING = 10;
+    protected int currentTimeRunning = 0;
     protected int currentTimeDead = 0;
 
     protected Sprite _sprite;
@@ -41,6 +43,7 @@ public abstract class Character extends Entity {
         super(xUnit, yUnit, img);
         initSprite();
         initState();
+        initSolidArea();
     }
 
     public Character(int xUnit, int yUnit) {
@@ -69,6 +72,32 @@ public abstract class Character extends Entity {
 
     public boolean isEnd() {
         return isEnd;
+    }
+
+    public void setRandomSpeed() {
+        if (isEnd)
+            return;
+
+        running = true;
+        int maxSpeed = 2;
+        speed = rand.nextInt(maxSpeed) % maxSpeed + 1;
+        //System.out.println(speed);
+    }
+
+    protected void updateRunning() {
+        if (isImpactWall()) {
+            setRandomSpeed();
+        }
+
+        if (!running) {
+            return;
+        }
+
+        currentTimeRunning++;
+        if (currentTimeRunning > TIME_RUNNING) {
+            currentTimeRunning = 0;
+            running = false;
+        }
     }
 
     /**
@@ -160,11 +189,42 @@ public abstract class Character extends Entity {
         return false;
     }
 
+    protected void updateCoordinate() {
+        if (!isImpactWall()) {
+            switch (_state) {
+                case GO_NORTH: {
+                    y -= speed;
+                    break;
+                }
+                case GO_SOUTH: {
+                    y += speed;
+                    break;
+                }
+                case GO_EAST: {
+                    x += speed;
+                    break;
+                }
+                case GO_WEST: {
+                    x -= speed;
+                    break;
+                }
+            }
+        }
+    }
+
     @Override
     public void update() {
         if (isEnd)
             return;
         animate();
+        if (!isDead)
+            updateCoordinate();
+    }
+
+    protected boolean isImpactWall() {
+        isCollisionOn = false;
+        this.game.collisionChecker.checkTile(this);
+        return isCollisionOn;
     }
 
     @Override

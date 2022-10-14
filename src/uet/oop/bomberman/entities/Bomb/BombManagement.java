@@ -16,6 +16,19 @@ public class BombManagement extends Management {
     private int explodedLength = 1;
     private int maxBomb = 1;
 
+    public int getMaxBomb() {
+        return maxBomb;
+    }
+    public void setMaxBomb(int maxBomb) {
+        this.maxBomb = maxBomb;
+    }
+
+    public int getFlame() {
+        return explodedLength;
+    }
+    public void setFlame(int flame) {
+        this.explodedLength = flame;
+    }
 
     public void setGame(BombermanGame game) {
         this.game = game;

@@ -137,6 +137,7 @@ public class Bomb extends Entity {
         if (Wall.isWall(xUnit, yUnit))
             return false;
         if (Brick.isBrick(xUnit, yUnit)) {
+
             destroyedBricks.add(new Pair<>(xUnit, yUnit));
             return false;
         }
@@ -384,7 +385,7 @@ public class Bomb extends Entity {
     }
 
     private void log(Coordinate c) {
-        System.out.println(c.toString());
+         // System.out.println(c.toString());
     }
 
     public void draw4SideFlame(GraphicsContext gc) {
@@ -531,7 +532,7 @@ public class Bomb extends Entity {
         if (_state == State.EXPLODING) {
             Sprite curBrickSprite;
             log(firstBrickDown);
-            System.out.println(get_yUnit());
+            // System.out.println(get_yUnit());
             if (firstBrickDown.getY() + 1 < BombermanGame.HEIGHT
                     && Brick.isBrick(firstBrickDown.getX(), firstBrickDown.getY() + 1)
                     && firstBrickDown.getY() + 1 <= get_yUnit() + bombManagement.getExplodedLength()) {
@@ -624,6 +625,10 @@ public class Bomb extends Entity {
         }
         if (explodedBrick.size() == 0 && canDestroyBrick == 1) {
             isEnd = true;
+        }
+        if (explodedBrick.size() != 0 ) {
+            explodedBrick.clear();
+            findFirstBrickAt4Side();
         }
 
     }

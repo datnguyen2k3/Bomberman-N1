@@ -9,9 +9,6 @@ import java.awt.*;
 import java.util.Random;
 import uet.oop.bomberman.BombermanGame;
 public abstract class Entity  {
-    public int recentDistanceMoving;
-    public int distanceToChangeSpeed; // change speed when reach this distance moving.
-    public int distanceToChangeDirection; // use for balloom.
     protected int _animate = 0;
     public static final int MAX_ANIMATION = 7500;
     protected int x; //Tọa độ X tính từ góc trái trên trong Canvas

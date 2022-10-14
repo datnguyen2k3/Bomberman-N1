@@ -31,6 +31,7 @@ public abstract class Item extends Entity {
     public Item(int xUnit, int yUnit) {
         super(xUnit, yUnit);
         initItemDiagram();
+        initSolidArea();
     }
 
     public void setActivate() {

@@ -8,11 +8,18 @@ import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.BombermanGame;
 
 public class EnemyManagement extends Management {
+
+    public int getNumEnemies() {
+        return list.size();
+    }
+
     public void add(int xUnit, int yUnit, char enemyDiagram, BombermanGame game) {
         if (enemyDiagram == Enemy.balloomDiagram) {
             list.add(new Balloom(xUnit, yUnit, Sprite.balloom_left1.getFxImage(), game));
         } else if (enemyDiagram == Enemy.onealDiagram) {
             list.add(new Oneal(xUnit, yUnit, Sprite.oneal_right1.getFxImage(), game));
+        } else if (enemyDiagram == Enemy.dollDiagram) {
+            list.add(new Doll(xUnit, yUnit, Sprite.doll_right1.getFxImage(), game));
         }
     }
 
@@ -23,7 +30,6 @@ public class EnemyManagement extends Management {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -34,12 +40,21 @@ public class EnemyManagement extends Management {
                 enemy.setDead();
             }
         }
+    }
 
-        for (Entity e : list) {
-            Enemy enemy = (Enemy) e;
+    public void updateRemoveEnemy() {
+        for (int i = 0; i < list.size(); i++) {
+            Enemy enemy = (Enemy) list.get(i);
             if (enemy.isEnd()) {
-                enemy.setDead();
+                list.remove(i);
+                i--;
             }
         }
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        updateRemoveEnemy();
     }
 }
