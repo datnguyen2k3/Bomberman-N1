@@ -127,6 +127,7 @@ public class Bomb extends Entity {
         if (currentTimeExploding > 0)
             return;
 
+
         if (explodedBrick.isEmpty()) {
             isEnd = true;
         }
