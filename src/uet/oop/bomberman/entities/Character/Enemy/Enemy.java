@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.Character.Enemy;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Character.Character;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
@@ -13,6 +14,8 @@ public abstract class Enemy extends Character {
     public static final char onealDiagram = '2';
     public static final char dollDiagram = '3';
     public static char lastEnemy = '3';
+
+    Bomber bomber = game.getBomberman();
 
     public Enemy(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
