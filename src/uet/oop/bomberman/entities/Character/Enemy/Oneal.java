@@ -9,11 +9,6 @@ import java.awt.*;
 import uet.oop.bomberman.BombermanGame;
 public class Oneal extends Enemy {
 
-    @Override
-    public void initType() {
-        type = "Oneal";
-    }
-
     public Oneal(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
     }

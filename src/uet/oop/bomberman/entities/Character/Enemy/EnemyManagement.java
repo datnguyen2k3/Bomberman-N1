@@ -18,6 +18,8 @@ public class EnemyManagement extends Management {
             list.add(new Balloom(xUnit, yUnit, Sprite.balloom_left1.getFxImage(), game));
         } else if (enemyDiagram == Enemy.onealDiagram) {
             list.add(new Oneal(xUnit, yUnit, Sprite.oneal_right1.getFxImage(), game));
+        } else if (enemyDiagram == Enemy.dollDiagram) {
+            list.add(new Doll(xUnit, yUnit, Sprite.doll_right1.getFxImage(), game));
         }
     }
 

@@ -12,11 +12,6 @@ public class Balloom extends Enemy {
     }
 
     @Override
-    public void initType() {
-        type = "Ballom";
-    }
-
-    @Override
     protected void initState() {
         setRandomState();
     }

@@ -11,13 +11,12 @@ import java.awt.*;
 public abstract class Enemy extends Character {
     public static final char balloomDiagram = '1';
     public static final char onealDiagram = '2';
-
-    public String type ;
+    public static final char dollDiagram = '3';
+    public static char lastEnemy = '3';
 
     public Enemy(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
         this.speed = 1;
-        initType();
     }
 
     @Override
@@ -25,11 +24,9 @@ public abstract class Enemy extends Character {
         solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 15 * Sprite.SCALE , 15 * Sprite.SCALE);
     }
 
-    public abstract void initType();
 
     public static boolean isEnemy(char diagram) {
-        return diagram == balloomDiagram
-                || diagram == onealDiagram;
+        return '1' <= diagram && diagram <= lastEnemy;
     }
 
     @Override
@@ -37,7 +34,6 @@ public abstract class Enemy extends Character {
         isDead = true;
         _state = State.DEAD;
     }
-
     public void setRandomState() {
         if(isEnd)
             return;
@@ -46,13 +42,17 @@ public abstract class Enemy extends Character {
         this._state = State.values()[choice];
     }
 
+    public void setState() {
+        setRandomState();
+    }
+
     @Override
     public void update() {
         super.update();
 
 
         if (isImpactWall()) {
-            setRandomState();
+            setState();
         }
 
         if(isDead) {
