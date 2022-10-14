@@ -17,9 +17,10 @@ public class Bomb extends Entity {
 
 
     List<Coordinate> explodedBrick = new ArrayList<>();
-    private int countBricksRemain;
+
 
     private int explodingCounter = 0;
+
     private int brickDestroyCounterRight = 0;
     private int brickDestroyCounterDown = 0;
     private int brickDestroyCounterTop = 0;
@@ -76,7 +77,6 @@ public class Bomb extends Entity {
     }
 
 
-
     @Override
     public void initSolidArea() {
 
@@ -118,6 +118,11 @@ public class Bomb extends Entity {
         currentTimeExploding--;
     }
 
+
+    private void active() {
+
+    }
+
     private void running() {
         waitToExploding();
         if (currentTimeWaitToExploding > 0)
@@ -128,6 +133,7 @@ public class Bomb extends Entity {
             return;
 
         if (explodedBrick.isEmpty()) {
+            // System.out.println("Destroy no bricks ");
             isEnd = true;
         }
 
@@ -152,7 +158,6 @@ public class Bomb extends Entity {
 
     // get the first brick to be destroyed, we need render from bomb location to this brick location, not render over.
     private Coordinate firstBrickToBeDestroyed(int startXUnit, int startYUnit, String direction) {
-
         Coordinate res = new Coordinate(0, 0);
         if (direction.equals("right")) {
             res.setY(get_yUnit());
@@ -264,8 +269,6 @@ public class Bomb extends Entity {
             }
             return res;
         }
-
-
     }
 
 
@@ -532,7 +535,7 @@ public class Bomb extends Entity {
         if (_state == State.EXPLODING) {
             Sprite curBrickSprite;
             log(firstBrickDown);
-            System.out.println(get_yUnit());
+            // System.out.println(get_yUnit());
             if (firstBrickDown.getY() + 1 < BombermanGame.HEIGHT
                     && Brick.isBrick(firstBrickDown.getX(), firstBrickDown.getY() + 1)
                     && firstBrickDown.getY() + 1 <= get_yUnit() + bombManagement.getExplodedLength()) {
@@ -624,7 +627,17 @@ public class Bomb extends Entity {
             }
         }
         if (explodedBrick.size() == 0 && canDestroyBrick == 1) {
+            // System.out.println("Can destroy brick");
             isEnd = true;
+        }
+
+        // continuosly update brick at four side when render
+        // in case of previous brick is exploded bricks in exploded brick list
+        // of recent bomb.
+        if (explodedBrick.size() != 0) {
+            // System.out.println("Remain bricks");
+            explodedBrick.clear();
+            findFirstBrickAt4Side();
         }
 
     }

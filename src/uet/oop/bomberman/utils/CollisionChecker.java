@@ -5,6 +5,7 @@ import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.StillObject.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.BombermanGame;
+
 public class CollisionChecker {
     BombermanGame game;
 
@@ -12,7 +13,7 @@ public class CollisionChecker {
         this.game = game;
     }
 
-    public void checkTile(Entity e ) {
+    public void checkTile(Entity e) {
         // get 4 point at x-axis, y-axis represent entity's rectangle.
         int entityLeftSideX = e.getX() + e.solidArea.x;
         int entityRightSideX = entityLeftSideX + e.solidArea.width;
@@ -43,6 +44,7 @@ public class CollisionChecker {
                 typeTileLeft = BombermanGame.diagramMap[entityBottomRow][entityLeftCol];
                 typeTileRight = BombermanGame.diagramMap[entityBottomRow][entityRightCol];
                 if (Brick.isBrick(typeTileLeft) || Wall.isWall(typeTileRight) || Brick.isBrick(typeTileRight) || Wall.isWall(typeTileLeft)) {
+                    // System.out.println("Collision when going south");
                     e.isCollisionOn = true;
                 }
                 break;

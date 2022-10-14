@@ -12,6 +12,7 @@ import java.util.List;
 import uet.oop.bomberman.utils.State;
 
 public abstract class Character extends Entity {
+
     protected boolean isDead = false;
     protected boolean isEnd = false;
     protected int worldX;
@@ -20,7 +21,6 @@ public abstract class Character extends Entity {
     public static final int TIME_ANIMATION_DEAD = 90;
     public static final int TIME_DEAD = 90;
     protected int currentTimeDead = 0;
-
     protected Sprite _sprite;
     protected State previousState;
     protected Sprite sprite_character_left, sprite_character_left_1, sprite_character_left_2, sprite_character_left_3, last_sprite_left;

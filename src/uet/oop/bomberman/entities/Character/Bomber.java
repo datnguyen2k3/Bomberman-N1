@@ -29,7 +29,7 @@ public class Bomber extends Character {
     private boolean isWin;
 
     private int entityLeftSideX;
-    private int entityRightSideX ;
+    private int entityRightSideX;
     private int entityTopY;
     private int entityBottomY;
 
@@ -232,6 +232,7 @@ public class Bomber extends Character {
                     case S:
                     case DOWN:
                         _state = State.GO_SOUTH;
+                      //   System.out.println(_state);
                         goSouth = true;
                         break;
                     case A:
@@ -339,7 +340,9 @@ public class Bomber extends Character {
                     break;
                 }
                 case GO_SOUTH: {
+                   // System.out.println("Going south");
                     y += speed;
+                   //  System.out.println("Increase y coordinate");
                     break;
                 }
                 case GO_EAST: {

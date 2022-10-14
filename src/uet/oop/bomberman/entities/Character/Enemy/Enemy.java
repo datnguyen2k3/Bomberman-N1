@@ -96,7 +96,6 @@ public abstract class Enemy extends Character {
             if(currentTimeDead >= TIME_DEAD)
                 isEnd = true;
         }
-
         super.update();
     }
 }
