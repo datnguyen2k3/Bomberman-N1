@@ -20,6 +20,7 @@ public class ItemManagement extends Management {
                 list.add(new SpeedItem(xUnit, yUnit));
                 break;
             case Item.portalItemDiagram:
+                //System.out.println(1);
                 list.add(new Portal(xUnit, yUnit));
                 break;
         }

@@ -10,7 +10,6 @@ public class BombItem extends Item{
 
     public BombItem(int xUnit, int yUnit) {
         super(xUnit, yUnit);
-        initSolidArea();
     }
 
     @Override

@@ -19,11 +19,6 @@ public class Portal extends Item{
     }
 
     @Override
-    public void setActivate() {
-
-    }
-
-    @Override
     public void update() {
 
     }

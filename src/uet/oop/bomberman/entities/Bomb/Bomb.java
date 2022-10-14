@@ -137,6 +137,7 @@ public class Bomb extends Entity {
         if (Wall.isWall(xUnit, yUnit))
             return false;
         if (Brick.isBrick(xUnit, yUnit)) {
+
             destroyedBricks.add(new Pair<>(xUnit, yUnit));
             return false;
         }
