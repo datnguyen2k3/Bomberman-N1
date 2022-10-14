@@ -35,8 +35,8 @@ public class Brick extends Entity {
     public void setDestroyed() {
         this.isDestroyed = true;
         _state = State.BE_DESTROYING;
-//        BombermanGame.diagramMap[get_yUnit()][get_xUnit()] = ' ';
-       img = Sprite.grass.getFxImage();
+        //BombermanGame.diagramMap[get_yUnit()][get_xUnit()] = ' ';
+        img = Sprite.grass.getFxImage();
     }
 
 

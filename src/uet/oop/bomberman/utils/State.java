@@ -7,6 +7,7 @@ public enum State {
     GO_SOUTH,
     GO_WEST,
     GO_EAST,
+    STATIONARY,
     IDLE,
     DEAD,
     EXPLODING,
@@ -14,4 +15,5 @@ public enum State {
     BE_DESTROYING,
     BE_DESTROYED,
     EXISTING;
+
 }

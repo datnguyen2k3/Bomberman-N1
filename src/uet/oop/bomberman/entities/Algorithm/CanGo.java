@@ -23,6 +23,8 @@ public class CanGo {
         int xUnit = character.get_xUnit();
         int yUnit = character.get_yUnit();
 
+        //System.out.println(character.getX() + " " + character.getY());
+
         return xUnit * Sprite.SCALED_SIZE < character.getX()
                 && (xUnit + 1) * Sprite.SCALED_SIZE > character.getX() + character.getSolidArea().width
                 && MinPath.isCanMove(map[yUnit + 1][xUnit]);

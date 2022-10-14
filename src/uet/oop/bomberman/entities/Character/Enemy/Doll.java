@@ -18,7 +18,7 @@ public class Doll extends Enemy{
 
     @Override
     protected void initState() {
-        _state = State.GO_NORTH;
+        _state = State.STATIONARY;
     }
 
     @Override
@@ -68,6 +68,7 @@ public class Doll extends Enemy{
             return;
 
         int direction = MinPath.findDirection(this, bomber.get_xUnitCenter(), bomber.get_yUnitCenter());
+        System.out.println(direction);
 
         if (direction == CanGo.CANT_MOVE) {
             return;
@@ -80,7 +81,6 @@ public class Doll extends Enemy{
             case 2: _state = State.GO_EAST; break;
         }
 
-        //System.out.println(direction);
 
     }
 

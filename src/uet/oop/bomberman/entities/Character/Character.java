@@ -123,7 +123,8 @@ public abstract class Character extends Entity {
                         last_sprite_right, _animate, TIME_ANIMATION_RUNNING);
                 break;
             }
-            case GO_WEST: {
+            case GO_WEST:
+            case STATIONARY:{
                 _sprite = Sprite.movingSprite(sprite_character_left, sprite_character_left_1,
                         last_sprite_left, _animate, TIME_ANIMATION_RUNNING);
                 break;
