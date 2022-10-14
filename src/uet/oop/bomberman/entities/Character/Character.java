@@ -41,6 +41,7 @@ public abstract class Character extends Entity {
         super(xUnit, yUnit, img);
         initSprite();
         initState();
+        initSolidArea();
     }
 
     public Character(int xUnit, int yUnit) {

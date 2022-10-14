@@ -10,23 +10,13 @@ import uet.oop.bomberman.BombermanGame;
 public class Oneal extends Enemy {
 
     @Override
-    public void initSolidArea() {
-        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 15 * Sprite.SCALE, 15 * Sprite.SCALE);
-    }
-
-    public Oneal(int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img);
-        initSprite();
-        initState();
+    public void initType() {
+        type = "Oneal";
     }
 
     public Oneal(int xUnit, int yUnit, Image img, BombermanGame game) {
-        this(xUnit, yUnit, img);
-        this.game = game;
-        initSolidArea();
+        super(xUnit, yUnit, img, game);
         distanceToChangeSpeed = rand.nextInt(30 * Sprite.SCALE - 10 * Sprite.SCALE) + 10 * Sprite.SCALE;
-        type = "Oneal";
-        // _state = State.DEAD;
     }
 
     @Override
