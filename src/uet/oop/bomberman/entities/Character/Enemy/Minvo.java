@@ -6,7 +6,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
 
 public class Minvo extends Enemy {
-    public int currentTimeDead = 0;
+    public int currentTimeMinvoDead = 0;
     public Minvo(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
         this.speed = 2;
@@ -47,10 +47,10 @@ public class Minvo extends Enemy {
     @Override
     public void update() {
         if (isDead) {
-            currentTimeDead++;
-            if (currentTimeDead == TIME_DEAD - 5) {
-                this.game.getEnemyManagement().add(get_xUnit(), get_yUnit(), '1', game);
-                this.game.getEnemyManagement().add(get_xUnit(), get_yUnit(), '2', game);
+            currentTimeMinvoDead++;
+            if (currentTimeMinvoDead == TIME_DEAD - 5) {
+                this.game.getEnemyManagement().addEnemyLater(get_xUnit(), get_yUnit(), '1', game);
+                this.game.getEnemyManagement().addEnemyLater(get_xUnit(), get_yUnit(), '2', game);
             }
         }
 
