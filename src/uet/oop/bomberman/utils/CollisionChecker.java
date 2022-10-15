@@ -5,6 +5,7 @@ import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.StillObject.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Character.Character;
 public class CollisionChecker {
     BombermanGame game;
 
@@ -28,12 +29,18 @@ public class CollisionChecker {
         char typeTileLeft, typeTileRight;
         char typeTileUp, typeTileDown;
 
+        boolean checkBrick = true;
+        if (e instanceof Character) {
+            checkBrick = !((Character) e).getPassBrick();
+        }
+
+
         switch (e.get_state()) {
             case GO_NORTH: {
                 entityTopRow = (entityTopY - e.getSpeed()) / Sprite.SCALED_SIZE;
                 typeTileLeft = BombermanGame.diagramMap[entityTopRow][entityLeftCol];
                 typeTileRight = BombermanGame.diagramMap[entityTopRow][entityRightCol];
-                if (Brick.isBrick(typeTileLeft) || Wall.isWall(typeTileRight) || Brick.isBrick(typeTileRight) || Wall.isWall(typeTileLeft)) {
+                if (Brick.isBrick(typeTileLeft, checkBrick) || Wall.isWall(typeTileRight) || Brick.isBrick(typeTileRight, checkBrick) || Wall.isWall(typeTileLeft)) {
                     e.isCollisionOn = true;
                 }
                 break;
@@ -42,7 +49,7 @@ public class CollisionChecker {
                 entityBottomRow = (entityBottomY + e.getSpeed()) / Sprite.SCALED_SIZE;
                 typeTileLeft = BombermanGame.diagramMap[entityBottomRow][entityLeftCol];
                 typeTileRight = BombermanGame.diagramMap[entityBottomRow][entityRightCol];
-                if (Brick.isBrick(typeTileLeft) || Wall.isWall(typeTileRight) || Brick.isBrick(typeTileRight) || Wall.isWall(typeTileLeft)) {
+                if (Brick.isBrick(typeTileLeft, checkBrick) || Wall.isWall(typeTileRight) || Brick.isBrick(typeTileRight, checkBrick) || Wall.isWall(typeTileLeft)) {
                     e.isCollisionOn = true;
                 }
                 break;
@@ -51,7 +58,7 @@ public class CollisionChecker {
                 entityRightCol = (entityRightSideX + e.getSpeed()) / Sprite.SCALED_SIZE;
                 typeTileUp = BombermanGame.diagramMap[entityTopRow][entityRightCol];
                 typeTileDown = BombermanGame.diagramMap[entityBottomRow][entityRightCol];
-                if (Brick.isBrick(typeTileUp) || Wall.isWall(typeTileDown) || Brick.isBrick(typeTileDown) || Wall.isWall(typeTileUp)) {
+                if (Brick.isBrick(typeTileUp, checkBrick) || Wall.isWall(typeTileDown) || Brick.isBrick(typeTileDown, checkBrick) || Wall.isWall(typeTileUp)) {
                     e.isCollisionOn = true;
                 }
                 break;
@@ -60,7 +67,7 @@ public class CollisionChecker {
                 entityLeftCol = (entityLeftSideX - e.getSpeed()) / Sprite.SCALED_SIZE;
                 typeTileUp = BombermanGame.diagramMap[entityTopRow][entityLeftCol];
                 typeTileDown = BombermanGame.diagramMap[entityBottomRow][entityLeftCol];
-                if (Brick.isBrick(typeTileUp) || Wall.isWall(typeTileDown) || Brick.isBrick(typeTileDown) || Wall.isWall(typeTileUp)) {
+                if (Brick.isBrick(typeTileUp, checkBrick) || Wall.isWall(typeTileDown) || Brick.isBrick(typeTileDown, checkBrick) || Wall.isWall(typeTileUp)) {
                     e.isCollisionOn = true;
                 }
                 break;

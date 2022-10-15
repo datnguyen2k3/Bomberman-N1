@@ -32,6 +32,18 @@ public abstract class Character extends Entity {
     protected Sprite sprite_character_dead, sprite_character_dead_1, sprite_character_dead_2;
 
     protected boolean running, goNorth, goSouth, goEast, goWest;
+    protected boolean passBrick = false;
+
+    public boolean getPassBrick() {
+        return passBrick;
+    }
+
+    public void setPassBrick() {
+        if (passBrick)
+            return;
+        passBrick = true;
+
+    }
 
 
     public Character(int xUnit, int yUnit, Image img, BombermanGame game) {
