@@ -49,10 +49,17 @@ public abstract class Item extends Entity {
 
     protected abstract void initItemDiagram();
 
+//    @Override
+//    public void render(GraphicsContext gc) {
+//        if (!isActivate)
+//            return;
+//        super.render(gc);
+//    }
+
     @Override
-    public void render(GraphicsContext gc) {
+    public void render() {
         if (!isActivate)
             return;
-        super.render(gc);
+        super.render();
     }
 }

@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import uet.oop.bomberman.graphics.GraphicsManager;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
 
@@ -94,10 +95,13 @@ public abstract class Entity  {
         return this._state;
     }
 
-    public void render(GraphicsContext gc) {
-        gc.drawImage(img, x, y);
-    }
+//    public void render(GraphicsContext gc) {
+//        gc.drawImage(img, x, y);
+//    }
 
+    public void render() {
+        GraphicsManager.getGraphicsManager().render(this);
+    }
 
     public void chooseSpriteBrick() {
         if(_state == State.BE_DESTROYING) {
@@ -113,4 +117,7 @@ public abstract class Entity  {
 
     public abstract void update();
 
+    public Image getImage() {
+        return img;
+    }
 }

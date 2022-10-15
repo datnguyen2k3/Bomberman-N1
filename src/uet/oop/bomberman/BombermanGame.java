@@ -24,8 +24,10 @@ import uet.oop.bomberman.entities.Item.ItemManagement;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.StillObject.Grass;
 import uet.oop.bomberman.entities.StillObject.Wall;
+import uet.oop.bomberman.graphics.GraphicsManager;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.entities.Character.Bomber;
+import uet.oop.bomberman.map.MapParser;
 import uet.oop.bomberman.utils.CollisionChecker;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
 
@@ -50,6 +52,7 @@ public class BombermanGame {
 
     private Board board = new Board();
     int level = 1;
+    public static char[][] diagramMap;
 
     public boolean isRun() {
         return isRun;
@@ -79,7 +82,10 @@ public class BombermanGame {
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
         this.level = level;
-        createMap(level);
+
+        //Create map
+        diagramMap = MapParser.diagramMapParser(level);
+        MapParser.load(diagramMap, itemManagement, stillObjects);
     }
 
     public Bomber getBomberman() {
@@ -90,49 +96,48 @@ public class BombermanGame {
         this.bomberman.setHP(hp);
     }
 
-    public static final char[][] diagramMap = new char[HEIGHT][WIDTH];
 
-    private void createDiagramMap(int level) {
-        try {
-            BufferedReader bufferreader = new BufferedReader(new FileReader("res/Map/map" + level + ".txt"));
-            String line;
-            int indexLine = 0;
-
-            while ((line = bufferreader.readLine()) != null) {
-                diagramMap[indexLine] = line.toCharArray();
-                indexLine++;
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private void createMap(int level) {
-        createDiagramMap(level);
-
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
-                Entity object = null;
-                char currentDiagramObject = diagramMap[j][i];
-
-                if (Wall.isWall(currentDiagramObject)) {
-                    object = new Wall(i, j);
-                } else if (Brick.isBrick(currentDiagramObject)) {
-                    object = new Brick(i, j);
-                } else if (Item.isItem(currentDiagramObject)) {
-                    object = new Brick(i, j);
-                    itemManagement.add(i, j, currentDiagramObject);
-                } else if (Enemy.isEnemy(currentDiagramObject)) {
-                    object = new Grass(i, j);
-                    enemyManagement.add(i, j, currentDiagramObject, this);
-                } else {
-                    object = new Grass(i, j);
-                }
-
-                stillObjects.add(object);
-            }
-        }
-    }
+//    private void createDiagramMap(int level) {
+//        try {
+//            BufferedReader bufferreader = new BufferedReader(new FileReader("res/Map/map" + level + ".txt"));
+//            String line;
+//            int indexLine = 0;
+//
+//            while ((line = bufferreader.readLine()) != null) {
+//                diagramMap[indexLine] = line.toCharArray();
+//                indexLine++;
+//            }
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//    }
+//
+//    private void createMap(int level) {
+//        createDiagramMap(level);
+//
+//        for (int i = 0; i < WIDTH; i++) {
+//            for (int j = 0; j < HEIGHT; j++) {
+//                Entity object = null;
+//                char currentDiagramObject = diagramMap[j][i];
+//
+//                if (Wall.isWall(currentDiagramObject)) {
+//                    object = new Wall(i, j);
+//                } else if (Brick.isBrick(currentDiagramObject)) {
+//                    object = new Brick(i, j);
+//                } else if (Item.isItem(currentDiagramObject)) {
+//                    object = new Brick(i, j);
+//                    itemManagement.add(i, j, currentDiagramObject);
+//                } else if (Enemy.isEnemy(currentDiagramObject)) {
+//                    object = new Grass(i, j);
+//                    enemyManagement.add(i, j, currentDiagramObject, this);
+//                } else {
+//                    object = new Grass(i, j);
+//                }
+//
+//                stillObjects.add(object);
+//            }
+//        }
+//    }
 
     public void update() {
         entities.forEach(Entity::update);
@@ -145,6 +150,8 @@ public class BombermanGame {
         }
         itemManagement.update();
         enemyManagement.update();
+        GraphicsManager.getGraphicsManager().update(bomberman.isCollisionOn, bomberman.get_state(), bomberman.getSpeed());
+
         board.update(bomberman.getHP(), enemyManagement.getNumEnemies(),
                     bombManagement.getMaxBomb(), bombManagement.getFlame(),
                     bomberman.getSpeed());
@@ -155,7 +162,6 @@ public class BombermanGame {
     }
 
     public void updateCombat(Scene scene) {
-
         // destroy brick
         for (Entity e : stillObjects) {
             if (e instanceof Brick) {
@@ -195,12 +201,19 @@ public class BombermanGame {
     }
 
     public void render(Canvas canvas, GraphicsContext gc) {
+//        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+//        stillObjects.forEach(g -> g.render(gc));
+//        entities.forEach(g -> g.render(gc));
+//        itemManagement.render(gc);
+//        bomberman.render(gc);
+//        enemyManagement.render(gc);
+
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        stillObjects.forEach(g -> g.render(gc));
-        entities.forEach(g -> g.render(gc));
-        itemManagement.render(gc);
-        bomberman.render(gc);
-        enemyManagement.render(gc);
+        stillObjects.forEach(g -> g.render());
+        entities.forEach(g -> g.render());
+        itemManagement.render();
+        bomberman.render();
+        enemyManagement.render();
     }
 
     public void run(Canvas canvas, GraphicsContext gc, Scene scene, Group root) {

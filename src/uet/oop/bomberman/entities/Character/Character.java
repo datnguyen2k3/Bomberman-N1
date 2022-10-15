@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.util.Pair;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.graphics.GraphicsManager;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.BombermanGame;
 import java.util.ArrayList;
@@ -221,17 +222,31 @@ public abstract class Character extends Entity {
             updateCoordinate();
     }
 
-    protected boolean isImpactWall() {
+//    protected boolean isImpactWall() {
+//        isCollisionOn = false;
+//        this.game.collisionChecker.checkTile(this);
+//        return isCollisionOn;
+//    }
+
+    public boolean isImpactWall() {
         isCollisionOn = false;
         this.game.collisionChecker.checkTile(this);
         return isCollisionOn;
     }
 
+//    @Override
+//    public void render(GraphicsContext gc) {
+//        if (isEnd)
+//            return;
+//        choosingSprite();
+//        gc.drawImage(_sprite.getFxImage(), x, y);
+//    }
+
     @Override
-    public void render(GraphicsContext gc) {
+    public void render() {
         if (isEnd)
             return;
         choosingSprite();
-        gc.drawImage(_sprite.getFxImage(), x, y);
+        GraphicsManager.getGraphicsManager().renderWithImage(this, _sprite.getFxImage());
     }
 }

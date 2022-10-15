@@ -12,6 +12,7 @@ import uet.oop.bomberman.entities.Item.Item;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.StillObject.Grass;
 import uet.oop.bomberman.entities.StillObject.Wall;
+import uet.oop.bomberman.graphics.GraphicsManager;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
@@ -333,12 +334,17 @@ public class Bomber extends Character {
         bombManagement.update();
     }
 
+//    @Override
+//    public void render(GraphicsContext gc) {
+//        updateCurrentState();
+//        bombManagement.render(gc);
+//        super.render(gc);
+//    }
+
     @Override
-    public void render(GraphicsContext gc) {
+    public void render() {
         updateCurrentState();
-        bombManagement.render(gc);
-        super.render(gc);
+        bombManagement.render();
+        super.render();
     }
-
-
 }

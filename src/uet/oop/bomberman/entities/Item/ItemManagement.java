@@ -76,14 +76,23 @@ public class ItemManagement extends Management {
     }
 
     // render
+//    @Override
+//    public void render(GraphicsContext gc) {
+//        for (Entity entity : list) {
+//            Item item = (Item) entity;
+//            if (item.isActivate()) {
+//                item.render(gc);
+//            }
+//        }
+//    }
+
     @Override
-    public void render(GraphicsContext gc) {
+    public void render() {
         for (Entity entity : list) {
             Item item = (Item) entity;
             if (item.isActivate()) {
-                item.render(gc);
+                item.render();
             }
         }
     }
-
 }

@@ -98,11 +98,18 @@ public class Brick extends Entity {
         img = Sprite.brick.getFxImage();
     }
 
-    @Override
-    public void render(GraphicsContext gc) {
-        //doExplodingAnimation(gc);
-         //chooseSprite();
-        //gc.drawImage(curSprite.getFxImage(),x,y);
-        super.render(gc);
-    }
+//    @Override
+//    public void render(GraphicsContext gc) {
+//        //doExplodingAnimation(gc);
+//         //chooseSprite();
+//        //gc.drawImage(curSprite.getFxImage(),x,y);
+//        super.render(gc);
+//    }
+//    @Override
+//    public void render(GraphicsContext gc) {
+//        //doExplodingAnimation(gc);
+//        //chooseSprite();
+//        //gc.drawImage(curSprite.getFxImage(),x,y);
+//        super.render(gc);
+//    }
 }

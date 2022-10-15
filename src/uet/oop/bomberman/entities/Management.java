@@ -6,9 +6,14 @@ import java.util.List;
 
 public abstract class Management {
     protected List<Entity> list = new ArrayList<>();
-    public void render(GraphicsContext gc) {
-        for(Entity e : list) {
-            e.render(gc);
+//    public void render(GraphicsContext gc) {
+//        for(Entity e : list) {
+//            e.render(gc);
+//        }
+//    }
+    public void render() {
+        for (Entity e : list) {
+            e.render();
         }
     }
     public void update() {

@@ -5,6 +5,7 @@ import javafx.util.Pair;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.StillObject.Wall;
+import uet.oop.bomberman.graphics.GraphicsManager;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.Coordinate;
 import uet.oop.bomberman.utils.State;
@@ -515,18 +516,29 @@ public class Bomb extends Entity {
         running();
     }
 
+//    @Override
+//    public void render(GraphicsContext gc) {
+//        choosingSprite();
+//        if (isEnd)
+//            return;
+//        gc.drawImage(currentSprite.getFxImage(), x, y);
+//        draw4SideFlame(gc);
+//        // _animate=0;
+//        renderExplodeBrick(gc);
+//
+//    }
+
     @Override
-    public void render(GraphicsContext gc) {
+    public void render() {
         choosingSprite();
         if (isEnd)
             return;
-        gc.drawImage(currentSprite.getFxImage(), x, y);
-        draw4SideFlame(gc);
+        GraphicsManager.getGraphicsManager().renderWithImage(this, currentSprite.getFxImage());
+        draw4SideFlame(GraphicsManager.getGraphicsManager().getGraphicsContext());
         // _animate=0;
-        renderExplodeBrick(gc);
+        renderExplodeBrick(GraphicsManager.getGraphicsManager().getGraphicsContext());
 
     }
-
 
     public void renderExplodeBrick(GraphicsContext gc) {
 
