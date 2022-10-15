@@ -14,11 +14,6 @@ public class Oneal extends Enemy {
     }
 
     @Override
-    protected void initState() {
-        this._state = State.GO_WEST;
-    }
-
-    @Override
     protected void initSprite() {
         this._sprite = Sprite.oneal_right1;
 

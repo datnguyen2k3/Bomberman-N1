@@ -14,14 +14,22 @@ public class EnemyManagement extends Management {
     }
 
     public void add(int xUnit, int yUnit, char enemyDiagram, BombermanGame game) {
-        if (enemyDiagram == Enemy.balloomDiagram) {
-            list.add(new Balloom(xUnit, yUnit, Sprite.balloom_left1.getFxImage(), game));
-        } else if (enemyDiagram == Enemy.onealDiagram) {
-            list.add(new Oneal(xUnit, yUnit, Sprite.oneal_right1.getFxImage(), game));
-        } else if (enemyDiagram == Enemy.dollDiagram) {
-            list.add(new Doll(xUnit, yUnit, Sprite.doll_right1.getFxImage(), game));
+        switch (enemyDiagram) {
+            case Enemy.balloomDiagram:
+                list.add(new Balloom(xUnit, yUnit, Sprite.balloom_left1.getFxImage(), game));
+                break;
+            case Enemy.onealDiagram:
+                list.add(new Oneal(xUnit, yUnit, Sprite.oneal_right1.getFxImage(), game));
+                break;
+            case Enemy.dollDiagram:
+                list.add(new Doll(xUnit, yUnit, Sprite.doll_right1.getFxImage(), game));
+                break;
+            case Enemy.minvoDiagram:
+                list.add(new Minvo(xUnit, yUnit, Sprite.minvo_left1.getFxImage(), game));
+                break;
         }
     }
+
 
     public boolean isEnemyKillCharacter(Character character) {
         for (Entity entity : list) {

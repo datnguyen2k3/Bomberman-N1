@@ -61,6 +61,9 @@ public abstract class Character extends Entity {
     protected abstract void initState();
 
     public void setDead() {
+        if (isDead || isEnd)
+            return;
+
         _state = State.DEAD;
         isDead = true;
         goEast = goNorth = goSouth = goWest = running = false;
