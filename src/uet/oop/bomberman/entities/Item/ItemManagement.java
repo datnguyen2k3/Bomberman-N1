@@ -23,6 +23,8 @@ public class ItemManagement extends Management {
                 //System.out.println(1);
                 list.add(new Portal(xUnit, yUnit));
                 break;
+            case Item.hpItemDiagram:
+                list.add(new HpItem(xUnit, yUnit));
         }
     }
 

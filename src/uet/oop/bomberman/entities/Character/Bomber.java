@@ -303,6 +303,9 @@ public class Bomber extends Character {
             case Item.flameItemDiagram:
                 bombManagement.powerUpFlameBomb();
                 break;
+            case Item.hpItemDiagram:
+                hp++;
+                break;
             case Item.portalItemDiagram:
                 if (isBombermanKillAllEnemies()) {
                     setBomberWin();
