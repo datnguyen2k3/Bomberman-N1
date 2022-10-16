@@ -1,14 +1,11 @@
 package uet.oop.bomberman.animation;
 
-import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
-import static uet.oop.bomberman.animation.TextGraphicsList.defaultSize;
+import static uet.oop.bomberman.animation.MenuList.MainMenuList.defaultSize;
 
 public class TextGraphics {
     private Text textGraphics;
@@ -39,6 +36,10 @@ public class TextGraphics {
         textGraphics.setY(y);
     }
 
+    public void setText(String text) {
+        textGraphics.setText(text);
+    }
+
     public void setCenterHorizontal(double screenWidth) {
         textGraphics.setX(screenWidth / 2 - this.getWidth() / 2);
     }
@@ -57,6 +58,11 @@ public class TextGraphics {
     public double getY() {
         return textGraphics.getY();
     }
+
+    public String getText() {
+        return textGraphics.getText();
+    }
+
     public void render(GraphicsContext gc) {
         //Set Color
         gc.setFill(Color.WHITE);

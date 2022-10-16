@@ -13,8 +13,8 @@ public class AnimatedGraphic {
     private int width;
     private int height;
 
-    private int spriteWidth = 0;
-    private int spriteHeight = 0;
+    private int spriteWidth;
+    private int spriteHeight;
 
     private int spriteXPos = 0;
     private int spriteYPos = 0;

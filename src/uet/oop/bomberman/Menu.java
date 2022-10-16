@@ -11,7 +11,8 @@ import javafx.stage.Stage;
 
 
 import uet.oop.bomberman.animation.AnimatedGraphic;
-import uet.oop.bomberman.animation.TextGraphics;
+import uet.oop.bomberman.animation.MenuList.MainMenuList;
+import uet.oop.bomberman.animation.MenuList.MenuLists;
 import uet.oop.bomberman.animation.TextGraphicsList;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -29,7 +30,10 @@ public class Menu extends Application {
     private static final int HEIGHT = 13;
 
     private AnimatedGraphic animatedGraphic;
-    private TextGraphicsList textGraphicsList;
+    private MainMenuList mainMenuList;
+    private TextGraphicsList highscoreGraphicsList;
+    private MenuLists menuLists;
+    private int currentList = 0;
 
     @Override
     public void start(Stage stage) {
@@ -49,7 +53,7 @@ public class Menu extends Application {
 
         // Them scene vao stage
         stage.setScene(scene);
-        stage.show();
+        stage.show(); 
 
         //Add animation
         String filepath = "file:res/textures/menu_logo.png";
@@ -57,8 +61,7 @@ public class Menu extends Application {
                 screenWidth / 2 - 280 / 2, screenHeight / 2 - 146 / 2 - 100,
                 1288, 1683, 280, 146);
 
-        String[] textList = {"START", "OPTIONS", "HIGHSCORE", "EXIT"};
-        textGraphicsList = new TextGraphicsList(textList, screenWidth, scene);
+        menuLists = new MenuLists(screenWidth, screenHeight, scene);
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -73,7 +76,7 @@ public class Menu extends Application {
 
     public void update() {
         animatedGraphic.update();
-        textGraphicsList.update();
+        menuLists.update();
     }
 
     public void render() {
@@ -81,6 +84,7 @@ public class Menu extends Application {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         animatedGraphic.render(gc);
-        textGraphicsList.render(gc);
+
+        menuLists.render(gc);
     }
 }
