@@ -12,8 +12,8 @@ import static javafx.scene.paint.Color.*;
 
 public class TextGraphicsList {
     public static final Color defaultColor = BLACK;
-    public static final double defaultSize = 20;
-    public static final double smallSize = 15;
+    public static final double defaultSize = 25;
+    public static final double smallSize = 20;
     public static final double spaceBetweenLines = 15;
     protected static final double yPos = 210;
     protected List<TextGraphics> textGraphicsList;
