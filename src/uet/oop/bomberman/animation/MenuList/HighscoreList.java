@@ -5,9 +5,18 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.animation.TextGraphicsList;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class HighscoreList extends TextGraphicsList {
+    private static final String dbPath = "res/highscoreDB.txt";
+    private static final String defaultLine = "NO HIGHSCORE RECORDED"; //text rendered when there are no highscores
+    int totalHighscore = 5;
+
     static class Highscore {
         private String playerName;
         private int score;
@@ -19,6 +28,19 @@ public class HighscoreList extends TextGraphicsList {
 
         public String toString() {
             return playerName + " " + score;
+        }
+        public static Highscore parseHighscore(String text) {
+            //Text has the follwing form: player name + " " + score
+            int spaceIndex = 0;
+            while (text.charAt(spaceIndex) != ' ') {
+                spaceIndex++;
+            }
+            if (spaceIndex == 0 || spaceIndex > text.length()) {
+                return null;
+            }
+            String playerName = text.substring(0, spaceIndex);
+            int score = Integer.parseInt(text.substring(spaceIndex + 1));
+            return new Highscore(playerName, score);
         }
     }
 
@@ -32,39 +54,35 @@ public class HighscoreList extends TextGraphicsList {
     }
 
     private void setHighscore() {
-        //Add a .txt file to store all the highscores
-        //Reading file functionalites...
-        highscore.add(new Highscore("t", 1));
-        highscore.add(new Highscore("t", 2));
-        highscore.add(new Highscore("t", 3));
-        highscore.add(new Highscore("t", 4));
-        highscore.add(new Highscore("t", 5));
-        highscore.add(new Highscore("t", 6));
-        highscore.add(new Highscore("t", 7));
-        highscore.add(new Highscore("t", 8));
-        highscore.add(new Highscore("t", 9));
-        highscore.add(new Highscore("t", 10));
+        readDB();
 
         highscore.sort((o1, o2) -> {
             if (o1.score != o2.score) {
-                return Integer.compare(o1.score, o2.score);
+                return Integer.compare(o2.score, o1.score);
             }
-            return o1.playerName.compareTo(o2.playerName);
+            return o2.playerName.compareTo(o1.playerName);
         });
 
-        while (highscore.size() > 10) {
-            highscore.remove(highscore.size() - 1);
-        }
+        if (highscore.size() == 0) {
+            addTextAtEnd(defaultLine);
+        } else {
+            while (highscore.size() > totalHighscore) {
+                highscore.remove(highscore.size() - 1);
+            }
 
-        for (Highscore score: highscore) {
-            addTextAtEnd(score.toString());
+            for (Highscore score: highscore) {
+                addTextAtEnd(score.toString());
+            }
         }
     }
 
     private void addHighscore(Highscore newScore) {
+        removeText(defaultLine);
+
         if (newScore.score > highscore.get(highscore.size() - 1).score) {
             removeText(highscore.size() - 1);
-            highscore.remove(highscore.size() -1);
+            findAndDeleteDB(highscore.get(highscore.size() - 1).toString());
+            highscore.remove(highscore.size() - 1);
             int index = 0;
             while (newScore.score < highscore.get(index).score) {
                 index++;
@@ -72,8 +90,7 @@ public class HighscoreList extends TextGraphicsList {
             highscore.add(index, newScore);
             addText(newScore.toString(), index);
 
-            //Write to file and delete
-            //...
+            writeToDB(newScore);
         }
     }
 
@@ -82,6 +99,40 @@ public class HighscoreList extends TextGraphicsList {
         if (mainIndex == textGraphicsList.size() - 1 && keyEvent.getCode() == KeyCode.ENTER) {
             //Handle state changes
             exitTo = "MAIN";
+        }
+    }
+
+    private void readDB() {
+        try (BufferedReader br = new BufferedReader(new FileReader(dbPath))) {
+            String line = br.readLine();
+
+            while (line != null) {
+                highscore.add(Highscore.parseHighscore(line));
+                line = br.readLine();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void findAndDeleteDB(String text) {
+        File file = new File(dbPath);
+        List<String> out;
+        try {
+            out = Files.lines(file.toPath())
+                    .filter(line -> !line.contains(text))
+                    .collect(Collectors.toList());
+            Files.write(file.toPath(), out, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void writeToDB(Highscore newScore) {
+      try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(dbPath), StandardOpenOption.APPEND)) {
+            writer.write(newScore.toString() + "\n");
+        } catch (IOException ioe) {
+            System.err.format("IOException: %s%n", ioe);
         }
     }
 }

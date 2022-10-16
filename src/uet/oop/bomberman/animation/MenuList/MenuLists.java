@@ -2,6 +2,7 @@ package uet.oop.bomberman.animation.MenuList;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import uet.oop.bomberman.Game;
 import uet.oop.bomberman.animation.TextGraphicsList;
 
 import java.util.ArrayList;
@@ -20,9 +21,9 @@ public class MenuLists {
         String[] mainTexts = {"START", "OPTIONS", "HIGHSCORE", "INFO", "EXIT"};
         menuLists.add(new MainMenuList(mainTexts, screenWidth, screenHeight, scene));
 
-        //Add options list
+        //Add option list
         String[] options = {"OPTIONS", "BACK"};
-        menuLists.add(new TextGraphicsList(options, screenWidth, screenHeight, scene));
+        menuLists.add(new OptionList(options, screenWidth, screenHeight, scene));
 
         //Add highscore list
         menuLists.add(new HighscoreList(screenWidth, screenHeight, scene));
@@ -30,7 +31,7 @@ public class MenuLists {
 
         //Add info
         String[] info = {"INFO", "BACK"};
-        menuLists.add(new TextGraphicsList(info, screenWidth, screenHeight, scene));
+        menuLists.add(new InfoList(info, screenWidth, screenHeight, scene));
 
     }
 
@@ -48,7 +49,7 @@ public class MenuLists {
             } else if (currentIndex == 5) {
                 currentIndex = 0;
             }
-            System.out.println(currentIndex);
+
             menuLists.get(oldIndex).exit();
         }
     }

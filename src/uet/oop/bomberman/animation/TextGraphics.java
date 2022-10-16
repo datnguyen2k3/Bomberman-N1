@@ -8,6 +8,7 @@ import javafx.scene.text.Text;
 import static uet.oop.bomberman.animation.MenuList.MainMenuList.defaultSize;
 
 public class TextGraphics {
+    private Color color;
     private Text textGraphics;
 
     public TextGraphics(String text) {
@@ -16,6 +17,7 @@ public class TextGraphics {
     }
 
     public void setColor(Color color) {
+        this.color = color;
         textGraphics.setFill(color);
     }
 
@@ -34,10 +36,6 @@ public class TextGraphics {
 
     public void setY(double y) {
         textGraphics.setY(y);
-    }
-
-    public void setText(String text) {
-        textGraphics.setText(text);
     }
 
     public void setCenterHorizontal(double screenWidth) {
@@ -65,7 +63,7 @@ public class TextGraphics {
 
     public void render(GraphicsContext gc) {
         //Set Color
-        gc.setFill(Color.WHITE);
+        gc.setFill(color);
 
         //Set Font
         gc.setFont(textGraphics.getFont());

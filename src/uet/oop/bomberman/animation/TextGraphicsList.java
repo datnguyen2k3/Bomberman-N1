@@ -8,15 +8,13 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import static javafx.scene.paint.Color.WHITE;
+import static javafx.scene.paint.Color.*;
 
 public class TextGraphicsList {
-    public static final Color defaultColor = WHITE;
+    public static final Color defaultColor = BLACK;
     public static final double defaultSize = 20;
     public static final double smallSize = 15;
     public static final double spaceBetweenLines = 15;
-    protected List<String> listTexts;
-    protected String listType;
     protected static final double yPos = 210;
     protected List<TextGraphics> textGraphicsList;
     protected int mainIndex;
@@ -53,9 +51,6 @@ public class TextGraphicsList {
         }
     }
 
-    public void setListType(String listType) {
-        this.listType = listType;
-    }
     public void setText() {
         if (isOverScreen) {
             //Set the opacity of texts outside the current range to 0
@@ -185,6 +180,7 @@ public class TextGraphicsList {
 
     protected void removeText(int i) {
         textGraphicsList.remove(i);
+
         restartList();
     }
 
@@ -195,8 +191,8 @@ public class TextGraphicsList {
             isOverScreen = true;
         }
 
+        currentTopIndex = 0;
         mainIndex = 0;
-
         setText();
     }
     protected String getText(int mainIndex) {
