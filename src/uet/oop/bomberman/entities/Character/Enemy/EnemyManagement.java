@@ -33,6 +33,8 @@ public class EnemyManagement extends Management {
                 return new Doll(xUnit, yUnit, Sprite.doll_right1.getFxImage(), game);
             case Enemy.minvoDiagram:
                 return new Minvo(xUnit, yUnit, Sprite.minvo_left1.getFxImage(), game);
+            case Enemy.doraDiagram:
+                return new Dora(xUnit, yUnit, Sprite.kondoria_left1.getFxImage(), game);
         }
 
         return null;

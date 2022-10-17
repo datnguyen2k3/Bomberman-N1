@@ -255,7 +255,14 @@ public class Bomber extends Character {
                 }
 
                 if (event.getCode() == KeyCode.SPACE) {
-                    Bomb b = new Bomb(get_xUnitCenter(), get_yUnitCenter(), bombManagement, game);
+                    int bomb_xUnit = get_xUnitCenter();
+                    int bomb_yUnit = get_yUnitCenter();
+
+                    if (Brick.isBrick(bomb_xUnit, bomb_yUnit) || Wall.isWall(bomb_xUnit, bomb_yUnit)) {
+                        return;
+                    }
+
+                    Bomb b = new Bomb(bomb_xUnit, bomb_yUnit, bombManagement, game);
                     bombManagement.add(b);
                 }
             }

@@ -53,6 +53,7 @@ public class BombManagement extends Management {
         if (list.size() == maxBomb)
             return;
         list.add(b);
+        //BombermanGame.diagramMap[b.get_yUnit()][b.get_xUnit()] = '*';
     }
 
     @Override
@@ -71,8 +72,10 @@ public class BombManagement extends Management {
         if (list.size() == 0)
             return;
         Bomb firstBomb = (Bomb) list.get(list.size() - 1);
-        if (firstBomb.isEnd())
+        if (firstBomb.isEnd()) {
+            //BombermanGame.diagramMap[firstBomb.get_yUnit()][firstBomb.get_xUnit()] = ' ';
             list.remove(firstBomb);
+        }
     }
 
     public boolean isDestroyBrick(Brick brick) {

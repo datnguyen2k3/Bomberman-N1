@@ -14,7 +14,8 @@ public abstract class Enemy extends Character {
     public static final char onealDiagram = '2';
     public static final char dollDiagram = '3';
     public static final char minvoDiagram = '4';
-    public static char lastEnemy = '4';
+    public static final char doraDiagram = '5';
+    public static char lastEnemy = '5';
 
     Bomber bomber = game.getBomberman();
 
