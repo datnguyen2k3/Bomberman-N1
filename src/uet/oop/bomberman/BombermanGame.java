@@ -48,6 +48,10 @@ public class BombermanGame {
     private boolean isAdd = false;
     private boolean isWin = false;
 
+    public BombManagement getBombManagement() {
+        return this.bombManagement;
+    }
+
     private Board board = new Board();
     int level = 1;
 

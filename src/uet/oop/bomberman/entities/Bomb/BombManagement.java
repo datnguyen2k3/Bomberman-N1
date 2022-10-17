@@ -12,13 +12,14 @@ public class BombManagement extends Management {
     private BombermanGame game;
     private int currentTimeRefresh = 0;
 
-//    private int explodedLength = 1;
+    //    private int explodedLength = 1;
     private int explodedLength = 1;
     private int maxBomb = 1;
 
     public int getMaxBomb() {
         return maxBomb;
     }
+
     public void setMaxBomb(int maxBomb) {
         this.maxBomb = maxBomb;
     }
@@ -26,6 +27,7 @@ public class BombManagement extends Management {
     public int getFlame() {
         return explodedLength;
     }
+
     public void setFlame(int flame) {
         this.explodedLength = flame;
     }
@@ -41,6 +43,7 @@ public class BombManagement extends Management {
     public void powerUpFlameBomb() {
         this.explodedLength++;
     }
+
     public void powerUpMaxBomb() {
         maxBomb++;
     }
@@ -49,7 +52,24 @@ public class BombManagement extends Management {
         return explodedLength;
     }
 
-    public void add( Bomb b) {
+
+    public boolean isBomb(int xUnit, int yUnit) {
+
+        for (Entity b : list) {
+            if (b instanceof Bomb) {
+                if (b.get_xUnit() == xUnit && b.get_yUnit() == yUnit) {
+                    if (game.getBomberman().get_xUnit() == xUnit && game.getBomberman().get_yUnit() == yUnit) {
+                        return false;
+                    }
+                    return true;
+                }
+            }
+
+        }
+        return false;
+    }
+
+    public void add(Bomb b) {
         if (list.size() == maxBomb)
             return;
         list.add(b);
@@ -81,7 +101,7 @@ public class BombManagement extends Management {
     public boolean isDestroyBrick(Brick brick) {
         for (Entity e : list) {
             // Bomb bomb = (Bomb) e;
-            for (Pair<Integer, Integer> bombCoordinate : ((Bomb)e).destroyedBricks) {
+            for (Pair<Integer, Integer> bombCoordinate : ((Bomb) e).destroyedBricks) {
                 int bomb_xUnit = bombCoordinate.getKey();
                 int bomb_yUnit = bombCoordinate.getValue();
                 if (bomb_xUnit == brick.get_xUnit() && bomb_yUnit == brick.get_yUnit())
@@ -99,9 +119,9 @@ public class BombManagement extends Management {
                 int bomb_xUnit = bombCoordinate.getKey();
                 int bomb_yUnit = bombCoordinate.getValue();
                 if (enemy.isImpact(bomb_xUnit * Sprite.SCALED_SIZE,
-                                    bomb_yUnit * Sprite.SCALED_SIZE,
-                                    bomb_xUnit * Sprite.SCALED_SIZE + Sprite.SCALED_SIZE,
-                                    bomb_yUnit * Sprite.SCALED_SIZE + Sprite.SCALED_SIZE)) {
+                        bomb_yUnit * Sprite.SCALED_SIZE,
+                        bomb_xUnit * Sprite.SCALED_SIZE + Sprite.SCALED_SIZE,
+                        bomb_yUnit * Sprite.SCALED_SIZE + Sprite.SCALED_SIZE)) {
                     // System.out.println(enemy.getX() + " " + enemy.getY());
                     return true;
                 }
