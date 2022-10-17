@@ -14,9 +14,9 @@ import static javafx.scene.paint.Color.*;
 public class TextGraphicsList {
     public static final Color defaultColor = BLACK;
     public static final double defaultSize = 25;
-    public static final double smallSize = 20;
     public static final double spaceBetweenLines = 15;
     protected static final double yPos = 210;
+    protected double size;
     protected List<TextGraphics> textGraphicsList;
     protected int mainIndex;
     protected int scrollSpeed = 10;
@@ -43,6 +43,7 @@ public class TextGraphicsList {
             textGraphicsList.add(textGraphics);
         }
 
+        setSize();
         setText();
 
         //Check if the list is over screen
@@ -68,10 +69,10 @@ public class TextGraphicsList {
             TextGraphics textGraphics = textGraphicsList.get(i);
             if (i != mainIndex) {
                 textGraphics.setOpacity(0.5);
-                textGraphics.setSize(smallSize);
+                textGraphics.setSize(size - 5);
             } else {
                 textGraphics.setOpacity(1);
-                textGraphics.setSize(defaultSize);
+                textGraphics.setSize(size);
             }
 
             this.textGraphicsList.get(i).setColor(defaultColor);
@@ -118,12 +119,16 @@ public class TextGraphicsList {
         mainIndex = 0;
     }
 
+    protected void setSize() {
+        size = defaultSize;
+    }
+
     public String isExiting() {
         return exitTo;
     }
 
     //Calculate the total height of the list
-    public int calculateMaxSize(double screenHeight) {
+    protected int calculateMaxSize(double screenHeight) {
         double height = 0;
 
         height += yPos;
