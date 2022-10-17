@@ -1,11 +1,11 @@
-In this game, you are a bomber
+In this game, you are a bomberman
 Your mission is to find hidden doors
 Use bombs to break obstacles and kill monsters
 Find power items to increase your strength
 Use ARROWS or WASD to move
 Press ENTER to place the bomb
 This game was developed by:
-Pham Thanh Dat
+Nguyen Thanh Dat
 Nguyen Vu Thanh Tung
 Nguyen Duc Tung
 Have fun playing our games:)
