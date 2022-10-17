@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static javafx.scene.paint.Color.*;
 
@@ -169,7 +170,7 @@ public class TextGraphicsList {
 
     protected void removeText(String text) {
         for (TextGraphics textGraphics: textGraphicsList) {
-            if (textGraphics.getText() == text) {
+            if (Objects.equals(textGraphics.getText(), text)) {
                 textGraphicsList.remove(textGraphics);
                 break;
             }
@@ -182,6 +183,10 @@ public class TextGraphicsList {
         textGraphicsList.remove(i);
 
         restartList();
+    }
+
+    protected void removeAllText() {
+        textGraphicsList.clear();
     }
 
     private void restartList() {

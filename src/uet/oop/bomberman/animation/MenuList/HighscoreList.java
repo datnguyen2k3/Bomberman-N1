@@ -135,4 +135,19 @@ public class HighscoreList extends TextGraphicsList {
             System.err.format("IOException: %s%n", ioe);
         }
     }
+
+    public void resetHighscore() {
+        File file = new File(dbPath);
+        file.delete();
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        highscore.clear();
+        removeAllText();
+        setHighscore();
+        addTextAtEnd("BACK");
+    }
 }

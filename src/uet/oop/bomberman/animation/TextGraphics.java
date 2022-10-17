@@ -9,7 +9,7 @@ import static uet.oop.bomberman.animation.MenuList.MainMenuList.defaultSize;
 
 public class TextGraphics {
     private Color color;
-    private Text textGraphics;
+    private final Text textGraphics;
 
     public TextGraphics(String text) {
         textGraphics = new Text(0, 0, text);
@@ -23,11 +23,6 @@ public class TextGraphics {
 
     public void setSize(double size) {
         textGraphics.setFont(Font.loadFont("file:res/Font/game_font.ttf", size));
-    }
-
-    public void setPos(double x, double y) {
-        textGraphics.setX(x);
-        textGraphics.setY(y);
     }
 
     public void setX(double x) {

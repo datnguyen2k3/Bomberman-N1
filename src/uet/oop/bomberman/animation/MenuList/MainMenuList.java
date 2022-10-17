@@ -6,8 +6,9 @@ import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.animation.TextGraphicsList;
 
 public class MainMenuList extends TextGraphicsList {
-    public MainMenuList(String[] textList, int screenWidth, int screenHeight, Scene scene) {
-        super(textList, screenWidth, screenHeight, scene);
+    private static final String[] mainTexts = {"START", "OPTIONS", "HIGHSCORE", "INFO", "EXIT"};
+    public MainMenuList(int screenWidth, int screenHeight, Scene scene) {
+        super(mainTexts, screenWidth, screenHeight, scene);
     }
 
 
@@ -16,6 +17,9 @@ public class MainMenuList extends TextGraphicsList {
         if (keyEvent.getCode() == KeyCode.ENTER) {
             //Handle state changes
             exitTo = getText(mainIndex);
+            if (mainIndex == 4) {
+                exitTo = "QUESTION";
+            }
         }
     }
 

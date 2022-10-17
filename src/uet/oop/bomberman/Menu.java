@@ -32,10 +32,7 @@ public class Menu extends Application {
 
     private AnimatedGraphic animatedGraphic;
     private AnimatedGraphic background;
-    private MainMenuList mainMenuList;
-    private TextGraphicsList highscoreGraphicsList;
     private MenuLists menuLists;
-    private int currentList = 0;
 
     @Override
     public void start(Stage stage) {
