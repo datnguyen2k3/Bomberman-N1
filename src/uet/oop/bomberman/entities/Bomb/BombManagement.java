@@ -1,12 +1,15 @@
 package uet.oop.bomberman.entities.Bomb;
 
 import javafx.util.Pair;
+import uet.oop.bomberman.entities.Character.Bomber;
+import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Management;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.entities.Character.Character;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.utils.State;
 
 public class BombManagement extends Management {
     private BombermanGame game;
@@ -53,14 +56,53 @@ public class BombManagement extends Management {
     }
 
 
-    public boolean isBomb(int xUnit, int yUnit) {
+    // xUnit, yUnit is coordinate of bomb.
+    public boolean checkPosBombAndBomber(int xUnit, int yUnit) {
+        int bomberX = game.getBomberman().getX();
+        int bomberY = game.getBomberman().getY();
+        int bomberXUnit = game.getBomberman().get_xUnit();
+        int bomberYUnit = game.getBomberman().get_yUnit();
 
+        if (game.getBomberman().get_state() == State.GO_EAST) {
+            // 2 truong hop
+            return (bomberXUnit == xUnit && bomberYUnit == yUnit)
+                    || (bomberX + Sprite.SCALED_SIZE - xUnit * Sprite.SCALED_SIZE > Sprite.SCALED_SIZE / 2
+                    && bomberYUnit == yUnit);
+        } else if (game.getBomberman().get_state() == State.GO_WEST) {
+            return (bomberXUnit == xUnit && bomberYUnit == yUnit)
+                    || ((xUnit + 1) * Sprite.SCALED_SIZE - bomberX > Sprite.SCALED_SIZE / 2
+                    && bomberYUnit == yUnit);
+        } else if (game.getBomberman().get_state() == State.GO_NORTH) {
+            return (bomberXUnit == xUnit && bomberYUnit == yUnit)
+                    || ((yUnit + 1) * Sprite.SCALED_SIZE - bomberY > Sprite.SCALED_SIZE / 2
+                    && bomberXUnit == xUnit);
+        } else if (game.getBomberman().get_state() == State.GO_SOUTH) {
+            return (bomberXUnit == xUnit && bomberYUnit == yUnit)
+                    || (bomberY + Sprite.SCALED_SIZE - yUnit * Sprite.SCALED_SIZE > Sprite.SCALED_SIZE / 2
+                    && bomberXUnit == xUnit);
+        }
+        return false;
+    }
+
+
+    public boolean isBomb(int xUnit, int yUnit, Entity entity) {
         for (Entity b : list) {
             if (b instanceof Bomb) {
                 if (b.get_xUnit() == xUnit && b.get_yUnit() == yUnit) {
-                    if (game.getBomberman().get_xUnit() == xUnit && game.getBomberman().get_yUnit() == yUnit) {
-                        return false;
+
+                    /*
+                     * if recent bomb and bomberman is at same position (unit coordinate)
+                     * we consider bomberman does not collide with bomb.
+                     */
+                    if (entity instanceof Enemy) {
+                        return true;
+                    } else if (entity instanceof Bomber) {
+                        if (checkPosBombAndBomber(xUnit, yUnit)) {
+                            return false;
+                        }
+                        return true;
                     }
+
                     return true;
                 }
             }
