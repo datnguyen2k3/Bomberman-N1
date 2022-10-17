@@ -34,7 +34,6 @@ public class OptionList extends TextGraphicsList {
             volumeString = "MUSIC VOLUME: " + musicVolume + "%";
         }
         if (type == 2) {
-            System.out.println(volume);
             SoundManager.getSoundManager().setSoundVolume((double) volume / 100);
             soundVolume = volume;
             volumeString = "SOUND VOLUME: " + soundVolume + "%";

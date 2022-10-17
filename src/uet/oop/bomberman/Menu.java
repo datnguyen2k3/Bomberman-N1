@@ -15,13 +15,7 @@ import uet.oop.bomberman.animation.Background;
 import uet.oop.bomberman.animation.MenuList.MenuLists;
 import uet.oop.bomberman.graphics.Sprite;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import uet.oop.bomberman.sound.SoundManager;
-
-import java.io.File;
-
-import static javafx.scene.media.MediaPlayer.INDEFINITE;
 
 public class Menu extends Application {
     public static void main(String[] args) {
@@ -65,7 +59,7 @@ public class Menu extends Application {
         animatedGraphic.setCenterHorizontal(screenWidth);
 
         //Add music
-        SoundManager.getSoundManager().addMusic(SoundManager.mainMusicFilepath, INDEFINITE);
+        SoundManager.getSoundManager().addMusicInfinite(SoundManager.mainMusicFilepath);
 
         menuLists = new MenuLists(screenWidth, screenHeight, scene);
 

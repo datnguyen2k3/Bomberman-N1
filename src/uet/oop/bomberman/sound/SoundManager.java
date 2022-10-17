@@ -27,8 +27,7 @@ public class SoundManager {
     }
 
     public void addMusic(String filepath, int totalCycles) {
-        String musicFile = filepath;
-        Media sound = new Media(new File(musicFile).toURI().toString());
+        Media sound = new Media(new File(filepath).toURI().toString());
         musicList.add(new MediaPlayer(sound));
         musicList.get(musicList.size() - 1).setCycleCount(totalCycles);
     }
@@ -38,8 +37,7 @@ public class SoundManager {
     }
 
     public void addSound(String filepath) {
-        String musicFile = filepath;
-        Media sound = new Media(new File(musicFile).toURI().toString());
+        Media sound = new Media(new File(filepath).toURI().toString());
         soundList.add(new MediaPlayer(sound));
     }
 
