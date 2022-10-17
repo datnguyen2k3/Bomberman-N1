@@ -1,5 +1,6 @@
 package uet.oop.bomberman.graphics;
 
+import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -62,6 +63,10 @@ class Viewport {
         this.dir = dir;
     }
 
+    public void setPos(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 }
 
 public class GraphicsManager {
@@ -91,11 +96,16 @@ public class GraphicsManager {
     }
 
     public void render(Entity entity) {
-        gc.drawImage(entity.getImage(), entity.getX() -  viewport.getX(), entity.getY() - viewport.getY());
+        renderRaw(entity.getX(), entity.getY(), entity.getImage());
     }
 
     public void renderWithImage(Entity entity, Image image) {
-        gc.drawImage(image, entity.getX() -  viewport.getX(), entity.getY() - viewport.getY());
+        renderRaw(entity.getX(), entity.getY(), image);
+    }
+
+    public void renderRaw(int x, int y, Image image) {
+
+        gc.drawImage(image, x - viewport.getX(), y - viewport.getY());
     }
 
     public void update(boolean isColliding, State state, int speed) {
@@ -110,6 +120,11 @@ public class GraphicsManager {
         viewport.update();
     }
 
+    public void restart(Group root) {
+        restartCanvas(root);
+        viewport.setPos(0, 0);
+    }
+
     public static GraphicsManager getGraphicsManager() {
         if (graphicsManager == null) {
             graphicsManager = new GraphicsManager();
@@ -122,6 +137,13 @@ public class GraphicsManager {
         gc = canvas.getGraphicsContext2D();
         gc.setFill(BLACK);
     }
+
+    public void restartCanvas(Group root) {
+        root.getChildren().remove(canvas);
+        setCanvas();
+        root.getChildren().add(canvas);
+    }
+
     public Canvas getCanvas() {
         return canvas;
     }

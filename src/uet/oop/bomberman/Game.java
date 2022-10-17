@@ -64,7 +64,7 @@ public class Game extends Application {
                 if (bombermanGame.isWin()) {
                     if (bombermanGame.getLevel() == maxLevel) {
                         if (!isWin) {
-                            restartCanvas(root);
+                            graphicsManager.restartCanvas(root);
                         }
                         if (gameWin.isRun()) {
                             gameWin.run(root);
@@ -84,7 +84,7 @@ public class Game extends Application {
                 }
 
                 if (gameOver.isRun()) {
-                    restartCanvas(root);
+                    graphicsManager.restartCanvas(root);
                     gameOver.run(root);
                     return;
                 }
@@ -108,7 +108,7 @@ public class Game extends Application {
         bombermanGame = newBombermanGame;
         levelGameUI = new LevelGameUI(bombermanGame.getLevel());
 
-        restartCanvas(root);
+        graphicsManager.restart(root);
     }
 
     private void setNextLevel(Group root) {
@@ -118,18 +118,18 @@ public class Game extends Application {
         bombermanGame = newBombermanGame;
         levelGameUI = new LevelGameUI(bombermanGame.getLevel());
 
-        restartCanvas(root);
+        graphicsManager.restartCanvas(root);
     }
 
-    private void restartCanvas(Group root) {
-        root.getChildren().remove(graphicsManager.getCanvas());
-        graphicsManager.setCanvas();
-        root.getChildren().add(graphicsManager.getCanvas());
-
-//        root.getChildren().remove(canvas);
-//        setCanvas();
-//        root.getChildren().add(canvas);
-    }
+//    private void restartCanvas(Group root) {
+//        root.getChildren().remove(graphicsManager.getCanvas());
+//        graphicsManager.setCanvas();
+//        root.getChildren().add(graphicsManager.getCanvas());
+//
+////        root.getChildren().remove(canvas);
+////        setCanvas();
+////        root.getChildren().add(canvas);
+//    }
 
     public static void main(String[] args) {
         launch(Game.class);

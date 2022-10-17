@@ -146,15 +146,12 @@ public class Bomb extends Entity {
         explodedCells.add(new Pair<>(xUnit, yUnit));
         return true;
     }
-
-
-    private void getAllExplodedBrick() {
-
-    }
+//    private void getAllExplodedBrick() {
+//
+//    }
 
     // get the first brick to be destroyed, we need render from bomb location to this brick location, not render over.
     private Coordinate firstBrickToBeDestroyed(int startXUnit, int startYUnit, String direction) {
-
         Coordinate res = new Coordinate(0, 0);
         if (direction.equals("right")) {
             res.setY(get_yUnit());
@@ -237,7 +234,9 @@ public class Bomb extends Entity {
                     return res;
                 }
             }
+
             return res;
+
         } else {
             res.setX(get_xUnit());
             if (startYUnit + bombManagement.getExplodedLength() >= BombermanGame.HEIGHT) {
@@ -296,7 +295,6 @@ public class Bomb extends Entity {
 
 
     public void choosingSprite() {
-
         switch (_state) {
             case WAITING_EXPLODING: {
                 currentSprite = Sprite.movingSprite(bomb, bomb1, bomb2, _animate, TIME_WAIT_TO_EXPLODING / 2);
@@ -309,22 +307,36 @@ public class Bomb extends Entity {
         }
     }
 
+//    private void renderFlameRight(GraphicsContext gc, int xUnit, boolean isLast) {
+//        if (isLast) {
+//            curFlameSprite = Sprite.movingSprite(Sprite.explosion_horizontal_right_last
+//                    , Sprite.explosion_horizontal_right_last1
+//                    , Sprite.explosion_horizontal_right_last2, _animate, TIME_EXPLODING / 2);
+//            gc.drawImage(curFlameSprite.getFxImage()
+//                    , xUnit * Sprite.SCALED_SIZE
+//                    , get_yUnit() * Sprite.SCALED_SIZE);
+//        } else {
+//            curFlameSprite = Sprite.movingSprite(Sprite.explosion_horizontal
+//                    , Sprite.explosion_horizontal1
+//                    , Sprite.explosion_horizontal2, _animate, TIME_EXPLODING / 2);
+//            gc.drawImage(curFlameSprite.getFxImage()
+//                    , xUnit * Sprite.SCALED_SIZE
+//                    , get_yUnit() * Sprite.SCALED_SIZE);
+//        }
+//    }
     private void renderFlameRight(GraphicsContext gc, int xUnit, boolean isLast) {
         if (isLast) {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_horizontal_right_last
                     , Sprite.explosion_horizontal_right_last1
                     , Sprite.explosion_horizontal_right_last2, _animate, TIME_EXPLODING / 2);
-            gc.drawImage(curFlameSprite.getFxImage()
-                    , xUnit * Sprite.SCALED_SIZE
-                    , get_yUnit() * Sprite.SCALED_SIZE);
         } else {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_horizontal
                     , Sprite.explosion_horizontal1
                     , Sprite.explosion_horizontal2, _animate, TIME_EXPLODING / 2);
-            gc.drawImage(curFlameSprite.getFxImage()
-                    , xUnit * Sprite.SCALED_SIZE
-                    , get_yUnit() * Sprite.SCALED_SIZE);
         }
+
+        GraphicsManager.getGraphicsManager().renderRaw(xUnit * Sprite.SCALED_SIZE
+                , get_yUnit() * Sprite.SCALED_SIZE, curFlameSprite.getFxImage());
     }
 
     private void renderFlameLeft(GraphicsContext gc, int xUnit, boolean isLast) {
@@ -332,17 +344,12 @@ public class Bomb extends Entity {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_horizontal_left_last
                     , Sprite.explosion_horizontal_left_last1
                     , Sprite.explosion_horizontal_left_last2, _animate, TIME_EXPLODING / 2);
-            gc.drawImage(curFlameSprite.getFxImage()
-                    , xUnit * Sprite.SCALED_SIZE
-                    , get_yUnit() * Sprite.SCALED_SIZE);
-
         } else {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_horizontal
                     , Sprite.explosion_horizontal1, Sprite.explosion_horizontal2, _animate, TIME_EXPLODING / 2);
-            gc.drawImage(curFlameSprite.getFxImage()
-                    , xUnit * Sprite.SCALED_SIZE
-                    , get_yUnit() * Sprite.SCALED_SIZE);
         }
+        GraphicsManager.getGraphicsManager().renderRaw(xUnit * Sprite.SCALED_SIZE
+                , get_yUnit() * Sprite.SCALED_SIZE, curFlameSprite.getFxImage());
     }
 
     private void renderFlameTop(GraphicsContext gc, int yUnit, boolean isLast) {
@@ -350,45 +357,38 @@ public class Bomb extends Entity {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_vertical_top_last
                     , Sprite.explosion_vertical_top_last1
                     , Sprite.explosion_vertical_top_last2, _animate, TIME_EXPLODING / 2);
-            gc.drawImage(curFlameSprite.getFxImage()
-                    , get_xUnit() * Sprite.SCALED_SIZE
-                    , yUnit * Sprite.SCALED_SIZE);
         } else {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_vertical
                     , Sprite.explosion_vertical1
                     , Sprite.explosion_vertical2, _animate, TIME_EXPLODING / 2);
-            gc.drawImage(curFlameSprite.getFxImage()
-                    , get_xUnit() * Sprite.SCALED_SIZE
-                    , yUnit * Sprite.SCALED_SIZE);
         }
-    }
 
-    private void explodeAllBrick(GraphicsContext gc) {
-
+        GraphicsManager.getGraphicsManager().renderRaw(get_xUnit() * Sprite.SCALED_SIZE
+                , yUnit * Sprite.SCALED_SIZE, curFlameSprite.getFxImage());
     }
 
     private void renderFlameDown(GraphicsContext gc, int yUnit, boolean isLast) {
-
         if (isLast) {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_vertical_down_last
                     , Sprite.explosion_vertical_down_last1
                     , Sprite.explosion_vertical_down_last2, _animate, TIME_EXPLODING / 2);
-            gc.drawImage(curFlameSprite.getFxImage()
-                    , get_xUnit() * Sprite.SCALED_SIZE
-                    , yUnit * Sprite.SCALED_SIZE);
         } else {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_vertical
                     , Sprite.explosion_vertical1
                     , Sprite.explosion_vertical2, _animate, TIME_EXPLODING / 2);
-            gc.drawImage(curFlameSprite.getFxImage()
-                    , get_xUnit() * Sprite.SCALED_SIZE
-                    , yUnit * Sprite.SCALED_SIZE);
         }
+
+        GraphicsManager.getGraphicsManager().renderRaw(get_xUnit() * Sprite.SCALED_SIZE
+                , yUnit * Sprite.SCALED_SIZE, curFlameSprite.getFxImage());
     }
 
-    private void log(Coordinate c) {
-         // System.out.println(c.toString());
-    }
+//    private void explodeAllBrick(GraphicsContext gc) {
+//
+//    }
+//
+//    private void log(Coordinate c) {
+//         // System.out.println(c.toString());
+//    }
 
     public void draw4SideFlame(GraphicsContext gc) {
         // check if bomb is exploding, find all grass tiles at 4 side within this exploded length and render
@@ -544,7 +544,7 @@ public class Bomb extends Entity {
 
         if (_state == State.EXPLODING) {
             Sprite curBrickSprite;
-            log(firstBrickDown);
+//            log(firstBrickDown);
             // System.out.println(get_yUnit());
             if (firstBrickDown.getY() + 1 < BombermanGame.HEIGHT
                     && Brick.isBrick(firstBrickDown.getX(), firstBrickDown.getY() + 1)
