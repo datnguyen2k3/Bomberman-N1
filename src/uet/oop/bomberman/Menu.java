@@ -15,6 +15,14 @@ import uet.oop.bomberman.animation.Background;
 import uet.oop.bomberman.animation.MenuList.MenuLists;
 import uet.oop.bomberman.graphics.Sprite;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import uet.oop.bomberman.sound.SoundManager;
+
+import java.io.File;
+
+import static javafx.scene.media.MediaPlayer.INDEFINITE;
+
 public class Menu extends Application {
     public static void main(String[] args) {
         Application.launch(Menu.class);
@@ -49,13 +57,15 @@ public class Menu extends Application {
         stage.setScene(scene);
         stage.show();
 
-        //Add animation
-        String filepath = "file:res/textures/menu_logo.png";
+        //Add background and animation
         background = new Background("file:res/Background/mountain.png",
                 0, 0, 2, screenWidth, screenHeight);
-        animatedGraphic = new AnimatedGraphic(filepath, 0, 50);
+        animatedGraphic = new AnimatedGraphic("file:res/textures/menu_logo.png", 0, 50);
         animatedGraphic.resize(0.25);
         animatedGraphic.setCenterHorizontal(screenWidth);
+
+        //Add music
+        SoundManager.getSoundManager().addMusic(SoundManager.mainMusicFilepath, INDEFINITE);
 
         menuLists = new MenuLists(screenWidth, screenHeight, scene);
 
@@ -67,16 +77,17 @@ public class Menu extends Application {
             }
         };
         timer.start();
-
     }
 
     public void update() {
+        SoundManager.getSoundManager().update();
         animatedGraphic.update();
         menuLists.update();
         background.update();
     }
 
     public void render() {
+        SoundManager.getSoundManager().play();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());

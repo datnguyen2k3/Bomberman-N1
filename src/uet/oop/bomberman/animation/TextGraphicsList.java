@@ -194,7 +194,7 @@ public class TextGraphicsList {
         textGraphicsList.clear();
     }
 
-    private void restartList() {
+    protected void restartList() {
         //Check if the list is over screen
         maxSize = calculateMaxSize(screenHeight);
         if (maxSize != textGraphicsList.size()) {
