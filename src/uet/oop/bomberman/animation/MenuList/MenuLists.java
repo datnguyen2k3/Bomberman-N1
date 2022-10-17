@@ -13,26 +13,14 @@ import java.util.Objects;
 public class MenuLists {
     private static final String[] listTypes = {"MAIN", "OPTIONS", "HIGHSCORE", "INFO", "QUESTION", "START", "EXIT"};
     private List<TextGraphicsList> menuLists;
-    private int currentIndex;
+    private int currentIndex = 0;
 
     public MenuLists(int screenWidth, int screenHeight, Scene scene) {
         menuLists = new ArrayList<>();
-
-        //Add main menu list;
         menuLists.add(new MainMenuList(screenWidth, screenHeight, scene));
-
-        //Add option list
         menuLists.add(new OptionList(screenWidth, screenHeight, scene));
-
-        //Add highscore list
         menuLists.add(new HighscoreList(screenWidth, screenHeight, scene));
-        currentIndex = 0;
-
-        //Add info list
-        String[] info = {"INFO", "BACK"};
-        menuLists.add(new InfoList(info, screenWidth, screenHeight, scene));
-
-        //Add question list
+        menuLists.add(new InfoList(screenWidth, screenHeight, scene));
         menuLists.add(new QuestionList(screenWidth, screenHeight, scene));
     }
 
@@ -42,11 +30,15 @@ public class MenuLists {
 
     public void update() {
         menuLists.get(currentIndex).update();
+
+        //Handle list changes
         if ((!Objects.equals(menuLists.get(currentIndex).isExiting(), "FALSE"))) {
             int oldIndex = currentIndex;
             currentIndex = getCurrentIndex((menuLists.get(currentIndex).isExiting()));
 
-            handleQuestionList(oldIndex);
+            if (currentIndex == 4) {
+                handleQuestionList(oldIndex);
+            }
 
             //Delete this after adding start and exit functionalities
             if (currentIndex == 5) {
@@ -55,31 +47,14 @@ public class MenuLists {
                 currentIndex = 0;
             }
 
+            //Exit from the old list
             menuLists.get(oldIndex).exit();
         }
     }
 
-    public int getCurrentIndex(String type) {
-        for (int i = 0; i < listTypes.length; i++) {
-            if (Objects.equals(type, listTypes[i])) {
-                return i;
-            }
-        }
-
-        return 0;
-    }
-
     public void handleQuestionList(int oldIndex) {
-        if (currentIndex != 4) {
-            return;
-        }
-
-        if (currentIndex == 4) {
-            QuestionList questionList = (QuestionList) menuLists.get(4);
-            questionList.setBeforeIndex(oldIndex);
-        }
-
         QuestionList questionList = (QuestionList) menuLists.get(4);
+        questionList.setBeforeIndex(oldIndex);
 
         //Handle reset highscore
         if (oldIndex == 1) {
@@ -101,6 +76,16 @@ public class MenuLists {
                 }
             });
         }
+    }
+
+    public int getCurrentIndex(String type) {
+        for (int i = 0; i < listTypes.length; i++) {
+            if (Objects.equals(type, listTypes[i])) {
+                return i;
+            }
+        }
+
+        return 0;
     }
 
     public static String getListType(int index) {

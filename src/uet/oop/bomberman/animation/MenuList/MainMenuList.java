@@ -7,15 +7,14 @@ import uet.oop.bomberman.animation.TextGraphicsList;
 
 public class MainMenuList extends TextGraphicsList {
     private static final String[] mainTexts = {"START", "OPTIONS", "HIGHSCORE", "INFO", "EXIT"};
+
     public MainMenuList(int screenWidth, int screenHeight, Scene scene) {
         super(mainTexts, screenWidth, screenHeight, scene);
     }
 
-
     @Override
     protected void addEventHandlers(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.ENTER) {
-            //Handle state changes
             exitTo = getText(mainIndex);
             if (mainIndex == 4) {
                 exitTo = "QUESTION";

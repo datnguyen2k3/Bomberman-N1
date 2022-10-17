@@ -12,13 +12,8 @@ import javafx.stage.Stage;
 
 import uet.oop.bomberman.animation.AnimatedGraphic;
 import uet.oop.bomberman.animation.Background;
-import uet.oop.bomberman.animation.MenuList.MainMenuList;
 import uet.oop.bomberman.animation.MenuList.MenuLists;
-import uet.oop.bomberman.animation.TextGraphicsList;
 import uet.oop.bomberman.graphics.Sprite;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Menu extends Application {
     public static void main(String[] args) {

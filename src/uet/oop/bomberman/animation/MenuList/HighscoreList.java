@@ -13,13 +13,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class HighscoreList extends TextGraphicsList {
-    private static final String dbPath = "res/highscoreDB.txt";
-    private static final String defaultLine = "NO HIGHSCORE RECORDED"; //text rendered when there are no highscores
-    int totalHighscore = 5;
-
-    static class Highscore {
-        private String playerName;
-        private int score;
+    private static class Highscore {
+        private final String playerName;
+        private final int score;
 
         public Highscore(String playerName, int score) {
             this.playerName = playerName;
@@ -43,8 +39,10 @@ public class HighscoreList extends TextGraphicsList {
             return new Highscore(playerName, score);
         }
     }
-
-    List<Highscore> highscore;
+    private static final String dbPath = "res/highscoreDB.txt";
+    private static final String defaultLine = "NO HIGHSCORE RECORDED"; //text rendered when there are no highscores
+    private final int totalHighscore = 5;
+    private List<Highscore> highscore;
 
     public HighscoreList(int screenWidth, int screenHeight, Scene scene) {
         super(new String[0], screenWidth, screenHeight, scene);
@@ -94,10 +92,23 @@ public class HighscoreList extends TextGraphicsList {
         }
     }
 
+    public void resetHighscore() {
+        try {
+            File file = new File(dbPath);
+            file.delete();
+            file.createNewFile();
+            highscore.clear();
+            removeAllText();
+            setHighscore();
+            addTextAtEnd("BACK");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     protected void addEventHandlers(KeyEvent keyEvent) {
         if (mainIndex == textGraphicsList.size() - 1 && keyEvent.getCode() == KeyCode.ENTER) {
-            //Handle state changes
             exitTo = "MAIN";
         }
     }
@@ -134,20 +145,5 @@ public class HighscoreList extends TextGraphicsList {
         } catch (IOException ioe) {
             System.err.format("IOException: %s%n", ioe);
         }
-    }
-
-    public void resetHighscore() {
-        File file = new File(dbPath);
-        file.delete();
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        highscore.clear();
-        removeAllText();
-        setHighscore();
-        addTextAtEnd("BACK");
     }
 }
