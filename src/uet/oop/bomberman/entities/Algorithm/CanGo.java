@@ -4,11 +4,11 @@ import uet.oop.bomberman.entities.Character.Character;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class CanGo {
-    public static int LEFT = 1;
-    public static int RIGHT = 2;
-    public static int UP = 3;
-    public static int DOWN = 4;
-    public static int CANT_MOVE = -1;
+    public static final int LEFT = 1;
+    public static final int RIGHT = 2;
+    public static final int UP = 3;
+    public static final int DOWN = 4;
+    public static final int CANT_MOVE = -1;
 
     public static boolean isCanGoUp(Character character, char[][] map) {
         int xUnit = character.get_xUnit();

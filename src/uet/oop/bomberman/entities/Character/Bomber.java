@@ -58,27 +58,32 @@ public class Bomber extends Character {
     }
 
     private boolean isBrickOrWall(int x, int y) {
-        return (Wall.isWall(get_xUnit(x), get_yUnit(y))
-                || Brick.isBrick(get_xUnit(x), get_yUnit(y)));
+        return Wall.isWall(get_xUnit(x), get_yUnit(y))
+                || Brick.isBrick(get_xUnit(x), get_yUnit(y));
+    }
+
+    private boolean isBrickOrWall(int x, int y, boolean checkBrick) {
+        return Wall.isWall(get_xUnit(x), get_yUnit(y))
+                || Brick.isBrick(get_xUnit(x), get_yUnit(y), checkBrick);
     }
 
     private void smoothMovement() {
         //  Brick brick = new Brick(0, 0);
         if (isCollisionOn == true) {
-
+            boolean checkBrick = !getPassBrick();
             // down
             if (_state == State.GO_SOUTH
-                    && Grass.isGrass(entityLeftSideX + EPSILON, entityTopY + Sprite.SCALED_SIZE + EPSILON)
-                    && Grass.isGrass(entityLeftSideX + EPSILON, entityTopY + EPSILON)
-                    && isBrickOrWall(entityLeftSideX, entityBottomY + EPSILON)) {
+                    && Grass.isGrass(entityLeftSideX + EPSILON, entityTopY + Sprite.SCALED_SIZE + EPSILON, checkBrick)
+                    && Grass.isGrass(entityLeftSideX + EPSILON, entityTopY + EPSILON, checkBrick)
+                    && isBrickOrWall(entityLeftSideX, entityBottomY + EPSILON, checkBrick)) {
 
                 this.x += EPSILON / speedMoveAtEdgeDivideBy;
                 return;
             }
             if (_state == State.GO_SOUTH
-                    && Grass.isGrass(entityRightSideX - EPSILON, entityTopY + Sprite.SCALED_SIZE + EPSILON)
-                    && Grass.isGrass(entityRightSideX - EPSILON, entityTopY + EPSILON)
-                    && isBrickOrWall(entityRightSideX, entityBottomY + EPSILON)) {
+                    && Grass.isGrass(entityRightSideX - EPSILON, entityTopY + Sprite.SCALED_SIZE + EPSILON, checkBrick)
+                    && Grass.isGrass(entityRightSideX - EPSILON, entityTopY + EPSILON, checkBrick)
+                    && isBrickOrWall(entityRightSideX, entityBottomY + EPSILON, checkBrick)) {
 
                 this.x -= EPSILON / speedMoveAtEdgeDivideBy;
                 return;
@@ -86,18 +91,18 @@ public class Bomber extends Character {
 
             // up
             if (_state == State.GO_NORTH
-                    && Grass.isGrass(entityLeftSideX + EPSILON, entityTopY - EPSILON)
-                    && Grass.isGrass(entityLeftSideX + EPSILON, entityTopY)
-                    && isBrickOrWall(entityLeftSideX, entityTopY - EPSILON)) {
+                    && Grass.isGrass(entityLeftSideX + EPSILON, entityTopY - EPSILON, checkBrick)
+                    && Grass.isGrass(entityLeftSideX + EPSILON, entityTopY, checkBrick)
+                    && isBrickOrWall(entityLeftSideX, entityTopY - EPSILON, checkBrick)) {
 
                 this.x += EPSILON / speedMoveAtEdgeDivideBy;
                 return;
             }
 
             if (_state == State.GO_NORTH
-                    && Grass.isGrass(entityRightSideX - EPSILON, entityTopY - EPSILON)
-                    && Grass.isGrass(entityRightSideX - EPSILON, entityTopY)
-                    && isBrickOrWall(entityRightSideX, entityTopY - EPSILON)) {
+                    && Grass.isGrass(entityRightSideX - EPSILON, entityTopY - EPSILON, checkBrick)
+                    && Grass.isGrass(entityRightSideX - EPSILON, entityTopY, checkBrick)
+                    && isBrickOrWall(entityRightSideX, entityTopY - EPSILON, checkBrick)) {
 
                 this.x -= EPSILON / speedMoveAtEdgeDivideBy;
                 return;
@@ -105,16 +110,16 @@ public class Bomber extends Character {
 
             // right
             if (_state == State.GO_EAST
-                    && Grass.isGrass(entityRightSideX + EPSILON, entityBottomY - EPSILON)
-                    && Grass.isGrass(entityRightSideX, entityBottomY - EPSILON)
-                    && isBrickOrWall(entityRightSideX + EPSILON, entityBottomY)) {
+                    && Grass.isGrass(entityRightSideX + EPSILON, entityBottomY - EPSILON, checkBrick)
+                    && Grass.isGrass(entityRightSideX, entityBottomY - EPSILON, checkBrick)
+                    && isBrickOrWall(entityRightSideX + EPSILON, entityBottomY, checkBrick)) {
 
                 this.y -= EPSILON / speedMoveAtEdgeDivideBy;
                 return;
             } else if (_state == State.GO_EAST
-                    && Grass.isGrass(entityRightSideX + EPSILON, entityTopY + EPSILON)
-                    && Grass.isGrass(entityRightSideX, entityTopY + EPSILON)
-                    && isBrickOrWall(entityRightSideX + EPSILON, entityTopY)) {
+                    && Grass.isGrass(entityRightSideX + EPSILON, entityTopY + EPSILON, checkBrick)
+                    && Grass.isGrass(entityRightSideX, entityTopY + EPSILON, checkBrick)
+                    && isBrickOrWall(entityRightSideX + EPSILON, entityTopY, checkBrick)) {
 
                 this.y += EPSILON / speedMoveAtEdgeDivideBy;
                 return;
@@ -122,15 +127,15 @@ public class Bomber extends Character {
 
             // left
             if (_state == State.GO_WEST
-                    && Grass.isGrass(entityLeftSideX - EPSILON, entityBottomY - EPSILON)
-                    && Grass.isGrass(entityLeftSideX, entityBottomY - EPSILON)
-                    && isBrickOrWall(entityLeftSideX - EPSILON, entityBottomY)) {
+                    && Grass.isGrass(entityLeftSideX - EPSILON, entityBottomY - EPSILON, checkBrick)
+                    && Grass.isGrass(entityLeftSideX, entityBottomY - EPSILON, checkBrick)
+                    && isBrickOrWall(entityLeftSideX - EPSILON, entityBottomY, checkBrick)) {
                 this.y -= EPSILON / speedMoveAtEdgeDivideBy;
                 return;
             } else if (_state == State.GO_WEST
-                    && Grass.isGrass(entityLeftSideX - EPSILON, entityTopY + EPSILON)
-                    && Grass.isGrass(entityLeftSideX, entityTopY + EPSILON)
-                    && isBrickOrWall(entityLeftSideX - EPSILON, entityTopY)) {
+                    && Grass.isGrass(entityLeftSideX - EPSILON, entityTopY + EPSILON, checkBrick)
+                    && Grass.isGrass(entityLeftSideX, entityTopY + EPSILON, checkBrick)
+                    && isBrickOrWall(entityLeftSideX - EPSILON, entityTopY, checkBrick)) {
                 this.y += EPSILON / speedMoveAtEdgeDivideBy;
                 return;
             }
@@ -250,7 +255,14 @@ public class Bomber extends Character {
                 }
 
                 if (event.getCode() == KeyCode.SPACE) {
-                    Bomb b = new Bomb(get_xUnitCenter(), get_yUnitCenter(), bombManagement, game);
+                    int bomb_xUnit = get_xUnitCenter();
+                    int bomb_yUnit = get_yUnitCenter();
+
+                    if (Brick.isBrick(bomb_xUnit, bomb_yUnit) || Wall.isWall(bomb_xUnit, bomb_yUnit)) {
+                        return;
+                    }
+
+                    Bomb b = new Bomb(bomb_xUnit, bomb_yUnit, bombManagement, game);
                     bombManagement.add(b);
                 }
             }
@@ -302,6 +314,10 @@ public class Bomber extends Character {
                 break;
             case Item.flameItemDiagram:
                 bombManagement.powerUpFlameBomb();
+                break;
+            case Item.hpItemDiagram:
+                hp++;
+                setPassBrick();
                 break;
             case Item.portalItemDiagram:
                 if (isBombermanKillAllEnemies()) {

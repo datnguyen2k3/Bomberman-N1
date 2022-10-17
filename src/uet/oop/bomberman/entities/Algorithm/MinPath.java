@@ -72,7 +72,7 @@ public class MinPath {
 
         if (CanGo.isCanGoUp(character, BombermanGame.diagramMap)) {
             int minPath = findMinPath(startX, startY - 1, endX, endY, BombermanGame.diagramMap);
-            System.out.println(CanGo.UP + " " + minPath);
+            //System.out.println(CanGo.UP + " " + minPath);
             if (minPath != -1 && minPath < currMinPath) {
                 currMinPath = minPath;
                 direction = CanGo.UP;
@@ -81,7 +81,7 @@ public class MinPath {
 
         if (CanGo.isCanGoDown(character, BombermanGame.diagramMap)) {
             int minPath = findMinPath(startX, startY + 1, endX, endY, BombermanGame.diagramMap);
-            System.out.println(CanGo.DOWN + " " + minPath);
+            //System.out.println(CanGo.DOWN + " " + minPath);
 
             if (minPath != -1 && minPath < currMinPath) {
                 currMinPath = minPath;
@@ -91,7 +91,7 @@ public class MinPath {
 
         if (CanGo.isCanGoLeft(character, BombermanGame.diagramMap)) {
             int minPath = findMinPath(startX - 1, startY, endX, endY, BombermanGame.diagramMap);
-            System.out.println(CanGo.LEFT + " " + minPath);
+            //System.out.println(CanGo.LEFT + " " + minPath);
 
             if (minPath != -1 && minPath < currMinPath) {
                 currMinPath = minPath;
@@ -101,7 +101,7 @@ public class MinPath {
 
         if (CanGo.isCanGoRight(character, BombermanGame.diagramMap)) {
             int minPath = findMinPath(startX + 1, startY, endX, endY, BombermanGame.diagramMap);
-            System.out.println(CanGo.RIGHT + " " + minPath);
+            //System.out.println(CanGo.RIGHT + " " + minPath);
 
             if (minPath != -1 && minPath < currMinPath) {
                 currMinPath = minPath;

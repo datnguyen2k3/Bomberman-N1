@@ -12,11 +12,6 @@ public class Balloom extends Enemy {
     }
 
     @Override
-    protected void initState() {
-        setRandomState();
-    }
-
-    @Override
     protected void initSprite() {
 
         this._sprite = Sprite.balloom_right1;

@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities.StillObject;
 
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -34,6 +35,14 @@ public class Grass extends Entity {
     public static boolean isGrass(int x, int y) {
         char currentDiagram = BombermanGame.diagramMap[get_yUnit(y)][get_xUnit(x)];
         return isGrass(currentDiagram);
+    }
+
+    public static boolean isGrass(int x, int y, boolean checkBrick) {
+        if (!checkBrick) {
+            return true;
+        }
+
+        return isGrass(x, y);
     }
 
 

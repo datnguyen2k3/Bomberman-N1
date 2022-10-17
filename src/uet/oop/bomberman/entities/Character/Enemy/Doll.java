@@ -68,7 +68,7 @@ public class Doll extends Enemy{
             return;
 
         int direction = MinPath.findDirection(this, bomber.get_xUnitCenter(), bomber.get_yUnitCenter());
-        System.out.println(direction);
+        //System.out.println(direction);
 
         if (direction == CanGo.CANT_MOVE) {
             return;

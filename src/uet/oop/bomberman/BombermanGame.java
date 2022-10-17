@@ -66,6 +66,9 @@ public class BombermanGame {
     public int getLevel() {
         return level;
     }
+    public EnemyManagement getEnemyManagement() {
+        return enemyManagement;
+    }
 
     public void setBomber(Bomber bomberman) {
         this.bomberman.setHP(bomberman.getHP());

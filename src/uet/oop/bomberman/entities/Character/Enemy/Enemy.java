@@ -13,7 +13,9 @@ public abstract class Enemy extends Character {
     public static final char balloomDiagram = '1';
     public static final char onealDiagram = '2';
     public static final char dollDiagram = '3';
-    public static char lastEnemy = '3';
+    public static final char minvoDiagram = '4';
+    public static final char doraDiagram = '5';
+    public static char lastEnemy = '5';
 
     Bomber bomber = game.getBomberman();
 
@@ -33,10 +35,10 @@ public abstract class Enemy extends Character {
     }
 
     @Override
-    public void setDead() {
-        isDead = true;
-        _state = State.DEAD;
+    protected void initState() {
+        setRandomState();
     }
+
     public void setRandomState() {
         if(isEnd)
             return;

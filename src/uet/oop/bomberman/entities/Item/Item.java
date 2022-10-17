@@ -9,6 +9,8 @@ public abstract class Item extends Entity {
     public static final char bombItemDiagram = 'b';
     public static final char speedItemDiagram = 's';
     public static final char portalItemDiagram = 'x';
+    public static final char hpItemDiagram = 'h';
+    public static final char[] items = {'f', 'b', 's', 'x', 'h'};
     protected char itemDiagram;
     protected boolean isActivate = false;
     protected boolean isTaken = false;
@@ -22,16 +24,24 @@ public abstract class Item extends Entity {
     }
 
     public static boolean isItem(char diagram) {
-        return diagram == flameItemDiagram
-                || diagram == bombItemDiagram
-                || diagram == speedItemDiagram
-                || diagram == portalItemDiagram;
+        for (char itemDiagram : items) {
+            if (itemDiagram == diagram) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public Item(int xUnit, int yUnit) {
         super(xUnit, yUnit);
         initItemDiagram();
         initSolidArea();
+    }
+
+    @Override
+    public void initSolidArea() {
+
     }
 
     public void setActivate() {
@@ -54,5 +64,10 @@ public abstract class Item extends Entity {
         if (!isActivate)
             return;
         super.render(gc);
+    }
+
+    @Override
+    public void update() {
+
     }
 }

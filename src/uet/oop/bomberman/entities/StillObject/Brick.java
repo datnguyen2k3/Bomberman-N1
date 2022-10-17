@@ -32,6 +32,22 @@ public class Brick extends Entity {
         return isBrick(BombermanGame.diagramMap[yUnit][xUnit]);
     }
 
+    public static boolean isBrick(char diagram, boolean checkBrick) {
+        if (!checkBrick) {
+            return false;
+        }
+
+        return isBrick(diagram);
+    }
+
+    public static boolean isBrick(int xUnit, int yUnit, boolean checkBrick) {
+        if(!checkBrick) {
+            return false;
+        }
+
+        return isBrick(xUnit, yUnit);
+    }
+
     public void setDestroyed() {
         this.isDestroyed = true;
         _state = State.BE_DESTROYING;
