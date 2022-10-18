@@ -34,10 +34,9 @@ public class Balloom extends Enemy {
         this.sprite_character_dead = Sprite.balloom_dead;
         this.sprite_character_dead_1 = Sprite.mob_dead1;
         this.sprite_character_dead_2 = Sprite.mob_dead2;
+        this.sprite_character_dead_3 = Sprite.mob_dead3;
 
-//        this.sprite_character_dead = Sprite.brick_exploded;
-//        this.sprite_character_dead_1 = Sprite.brick_exploded1;
-//        this.sprite_character_dead_2 = Sprite.brick_exploded2;
+
 
         this.sprite_character_up = Sprite.balloom_right1;
         this.sprite_character_up_1 = Sprite.balloom_right1;

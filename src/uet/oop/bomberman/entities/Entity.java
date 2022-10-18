@@ -10,6 +10,11 @@ import java.util.Random;
 import uet.oop.bomberman.BombermanGame;
 public abstract class Entity  {
     protected int _animate = 0;
+    protected int animateRight = 0;
+    protected int animateLeft = 0;
+    protected int animateUp = 0;
+    protected int animateDown = 0;
+    protected int animateDead = 0;
     public static final int MAX_ANIMATION = 7500;
     protected int x; //Tọa độ X tính từ góc trái trên trong Canvas
     protected int y; //Tọa độ Y tính từ góc trái trên trong Canvas
@@ -82,11 +87,48 @@ public abstract class Entity  {
         this.y = yUnit * Sprite.SCALED_SIZE;
     }
 
+    public void animate(String state) {
+        if(state.equals("up")) {
+            if (animateUp < MAX_ANIMATION) {
+                animateUp++;
+            } else {
+                animateUp = 0;
+            }
+        }
+        else if (state.equals("down")) {
+            if (animateDown < MAX_ANIMATION) {
+                animateDown++;
+            } else {
+                animateDown = 0;
+            }
+        }
+        else if (state.equals("right")) {
+            if (animateRight < MAX_ANIMATION) {
+                animateRight++;
+            } else {
+                animateRight = 0;
+            }
+        }
+        else if (state.equals("left")) {
+            if (animateLeft < MAX_ANIMATION) {
+                animateLeft++;
+            } else {
+                animateLeft = 0;
+            }
+        }
+        else if (state.equals("dead")) {
+            if (animateDead < MAX_ANIMATION) {
+                animateDead++;
+            } else {
+                animateDead = 0;
+            }
+        }
+    }
     public void animate() {
-        if (_animate < MAX_ANIMATION) {
-            _animate++;
+        if (this._animate < MAX_ANIMATION) {
+            this._animate++;
         } else {
-            _animate = 0;
+            this._animate = 0;
         }
     }
 

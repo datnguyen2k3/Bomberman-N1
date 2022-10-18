@@ -37,6 +37,7 @@ public class BombermanGame {
     private Canvas canvas;
     private GraphicsContext gc;
 
+
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), this);
     private List<Entity> entities = new ArrayList<>();
@@ -180,9 +181,9 @@ public class BombermanGame {
         enemyManagement.updateEnemyIsKilledByBomb(bomberman.getBombManagement());
 
         // Bomb kill bomber
-//        if (bomberman.getBombManagement().isDestroyEnemy(bomberman)) {
-//            bomberman.setDead();
-//        }
+        if (bomberman.getBombManagement().isDestroyEnemy(bomberman)) {
+            bomberman.setDead();
+        }
 
         // Enemy kill bomber
         if (enemyManagement.isEnemyKillCharacter(bomberman)) {

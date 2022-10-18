@@ -9,13 +9,14 @@ import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.Coordinate;
 import uet.oop.bomberman.utils.State;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Character.Character;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bomb extends Entity {
 
-
+    public static final char bombDiagram = '@';
     List<Coordinate> explodedBrick = new ArrayList<>();
     private int countBricksRemain;
 
@@ -35,6 +36,7 @@ public class Bomb extends Entity {
     private int currentTimeWaitToExploding = TIME_WAIT_TO_EXPLODING;
     private int currentTimeExploding = TIME_EXPLODING;
     private int timeBrickCollapse = 100;
+    private List<Character> charactersInBomb = new ArrayList<>();
 
 
     public List<Pair<Integer, Integer>> explodedCells = new ArrayList<>();
@@ -64,8 +66,37 @@ public class Bomb extends Entity {
         this.bombManagement = bombManagement;
         this.game = game;
         findFirstBrickAt4Side();
+        initCharacterInBomb();
     }
 
+    private void initCharacterInBomb() {
+        if (game.getBomberman().isImpact(get_xUnit(), get_yUnit())) {
+            charactersInBomb.add(game.getBomberman());
+        }
+
+        for(Entity e : game.getEnemyManagement().getList()) {
+            Character c = (Character) e;
+            if (c.isImpact(get_xUnit(), get_yUnit())) {
+                charactersInBomb.add(c);
+            }
+        }
+    }
+    private void updateCharacterInBomb() {
+        List<Character> newCharactersInBomb = new ArrayList<>();
+        for (Character c : charactersInBomb) {
+            if (c.isImpact(get_xUnit(), get_yUnit())) {
+                newCharactersInBomb.add(c);
+            }
+        }
+        charactersInBomb = newCharactersInBomb;
+    }
+    public boolean isCharacterInBomb(Character other) {
+        for (Character c : charactersInBomb) {
+            if (c == other)
+                return true;
+        }
+        return false;
+    }
 
     private void findFirstBrickAt4Side() {
         firstBrickRight = firstBrickToBeDestroyed(get_xUnit(), get_yUnit(), "right");
@@ -74,8 +105,6 @@ public class Bomb extends Entity {
         firstBrickDown = firstBrickToBeDestroyed(get_xUnit(), get_yUnit(), "down");
 //        log(firstBrickDown);
     }
-
-
 
     @Override
     public void initSolidArea() {
@@ -513,6 +542,7 @@ public class Bomb extends Entity {
     public void update() {
         animate();
         running();
+        updateCharacterInBomb();
     }
 
     @Override

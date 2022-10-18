@@ -35,6 +35,10 @@ public class BombManagement extends Management {
         this.explodedLength = flame;
     }
 
+    public BombermanGame getGame() {
+        return this.game;
+    }
+
     public void setGame(BombermanGame game) {
         this.game = game;
     }
@@ -84,12 +88,10 @@ public class BombManagement extends Management {
         return false;
     }
 
-
     public boolean isBomb(int xUnit, int yUnit, Entity entity) {
         for (Entity b : list) {
             if (b instanceof Bomb) {
                 if (b.get_xUnit() == xUnit && b.get_yUnit() == yUnit) {
-
                     /*
                      * if recent bomb and bomberman is at same position (unit coordinate)
                      * we consider bomberman does not collide with bomb.
@@ -104,9 +106,9 @@ public class BombManagement extends Management {
                     }
 
                     return true;
+
                 }
             }
-
         }
         return false;
     }
@@ -116,6 +118,23 @@ public class BombManagement extends Management {
             return;
         list.add(b);
         //BombermanGame.diagramMap[b.get_yUnit()][b.get_xUnit()] = '*';
+    }
+
+    public boolean isCanMoveThroughBomb(int xUnit, int yUnit, Character other) {
+        if (other.getPassBrick()) {
+            return true;
+        }
+
+        for (Entity e : list) {
+            Bomb b = (Bomb) e;
+            if (b.get_xUnit() != xUnit || b.get_yUnit() != yUnit)
+                continue;
+            if (!b.isCharacterInBomb(other)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
@@ -172,4 +191,6 @@ public class BombManagement extends Management {
 
         return false;
     }
+
+
 }

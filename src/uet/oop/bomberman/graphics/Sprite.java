@@ -230,11 +230,9 @@ public class Sprite {
 		if (calc < diff) {
 			return normal;
 		}
-			
 		if (calc < diff * 2) {
 			return x1;
 		}
-			
 		return x2;
 	}
 	

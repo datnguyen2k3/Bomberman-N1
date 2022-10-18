@@ -29,7 +29,7 @@ public class Bomber extends Character {
     private boolean isWin;
 
     private int entityLeftSideX;
-    private int entityRightSideX ;
+    private int entityRightSideX;
     private int entityTopY;
     private int entityBottomY;
 
@@ -37,6 +37,7 @@ public class Bomber extends Character {
         this(x, y, img);
         this.game = game;
         bombManagement = new BombManagement(this.game);
+        MAX_TIME_STOP = 20;
     }
 
     @Override
@@ -181,8 +182,9 @@ public class Bomber extends Character {
         this.sprite_character_right_2 = Sprite.player_right_2;
 
         this.sprite_character_dead = Sprite.player_dead1;
-        this.sprite_character_dead_1 = Sprite.player_dead2;
-        this.sprite_character_dead_2 = Sprite.player_dead3;
+        this.sprite_character_dead_1 = Sprite.player_dead1;
+        this.sprite_character_dead_2 = Sprite.player_dead2;
+        this.sprite_character_dead_3 = Sprite.player_dead3;
 
 
         this._sprite = this.sprite_character_right;
@@ -193,7 +195,6 @@ public class Bomber extends Character {
         if (isDead) {
             return;
         }
-
         super.setDead();
         hp--;
     }
