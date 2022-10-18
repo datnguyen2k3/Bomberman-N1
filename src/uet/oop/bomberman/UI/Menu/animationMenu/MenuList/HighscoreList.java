@@ -3,7 +3,6 @@ package uet.oop.bomberman.UI.Menu.animationMenu.MenuList;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import uet.oop.bomberman.UI.Menu.animationMenu.TextGraphicsList;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -11,6 +10,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import uet.oop.bomberman.UI.Menu.animationMenu.TextGraphicsList;
 
 public class HighscoreList extends TextGraphicsList {
     private static class Highscore {

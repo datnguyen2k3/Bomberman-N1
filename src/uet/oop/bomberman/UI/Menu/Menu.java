@@ -11,9 +11,9 @@ import javafx.stage.Stage;
 
 
 import uet.oop.bomberman.UI.Menu.animationMenu.AnimatedGraphic;
-import uet.oop.bomberman.UI.Menu.animationMenu.Background;
 import uet.oop.bomberman.UI.Menu.animationMenu.MenuList.MenuLists;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.UI.Menu.animationMenu.Background;
 
 import uet.oop.bomberman.sound.SoundManager;
 
