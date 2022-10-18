@@ -5,7 +5,7 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Dora extends Enemy {
-    public static int TIME_CHANGE_STAGE = 120;
+    public static int TIME_CHANGE_STAGE = 60;
     public static int currentTimeChangeStage = 0;
 
     public Dora(int xUnit, int yUnit, Image img, BombermanGame game) {

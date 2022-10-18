@@ -14,6 +14,7 @@ public class Doll extends Enemy{
         super(xUnit, yUnit, img, game);
         this.x = xUnit * Sprite.SCALED_SIZE + 1;
         this.y = yUnit * Sprite.SCALED_SIZE + 1;
+        this.speed = 4;
     }
 
     @Override
@@ -61,7 +62,7 @@ public class Doll extends Enemy{
     // find min path from doll to bomberman
     @Override
     public void updateCurrentState() {
-        if (isEnd)
+        if (isEnd || isDead)
             return;
 
         if (x % Sprite.SCALED_SIZE != 1 || y % Sprite.SCALED_SIZE != 1)
@@ -71,6 +72,7 @@ public class Doll extends Enemy{
         //System.out.println(direction);
 
         if (direction == CanGo.CANT_MOVE) {
+            setRandomState();
             return;
         }
 

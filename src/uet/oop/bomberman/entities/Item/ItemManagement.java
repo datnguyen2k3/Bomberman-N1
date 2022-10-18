@@ -25,6 +25,8 @@ public class ItemManagement extends Management {
                 break;
             case Item.hpItemDiagram:
                 list.add(new HpItem(xUnit, yUnit));
+            case Item.passBrickDiagram:
+                list.add(new PassBrickItem(xUnit, yUnit));
         }
     }
 
