@@ -34,6 +34,9 @@ public class BombManagement extends Management {
     public void setFlame(int flame) {
         this.explodedLength = flame;
     }
+    public BombermanGame getGame() {
+        return this.game;
+    }
 
     public void setGame(BombermanGame game) {
         this.game = game;
@@ -55,67 +58,28 @@ public class BombManagement extends Management {
         return explodedLength;
     }
 
-
-    // xUnit, yUnit is coordinate of bomb.
-    public boolean checkPosBombAndBomber(int xUnit, int yUnit) {
-        int bomberX = game.getBomberman().getX();
-        int bomberY = game.getBomberman().getY();
-        int bomberXUnit = game.getBomberman().get_xUnit();
-        int bomberYUnit = game.getBomberman().get_yUnit();
-
-        if (game.getBomberman().get_state() == State.GO_EAST) {
-            // 2 truong hop
-            return (bomberXUnit == xUnit && bomberYUnit == yUnit)
-                    || (bomberX + Sprite.SCALED_SIZE - xUnit * Sprite.SCALED_SIZE > Sprite.SCALED_SIZE / 2
-                    && bomberYUnit == yUnit);
-        } else if (game.getBomberman().get_state() == State.GO_WEST) {
-            return (bomberXUnit == xUnit && bomberYUnit == yUnit)
-                    || ((xUnit + 1) * Sprite.SCALED_SIZE - bomberX > Sprite.SCALED_SIZE / 2
-                    && bomberYUnit == yUnit);
-        } else if (game.getBomberman().get_state() == State.GO_NORTH) {
-            return (bomberXUnit == xUnit && bomberYUnit == yUnit)
-                    || ((yUnit + 1) * Sprite.SCALED_SIZE - bomberY > Sprite.SCALED_SIZE / 2
-                    && bomberXUnit == xUnit);
-        } else if (game.getBomberman().get_state() == State.GO_SOUTH) {
-            return (bomberXUnit == xUnit && bomberYUnit == yUnit)
-                    || (bomberY + Sprite.SCALED_SIZE - yUnit * Sprite.SCALED_SIZE > Sprite.SCALED_SIZE / 2
-                    && bomberXUnit == xUnit);
-        }
-        return false;
-    }
-
-
-    public boolean isBomb(int xUnit, int yUnit, Entity entity) {
-        for (Entity b : list) {
-            if (b instanceof Bomb) {
-                if (b.get_xUnit() == xUnit && b.get_yUnit() == yUnit) {
-
-                    /*
-                     * if recent bomb and bomberman is at same position (unit coordinate)
-                     * we consider bomberman does not collide with bomb.
-                     */
-                    if (entity instanceof Enemy) {
-                        return true;
-                    } else if (entity instanceof Bomber) {
-                        if (checkPosBombAndBomber(xUnit, yUnit)) {
-                            return false;
-                        }
-                        return true;
-                    }
-
-                    return true;
-                }
-            }
-
-        }
-        return false;
-    }
-
     public void add(Bomb b) {
         if (list.size() == maxBomb)
             return;
         list.add(b);
         //BombermanGame.diagramMap[b.get_yUnit()][b.get_xUnit()] = '*';
+    }
+
+    public boolean isCanMoveThroughBomb(int xUnit, int yUnit, Character other) {
+        if (other.getPassBrick()) {
+            return true;
+        }
+
+        for (Entity e : list) {
+            Bomb b = (Bomb) e;
+            if (b.get_xUnit() != xUnit || b.get_yUnit() != yUnit)
+                continue;
+            if (!b.isCharacterInBomb(other)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
@@ -172,4 +136,6 @@ public class BombManagement extends Management {
 
         return false;
     }
+
+
 }

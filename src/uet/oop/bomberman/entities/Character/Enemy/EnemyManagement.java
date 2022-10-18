@@ -15,6 +15,9 @@ public class EnemyManagement extends Management {
     public int getNumEnemies() {
         return list.size();
     }
+    public List<Entity> getList() {
+        return list;
+    }
 
     public void add(int xUnit, int yUnit, char enemyDiagram, BombermanGame game) {
         Enemy enemy = getEnemy(xUnit, yUnit, enemyDiagram, game);

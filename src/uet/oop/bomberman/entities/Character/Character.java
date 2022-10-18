@@ -205,6 +205,13 @@ public abstract class Character extends Entity {
         return false;
     }
 
+    public boolean isImpact(int xUnitOfCell, int yUnitOfCell) {
+        return isImpact(xUnitOfCell * Sprite.SCALED_SIZE,
+                    yUnitOfCell * Sprite.SCALED_SIZE,
+                    xUnitOfCell * Sprite.SCALED_SIZE + Sprite.SCALED_SIZE,
+                    yUnitOfCell * Sprite.SCALED_SIZE + Sprite.SCALED_SIZE);
+    }
+
     protected void updateCoordinate() {
         if (!isImpactWall()) {
             switch (_state) {
