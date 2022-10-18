@@ -66,19 +66,19 @@ public class BombManagement extends Management {
         if (game.getBomberman().get_state() == State.GO_EAST) {
             // 2 truong hop
             return (bomberXUnit == xUnit && bomberYUnit == yUnit)
-                    || (bomberX + Sprite.SCALED_SIZE - xUnit * Sprite.SCALED_SIZE > Sprite.SCALED_SIZE / 2
+                    || (bomberX + Sprite.SCALED_SIZE - xUnit * Sprite.SCALED_SIZE > Sprite.SCALED_SIZE / 3
                     && bomberYUnit == yUnit);
         } else if (game.getBomberman().get_state() == State.GO_WEST) {
             return (bomberXUnit == xUnit && bomberYUnit == yUnit)
-                    || ((xUnit + 1) * Sprite.SCALED_SIZE - bomberX > Sprite.SCALED_SIZE / 2
+                    || ((xUnit + 1) * Sprite.SCALED_SIZE - bomberX > Sprite.SCALED_SIZE / 3
                     && bomberYUnit == yUnit);
         } else if (game.getBomberman().get_state() == State.GO_NORTH) {
             return (bomberXUnit == xUnit && bomberYUnit == yUnit)
-                    || ((yUnit + 1) * Sprite.SCALED_SIZE - bomberY > Sprite.SCALED_SIZE / 2
+                    || ((yUnit + 1) * Sprite.SCALED_SIZE - bomberY > Sprite.SCALED_SIZE / 3
                     && bomberXUnit == xUnit);
         } else if (game.getBomberman().get_state() == State.GO_SOUTH) {
             return (bomberXUnit == xUnit && bomberYUnit == yUnit)
-                    || (bomberY + Sprite.SCALED_SIZE - yUnit * Sprite.SCALED_SIZE > Sprite.SCALED_SIZE / 2
+                    || (bomberY + Sprite.SCALED_SIZE - yUnit * Sprite.SCALED_SIZE > Sprite.SCALED_SIZE / 3
                     && bomberXUnit == xUnit);
         }
         return false;

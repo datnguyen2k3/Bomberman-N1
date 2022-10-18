@@ -180,9 +180,9 @@ public class BombermanGame {
         enemyManagement.updateEnemyIsKilledByBomb(bomberman.getBombManagement());
 
         // Bomb kill bomber
-        if (bomberman.getBombManagement().isDestroyEnemy(bomberman)) {
-            bomberman.setDead();
-        }
+//        if (bomberman.getBombManagement().isDestroyEnemy(bomberman)) {
+//            bomberman.setDead();
+//        }
 
         // Enemy kill bomber
         if (enemyManagement.isEnemyKillCharacter(bomberman)) {
