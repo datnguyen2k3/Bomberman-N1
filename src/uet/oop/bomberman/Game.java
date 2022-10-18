@@ -14,7 +14,7 @@ import uet.oop.bomberman.UI.LevelGameUI;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Game extends Application {
-
+    
     public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT;
     public static final int WIDTH = Sprite.SCALED_SIZE * (BombermanGame.WIDTH + 6);
     private int maxLevel = 2;

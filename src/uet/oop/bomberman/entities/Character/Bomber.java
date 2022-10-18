@@ -310,12 +310,14 @@ public class Bomber extends Character {
                 break;
             case Item.hpItemDiagram:
                 hp++;
-                setPassBrick();
                 break;
             case Item.portalItemDiagram:
                 if (isBombermanKillAllEnemies()) {
                     setBomberWin();
                 }
+                break;
+            case Item.passBrickDiagram:
+                setPassBrick();
                 break;
         }
     }
