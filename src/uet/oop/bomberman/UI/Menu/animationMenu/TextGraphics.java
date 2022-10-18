@@ -1,11 +1,11 @@
-package uet.oop.bomberman.animation;
+package uet.oop.bomberman.UI.Menu.animationMenu;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import static uet.oop.bomberman.animation.MenuList.MainMenuList.defaultSize;
+import static uet.oop.bomberman.UI.Menu.animationMenu.MenuList.MainMenuList.defaultSize;
 
 public class TextGraphics {
     private Color color;

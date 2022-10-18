@@ -1,4 +1,4 @@
-package uet.oop.bomberman;
+package uet.oop.bomberman.UI.Menu;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -10,9 +10,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
-import uet.oop.bomberman.animation.AnimatedGraphic;
-import uet.oop.bomberman.animation.Background;
-import uet.oop.bomberman.animation.MenuList.MenuLists;
+import uet.oop.bomberman.UI.Menu.animationMenu.AnimatedGraphic;
+import uet.oop.bomberman.UI.Menu.animationMenu.Background;
+import uet.oop.bomberman.UI.Menu.animationMenu.MenuList.MenuLists;
 import uet.oop.bomberman.graphics.Sprite;
 
 import uet.oop.bomberman.sound.SoundManager;
@@ -21,7 +21,7 @@ public class Menu extends Application {
     public static void main(String[] args) {
         Application.launch(Menu.class);
     }
-
+    private boolean isRun = true;
     private Canvas canvas;
     private GraphicsContext gc;
     private static final int WIDTH = 31;
@@ -66,21 +66,20 @@ public class Menu extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                render();
-                update();
+                run(canvas, gc, stage);
             }
         };
         timer.start();
     }
 
-    public void update() {
+    public void update(Stage stage) {
         SoundManager.getSoundManager().update();
         animatedGraphic.update();
-        menuLists.update();
+        menuLists.update(stage);
         background.update();
     }
 
-    public void render() {
+    public void render(Canvas canvas, GraphicsContext gc) {
         SoundManager.getSoundManager().play();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.BLACK);
@@ -88,5 +87,21 @@ public class Menu extends Application {
         background.render(gc);
         animatedGraphic.render(gc);
         menuLists.render(gc);
+    }
+
+    public void run(Canvas canvas, GraphicsContext gc, Stage stage) {
+        if (!isRun)
+            return;
+
+        update(stage);
+        render(canvas, gc);
+    }
+
+    public void setEnd() {
+        isRun = false;
+    }
+
+    public void setStart() {
+        isRun = true;
     }
 }

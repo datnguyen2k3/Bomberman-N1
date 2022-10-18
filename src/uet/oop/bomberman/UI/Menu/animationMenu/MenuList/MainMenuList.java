@@ -1,9 +1,9 @@
-package uet.oop.bomberman.animation.MenuList;
+package uet.oop.bomberman.UI.Menu.animationMenu.MenuList;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import uet.oop.bomberman.animation.TextGraphicsList;
+import uet.oop.bomberman.UI.Menu.animationMenu.TextGraphicsList;
 
 public class MainMenuList extends TextGraphicsList {
     private static final String[] mainTexts = {"START", "OPTIONS", "HIGHSCORE", "INFO", "EXIT"};

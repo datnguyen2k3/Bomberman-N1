@@ -1,11 +1,10 @@
-package uet.oop.bomberman.animation.MenuList;
+package uet.oop.bomberman.UI.Menu.animationMenu.MenuList;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
-import uet.oop.bomberman.Game;
-import uet.oop.bomberman.animation.TextGraphicsList;
+import javafx.stage.Stage;
+import uet.oop.bomberman.UI.Menu.animationMenu.TextGraphicsList;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +27,7 @@ public class MenuLists {
         menuLists.get(currentIndex).render(gc);
     }
 
-    public void update() {
+    public void update(Stage stage) {
         menuLists.get(currentIndex).update();
 
         //Handle list changes
@@ -37,7 +36,7 @@ public class MenuLists {
             currentIndex = getCurrentIndex((menuLists.get(currentIndex).isExiting()));
 
             if (currentIndex == 4) {
-                handleQuestionList(oldIndex);
+                handleQuestionList(oldIndex, stage);
             }
 
             //Delete this after adding start and exit functionalities
@@ -52,7 +51,7 @@ public class MenuLists {
         }
     }
 
-    public void handleQuestionList(int oldIndex) {
+    public void handleQuestionList(int oldIndex, Stage stage) {
         QuestionList questionList = (QuestionList) menuLists.get(4);
         questionList.setBeforeIndex(oldIndex);
 
@@ -72,7 +71,7 @@ public class MenuLists {
             questionList.setCallback(new QuestionList.Callback() {
                 @Override
                 public void execute() {
-                    exit();
+                    exit(stage);
                 }
             });
         }
@@ -107,7 +106,7 @@ public class MenuLists {
         return "MAIN";
     }
 
-    public void exit() {
-        //Exiting functionalities
+    public void exit(Stage stage) {
+        stage.close();
     }
 }

@@ -1,9 +1,6 @@
-package uet.oop.bomberman.animation;
+package uet.oop.bomberman.UI.Menu.animationMenu;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritableImage;
 
 public class Background extends AnimatedGraphic {
 //    private Image img2; //use for background

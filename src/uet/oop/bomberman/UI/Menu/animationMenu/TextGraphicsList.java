@@ -1,4 +1,4 @@
-package uet.oop.bomberman.animation;
+package uet.oop.bomberman.UI.Menu.animationMenu;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;

@@ -1,8 +1,7 @@
-package uet.oop.bomberman.animation;
+package uet.oop.bomberman.UI.Menu.animationMenu;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelBuffer;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 
