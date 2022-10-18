@@ -14,6 +14,6 @@ module Bomberman {
     opens uet.oop.bomberman.entities.Character;
     opens uet.oop.bomberman.entities.Character.Enemy;
     opens uet.oop.bomberman.UI.Menu;
-    opens uet.oop.bomberman.UI;
+    opens uet.oop.bomberman.UI.GameUI;
 
 }

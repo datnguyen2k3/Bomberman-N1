@@ -1,4 +1,4 @@
-package uet.oop.bomberman.UI;
+package uet.oop.bomberman.UI.GameUI;
 
 public class GameWin extends Intro {
     public GameWin() {

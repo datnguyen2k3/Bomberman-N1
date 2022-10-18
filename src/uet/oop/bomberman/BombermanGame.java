@@ -1,24 +1,19 @@
 package uet.oop.bomberman;
 
-import javafx.animation.AnimationTimer;
-import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import uet.oop.bomberman.UI.Board;
+import uet.oop.bomberman.UI.GameUI.Board;
 import uet.oop.bomberman.entities.*;
-import uet.oop.bomberman.entities.Character.Enemy.Balloom;
 import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.entities.Character.Enemy.EnemyManagement;
-import uet.oop.bomberman.entities.Character.Enemy.Oneal;
 import uet.oop.bomberman.entities.Item.Item;
 import uet.oop.bomberman.entities.Item.ItemManagement;
 import uet.oop.bomberman.entities.StillObject.Brick;

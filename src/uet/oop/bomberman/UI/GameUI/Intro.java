@@ -1,4 +1,4 @@
-package uet.oop.bomberman.UI;
+package uet.oop.bomberman.UI.GameUI;
 
 import javafx.scene.Group;
 import javafx.scene.effect.DropShadow;
