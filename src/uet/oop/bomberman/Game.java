@@ -74,6 +74,7 @@ public class Game extends Application {
                             gameWin.run(root);
                             return;
                         }
+                        setNewGame();
                         menu.setStart();
                         return;
                         //stage.close();
@@ -122,6 +123,13 @@ public class Game extends Application {
 
         bombermanGame = newBombermanGame;
         levelGameUI = new LevelGameUI(bombermanGame.getLevel());
+
+        restartCanvas();
+    }
+
+    private void setNewGame() {
+        bombermanGame = new BombermanGame(1);
+        levelGameUI = new LevelGameUI(1);
 
         restartCanvas();
     }
