@@ -251,7 +251,9 @@ public class Bomber extends Character {
                     int bomb_xUnit = get_xUnitCenter();
                     int bomb_yUnit = get_yUnitCenter();
 
-                    if (Brick.isBrick(bomb_xUnit, bomb_yUnit) || Wall.isWall(bomb_xUnit, bomb_yUnit)) {
+                    if (Brick.isBrick(bomb_xUnit, bomb_yUnit)
+                            || Wall.isWall(bomb_xUnit, bomb_yUnit)
+                            || bombManagement.isBomb(bomb_xUnit, bomb_yUnit)) {
                         return;
                     }
 

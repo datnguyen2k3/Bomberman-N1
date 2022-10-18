@@ -88,6 +88,17 @@ public class BombManagement extends Management {
         return false;
     }
 
+    public boolean isBomb(int xUnit, int yUnit) {
+        for (Entity b : list) {
+            if (b instanceof  Bomb) {
+                if (b.get_xUnit() == xUnit && b.get_yUnit() == yUnit) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean isBomb(int xUnit, int yUnit, Entity entity) {
         for (Entity b : list) {
             if (b instanceof Bomb) {

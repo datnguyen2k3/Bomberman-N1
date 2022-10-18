@@ -11,7 +11,9 @@ import javafx.stage.Stage;
 import uet.oop.bomberman.UI.GameOver;
 import uet.oop.bomberman.UI.GameWin;
 import uet.oop.bomberman.UI.LevelGameUI;
+import uet.oop.bomberman.UI.Menu.Menu;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.graphics.SpriteSheet;
 
 public class Game extends Application {
     
@@ -25,6 +27,7 @@ public class Game extends Application {
     private GameOver gameOver = new GameOver();
     private GameWin gameWin = new GameWin();
     private boolean isWin = false;
+
     @Override
     public void start(Stage stage) throws Exception {
         // Tao Canvas
@@ -42,6 +45,7 @@ public class Game extends Application {
         // Them scene vao stage
         stage.setScene(scene);
         stage.show();
+
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
