@@ -95,6 +95,7 @@ public class Game extends Application {
                     return;
                 }
                 menu.setStart();
+                setNewGame();
                 //stage.close();
             }
         };

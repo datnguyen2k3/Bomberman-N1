@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 import uet.oop.bomberman.UI.Menu.Menu;
 import uet.oop.bomberman.UI.Menu.animationMenu.TextGraphicsList;
+import uet.oop.bomberman.sound.SoundManager;
 
 import java.util.ArrayList;
 import java.util.List;
