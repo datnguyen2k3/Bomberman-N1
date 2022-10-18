@@ -3,6 +3,7 @@ module Bomberman {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
+    requires javafx.media;
 
     opens uet.oop.bomberman.entities;
     opens uet.oop.bomberman.graphics;
@@ -12,5 +13,7 @@ module Bomberman {
     opens uet.oop.bomberman.entities.StillObject;
     opens uet.oop.bomberman.entities.Character;
     opens uet.oop.bomberman.entities.Character.Enemy;
+    opens uet.oop.bomberman.UI.Menu;
     opens uet.oop.bomberman.UI;
+
 }
