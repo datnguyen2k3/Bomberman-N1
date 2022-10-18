@@ -37,6 +37,7 @@ public class BombermanGame {
     private Canvas canvas;
     private GraphicsContext gc;
 
+
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), this);
     private List<Entity> entities = new ArrayList<>();
@@ -47,6 +48,10 @@ public class BombermanGame {
     private boolean isRun = true;
     private boolean isAdd = false;
     private boolean isWin = false;
+
+    public BombManagement getBombManagement() {
+        return this.bombManagement;
+    }
 
     private Board board = new Board();
     int level = 1;
@@ -65,6 +70,9 @@ public class BombermanGame {
 
     public int getLevel() {
         return level;
+    }
+    public EnemyManagement getEnemyManagement() {
+        return enemyManagement;
     }
 
     public void setBomber(Bomber bomberman) {

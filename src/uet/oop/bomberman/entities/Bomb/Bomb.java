@@ -9,13 +9,14 @@ import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.Coordinate;
 import uet.oop.bomberman.utils.State;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Character.Character;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bomb extends Entity {
 
-
+    public static final char bombDiagram = '@';
     List<Coordinate> explodedBrick = new ArrayList<>();
     private int countBricksRemain;
 
@@ -35,6 +36,7 @@ public class Bomb extends Entity {
     private int currentTimeWaitToExploding = TIME_WAIT_TO_EXPLODING;
     private int currentTimeExploding = TIME_EXPLODING;
     private int timeBrickCollapse = 100;
+    private List<Character> charactersInBomb = new ArrayList<>();
 
 
     public List<Pair<Integer, Integer>> explodedCells = new ArrayList<>();
@@ -64,8 +66,37 @@ public class Bomb extends Entity {
         this.bombManagement = bombManagement;
         this.game = game;
         findFirstBrickAt4Side();
+        initCharacterInBomb();
     }
 
+    private void initCharacterInBomb() {
+        if (game.getBomberman().isImpact(get_xUnit(), get_yUnit())) {
+            charactersInBomb.add(game.getBomberman());
+        }
+
+        for(Entity e : game.getEnemyManagement().getList()) {
+            Character c = (Character) e;
+            if (c.isImpact(get_xUnit(), get_yUnit())) {
+                charactersInBomb.add(c);
+            }
+        }
+    }
+    private void updateCharacterInBomb() {
+        List<Character> newCharactersInBomb = new ArrayList<>();
+        for (Character c : charactersInBomb) {
+            if (c.isImpact(get_xUnit(), get_yUnit())) {
+                newCharactersInBomb.add(c);
+            }
+        }
+        charactersInBomb = newCharactersInBomb;
+    }
+    public boolean isCharacterInBomb(Character other) {
+        for (Character c : charactersInBomb) {
+            if (c == other)
+                return true;
+        }
+        return false;
+    }
 
     private void findFirstBrickAt4Side() {
         firstBrickRight = firstBrickToBeDestroyed(get_xUnit(), get_yUnit(), "right");
@@ -74,8 +105,6 @@ public class Bomb extends Entity {
         firstBrickDown = firstBrickToBeDestroyed(get_xUnit(), get_yUnit(), "down");
 //        log(firstBrickDown);
     }
-
-
 
     @Override
     public void initSolidArea() {
@@ -126,6 +155,7 @@ public class Bomb extends Entity {
         explode();
         if (currentTimeExploding > 0)
             return;
+
 
         if (explodedBrick.isEmpty()) {
             isEnd = true;
@@ -385,7 +415,7 @@ public class Bomb extends Entity {
     }
 
     private void log(Coordinate c) {
-        System.out.println(c.toString());
+         // System.out.println(c.toString());
     }
 
     public void draw4SideFlame(GraphicsContext gc) {
@@ -512,6 +542,7 @@ public class Bomb extends Entity {
     public void update() {
         animate();
         running();
+        updateCharacterInBomb();
     }
 
     @Override
@@ -532,7 +563,7 @@ public class Bomb extends Entity {
         if (_state == State.EXPLODING) {
             Sprite curBrickSprite;
             log(firstBrickDown);
-            System.out.println(get_yUnit());
+            // System.out.println(get_yUnit());
             if (firstBrickDown.getY() + 1 < BombermanGame.HEIGHT
                     && Brick.isBrick(firstBrickDown.getX(), firstBrickDown.getY() + 1)
                     && firstBrickDown.getY() + 1 <= get_yUnit() + bombManagement.getExplodedLength()) {
@@ -625,6 +656,10 @@ public class Bomb extends Entity {
         }
         if (explodedBrick.size() == 0 && canDestroyBrick == 1) {
             isEnd = true;
+        }
+        if (explodedBrick.size() != 0 ) {
+            explodedBrick.clear();
+            findFirstBrickAt4Side();
         }
 
     }

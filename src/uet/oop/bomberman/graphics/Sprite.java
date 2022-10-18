@@ -14,7 +14,7 @@ public class Sprite {
 
 	public static final int DEFAULT_SIZE = 16;
 
-	public static final int SCALE = 2;
+	public static final int SCALE = 3;
 	public boolean isSolid;
 
 
@@ -230,11 +230,9 @@ public class Sprite {
 		if (calc < diff) {
 			return normal;
 		}
-			
 		if (calc < diff * 2) {
 			return x1;
 		}
-			
 		return x2;
 	}
 	

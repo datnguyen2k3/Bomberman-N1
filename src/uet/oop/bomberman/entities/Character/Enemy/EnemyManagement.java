@@ -7,24 +7,46 @@ import uet.oop.bomberman.entities.Management;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.BombermanGame;
 
-public class EnemyManagement extends Management {
+import java.util.ArrayList;
+import java.util.List;
 
+public class EnemyManagement extends Management {
+    private List<Enemy> addLater = new ArrayList<>();
     public int getNumEnemies() {
         return list.size();
     }
+    public List<Entity> getList() {
+        return list;
+    }
 
     public void add(int xUnit, int yUnit, char enemyDiagram, BombermanGame game) {
-        if (enemyDiagram == Enemy.balloomDiagram) {
-            list.add(new Balloom(xUnit, yUnit, Sprite.balloom_left1.getFxImage(), game));
-        } else if (enemyDiagram == Enemy.onealDiagram) {
-            list.add(new Oneal(xUnit, yUnit, Sprite.oneal_right1.getFxImage(), game));
+        Enemy enemy = getEnemy(xUnit, yUnit, enemyDiagram, game);
+        if (enemy != null) {
+            list.add(enemy);
         }
+    }
+
+    private Enemy getEnemy(int xUnit, int yUnit, char enemyDiagram, BombermanGame game) {
+        switch (enemyDiagram) {
+            case Enemy.balloomDiagram:
+                return new Balloom(xUnit, yUnit, Sprite.balloom_left1.getFxImage(), game);
+            case Enemy.onealDiagram:
+                return new Oneal(xUnit, yUnit, Sprite.oneal_right1.getFxImage(), game);
+            case Enemy.dollDiagram:
+                return new Doll(xUnit, yUnit, Sprite.doll_right1.getFxImage(), game);
+            case Enemy.minvoDiagram:
+                return new Minvo(xUnit, yUnit, Sprite.minvo_left1.getFxImage(), game);
+            case Enemy.doraDiagram:
+                return new Dora(xUnit, yUnit, Sprite.kondoria_left1.getFxImage(), game);
+        }
+
+        return null;
     }
 
     public boolean isEnemyKillCharacter(Character character) {
         for (Entity entity : list) {
             Enemy enemy = (Enemy) entity;
-            if (!enemy.isDead() && enemy.isImpact(character)) {
+            if (!enemy.isDead() && character.isImpact(enemy)) {
                 return true;
             }
         }
@@ -50,9 +72,23 @@ public class EnemyManagement extends Management {
         }
     }
 
+    public void addEnemyLater(int xUnit, int yUnit, char enemyDiagram, BombermanGame game) {
+        Enemy enemy = getEnemy(xUnit, yUnit, enemyDiagram, game);
+        if (enemy != null) {
+            addLater.add(enemy);
+        }
+    }
+
+    private void updateAddEnemyLater() {
+        list.addAll(addLater);
+        addLater.clear();
+
+    }
+
     @Override
     public void update() {
         super.update();
         updateRemoveEnemy();
+        updateAddEnemyLater();
     }
 }

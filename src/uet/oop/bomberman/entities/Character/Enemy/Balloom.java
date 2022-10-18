@@ -7,31 +7,8 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.awt.*;
 import uet.oop.bomberman.BombermanGame;
 public class Balloom extends Enemy {
-
-
     public Balloom(int xUnit, int yUnit, Image img, BombermanGame game) {
-        this(xUnit, yUnit, img);
-        initSolidArea();
-        this.game = game;
-        type = "Balloom";
-        //_state = State.DEAD;
-    }
-
-    @Override
-    public void initSolidArea() {
-        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 15 * Sprite.SCALE , 15 * Sprite.SCALE);
-    }
-
-    public Balloom(int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img);
-        initSprite();
-        initState();
-    }
-
-
-    @Override
-    protected void initState() {
-        setRandomState();
+        super(xUnit, yUnit, img, game);
     }
 
     @Override
@@ -57,10 +34,9 @@ public class Balloom extends Enemy {
         this.sprite_character_dead = Sprite.balloom_dead;
         this.sprite_character_dead_1 = Sprite.mob_dead1;
         this.sprite_character_dead_2 = Sprite.mob_dead2;
+        this.sprite_character_dead_3 = Sprite.mob_dead3;
 
-//        this.sprite_character_dead = Sprite.brick_exploded;
-//        this.sprite_character_dead_1 = Sprite.brick_exploded1;
-//        this.sprite_character_dead_2 = Sprite.brick_exploded2;
+
 
         this.sprite_character_up = Sprite.balloom_right1;
         this.sprite_character_up_1 = Sprite.balloom_right1;
@@ -71,12 +47,6 @@ public class Balloom extends Enemy {
         this.sprite_character_down_2 = Sprite.balloom_left2;
 
 
-    }
-
-
-    @Override
-    public void render(GraphicsContext gc) {
-        super.render(gc);
     }
 
 

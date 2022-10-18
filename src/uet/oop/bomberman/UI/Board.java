@@ -26,7 +26,7 @@ public class Board {
         rectangle.setY(0);
         rectangle.setWidth(Game.WIDTH - BombermanGame.WIDTH * Sprite.SCALED_SIZE);
         rectangle.setHeight(Game.HEIGHT);
-        rectangle.setFill(Color.GRAY);
+        rectangle.setFill(Color.DARKGREY);
 
         enemyText = initText(1);
         hpText = initText(2);

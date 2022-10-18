@@ -1,30 +1,42 @@
 package uet.oop.bomberman.entities.Character.Enemy;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Character.Character;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
 
+import java.awt.*;
+
 public abstract class Enemy extends Character {
     public static final char balloomDiagram = '1';
     public static final char onealDiagram = '2';
+    public static final char dollDiagram = '3';
+    public static final char minvoDiagram = '4';
+    public static final char doraDiagram = '5';
+    public static char lastEnemy = '5';
 
-    public String type ;
+    Bomber bomber = game.getBomberman();
 
-    public Enemy(int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img);
+    public Enemy(int xUnit, int yUnit, Image img, BombermanGame game) {
+        super(xUnit, yUnit, img, game);
         this.speed = 1;
     }
 
+    @Override
+    public void initSolidArea() {
+        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 15 * Sprite.SCALE , 15 * Sprite.SCALE);
+    }
+
+
     public static boolean isEnemy(char diagram) {
-        return diagram == balloomDiagram
-                || diagram == onealDiagram;
+        return '1' <= diagram && diagram <= lastEnemy;
     }
 
     @Override
-    public void setDead() {
-        isDead = true;
-        _state = State.DEAD;
+    protected void initState() {
+        setRandomState();
     }
 
     public void setRandomState() {
@@ -35,68 +47,25 @@ public abstract class Enemy extends Character {
         this._state = State.values()[choice];
     }
 
-    public  void setRandomSpeed() {
-        if (isEnd)
-            return;
-
-        int randSpeed = rand.nextInt(3);
-        speed = randSpeed;
-        if (speed == 0 ) {
-            speed = 1;
-        }
+    public void setState() {
+        setRandomState();
     }
 
     @Override
     public void update() {
-        if(isEnd)
-            return;
+        super.update();
 
-        if (!isDead) {
-            isCollisionOn = false;
-            this.game.collisionChecker.checkTile(this);
-            if (isCollisionOn == false) {
-                switch (this._state) {
-                    case GO_NORTH: {
-                        y -= speed;
-                        break;
-                    }
-                    case GO_SOUTH: {
-                        y += speed;
-                        break;
-                    }
-                    case GO_EAST: {
-                        x += speed;
-                        break;
-                    }
-                    case GO_WEST: {
-                        x -= speed;
-                        break;
-                    }
-                }
-                recentDistanceMoving += speed;
-                if (recentDistanceMoving >= distanceToChangeSpeed) {
-                    if (type.equals("Oneal")) {
-                        setRandomSpeed();
-                    }
-                    recentDistanceMoving = 0;
-                    distanceToChangeSpeed = rand.nextInt(200 * Sprite.SCALE - 60 * Sprite.SCALE) + 60 * Sprite.SCALE;
-                }
-            } else {
-                if (type.equals("Balloom")) {
-                    setRandomState();
-                } else if (type.equals("Oneal")) {
-                    setRandomSpeed();
-                    setRandomState();
-                }
-            }
+
+        if (isImpactWall()) {
+            setState();
         }
 
         if(isDead) {
             currentTimeDead++;
-            if(currentTimeDead >= TIME_DEAD)
+            if(currentTimeDead >= TIME_DEAD) {
                 isEnd = true;
+            }
         }
 
-        super.update();
     }
 }

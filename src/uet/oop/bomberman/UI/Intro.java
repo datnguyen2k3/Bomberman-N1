@@ -1,6 +1,7 @@
 package uet.oop.bomberman.UI;
 
 import javafx.scene.Group;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
