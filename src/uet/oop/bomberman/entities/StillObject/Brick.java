@@ -3,7 +3,9 @@ package uet.oop.bomberman.entities.StillObject;
 import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.graphics.GraphicsManager;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.utils.CollisionChecker;
 import uet.oop.bomberman.utils.State;
 import uet.oop.bomberman.BombermanGame;
 public class Brick extends Entity {
@@ -28,15 +30,18 @@ public class Brick extends Entity {
     public static boolean isBrick(char diagram) {
         return diagram == Brick.diagramBrick;
     }
+
     public static boolean isBrick(int xUnit, int yUnit) {
+        if (CollisionChecker.isOutOfMap(BombermanGame.diagramMap, xUnit, yUnit)) {
+            return false;
+        }
         return isBrick(BombermanGame.diagramMap[yUnit][xUnit]);
     }
 
     public void setDestroyed() {
         this.isDestroyed = true;
         _state = State.BE_DESTROYING;
-//        BombermanGame.diagramMap[get_yUnit()][get_xUnit()] = ' ';
-       img = Sprite.grass.getFxImage();
+        img = Sprite.grass.getFxImage();
     }
 
 
@@ -56,27 +61,25 @@ public class Brick extends Entity {
 
     private void chooseSprite() {
 
-        if ( _state == State.EXISTING) {
+        if (_state == State.EXISTING) {
             img = Sprite.brick.getFxImage();
-        }
-        else if ( _state == State.BE_DESTROYING) {
-            img = Sprite.movingSprite(Sprite.brick_exploded,Sprite.brick_exploded1,Sprite.brick_exploded2,_animate,120).getFxImage();
-        }
-        else if (_state == State.BE_DESTROYED){
-           img = Sprite.grass.getFxImage();
+        } else if (_state == State.BE_DESTROYING) {
+            img = Sprite.movingSprite(Sprite.brick_exploded, Sprite.brick_exploded1,
+                    Sprite.brick_exploded2, _animate, 120).getFxImage();
+        } else if (_state == State.BE_DESTROYED) {
+            img = Sprite.grass.getFxImage();
         }
     }
 
-
     private void doExplodingAnimation(GraphicsContext gc) {
-        if ( _state == State.BE_DESTROYING) {
-            gc.drawImage(Sprite.movingSprite(Sprite.brick_exploded,Sprite.brick_exploded1,Sprite.brick_exploded2,_animate,60).getFxImage(),x,y);
-        }
-        else if ( _state == State.EXISTING) {
-            gc.drawImage(Sprite.brick.getFxImage(),x,y);
-        }
-        else {
-            gc.drawImage(Sprite.grass.getFxImage(), x,y);
+        if (_state == State.BE_DESTROYING) {
+            GraphicsManager.getGraphicsManager().renderWithImage(this,
+                    Sprite.movingSprite(Sprite.brick_exploded, Sprite.brick_exploded1,
+                            Sprite.brick_exploded2, _animate, 60).getFxImage());
+        } else if (_state == State.EXISTING) {
+            GraphicsManager.getGraphicsManager().renderWithImage(this, Sprite.brick.getFxImage());
+        } else {
+            GraphicsManager.getGraphicsManager().renderWithImage(this, Sprite.grass.getFxImage());
         }
     }
 
@@ -90,26 +93,10 @@ public class Brick extends Entity {
     public void update(Bomber bomber) {
         updateState();
         animate();
-        // System.out.println(_animate);
     }
 
     @Override
     protected void initSprite() {
         img = Sprite.brick.getFxImage();
     }
-
-//    @Override
-//    public void render(GraphicsContext gc) {
-//        //doExplodingAnimation(gc);
-//         //chooseSprite();
-//        //gc.drawImage(curSprite.getFxImage(),x,y);
-//        super.render(gc);
-//    }
-//    @Override
-//    public void render(GraphicsContext gc) {
-//        //doExplodingAnimation(gc);
-//        //chooseSprite();
-//        //gc.drawImage(curSprite.getFxImage(),x,y);
-//        super.render(gc);
-//    }
 }

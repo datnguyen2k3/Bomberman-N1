@@ -13,6 +13,7 @@ import uet.oop.bomberman.UI.GameWin;
 import uet.oop.bomberman.UI.LevelGameUI;
 import uet.oop.bomberman.graphics.GraphicsManager;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.map.MapParser;
 
 public class Game extends Application {
 
@@ -64,7 +65,7 @@ public class Game extends Application {
                 if (bombermanGame.isWin()) {
                     if (bombermanGame.getLevel() == maxLevel) {
                         if (!isWin) {
-                            graphicsManager.restartCanvas(root);
+                            graphicsManager.restart(root);
                         }
                         if (gameWin.isRun()) {
                             gameWin.run(root);
@@ -118,7 +119,9 @@ public class Game extends Application {
         bombermanGame = newBombermanGame;
         levelGameUI = new LevelGameUI(bombermanGame.getLevel());
 
-        graphicsManager.restartCanvas(root);
+        graphicsManager.restart(root);
+        graphicsManager.setMap(MapParser.getMapWidth(newBombermanGame.getDiagramMap()),
+                MapParser.getMapHeight(newBombermanGame.getDiagramMap()));
     }
 
 //    private void restartCanvas(Group root) {

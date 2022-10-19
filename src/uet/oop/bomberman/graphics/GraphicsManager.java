@@ -24,6 +24,29 @@ class Viewport {
     private int mapHeight;
 
     public Viewport(int x, int y, int screenWidth, int screenHeight, int mapWidth, int mapHeight) {
+        setViewport(x, y, screenWidth, screenHeight, mapWidth, mapHeight);
+    }
+
+    public void update(int bombermanX, int bombermanY) {
+        if (bombermanX - x < screenWidth / 2 && dir == State.GO_WEST && x - speed >= 0) {
+            x -= speed;
+        }
+
+        if (bombermanX - x > screenWidth / 2 && dir == State.GO_EAST && x + speed + screenWidth <= mapWidth) {
+           x += speed;
+        }
+
+        if (bombermanY - y < screenHeight / 2 && dir == State.GO_NORTH && y - speed >= 0) {
+            y -= speed;
+        }
+
+        if (bombermanY - y > screenHeight / 2 &&dir == State.GO_SOUTH && y + speed + screenHeight <= mapHeight) {
+            y += speed;
+        }
+
+    }
+
+    public void setViewport(int x, int y, int screenWidth, int screenHeight, int mapWidth, int mapHeight) {
         this.x = x;
         this.y = y;
 
@@ -36,24 +59,6 @@ class Viewport {
         dir = State.IDLE;
     }
 
-    public void update() {
-        if (dir == State.GO_WEST && x - speed >= 0) {
-            x -= speed;
-        }
-
-        if (dir == State.GO_EAST && x + speed + screenWidth <= mapWidth) {
-           x += speed;
-        }
-
-        if (dir == State.GO_NORTH && y - speed >= 0) {
-            y -= speed;
-        }
-
-        if (dir == State.GO_SOUTH && y + speed + screenHeight <= mapHeight) {
-            y += speed;
-        }
-
-    }
     public int getX() {return x;}
     public int getY() {return y;}
     public void setSpeed(int speed) {
@@ -66,6 +71,11 @@ class Viewport {
     public void setPos(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public void setMap(int mapWidth, int mapHeight) {
+        this.mapWidth = mapWidth;
+        this.mapHeight = mapHeight;
     }
 }
 
@@ -104,11 +114,10 @@ public class GraphicsManager {
     }
 
     public void renderRaw(int x, int y, Image image) {
-
         gc.drawImage(image, x - viewport.getX(), y - viewport.getY());
     }
 
-    public void update(boolean isColliding, State state, int speed) {
+    public void update(int bombermanX, int bombermanY, boolean isColliding, State state, int speed) {
         if (state == State.DEAD || isColliding) {
             viewport.setDir(State.IDLE);
             return;
@@ -117,7 +126,7 @@ public class GraphicsManager {
         //Update the viewport
         viewport.setDir(state);
         viewport.setSpeed(speed);
-        viewport.update();
+        viewport.update(bombermanX, bombermanY);
     }
 
     public void restart(Group root) {
@@ -149,5 +158,9 @@ public class GraphicsManager {
     }
     public GraphicsContext getGraphicsContext() {
         return gc;
+    }
+
+    public void setMap(int mapWidth, int mapHeight) {
+        viewport.setMap(mapWidth, mapHeight);
     }
 }

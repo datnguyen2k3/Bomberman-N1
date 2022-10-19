@@ -541,7 +541,6 @@ public class Bomb extends Entity {
     }
 
     public void renderExplodeBrick(GraphicsContext gc) {
-
         if (_state == State.EXPLODING) {
             Sprite curBrickSprite;
 //            log(firstBrickDown);
@@ -554,10 +553,11 @@ public class Bomb extends Entity {
                         Sprite.brick_exploded1,
                         Sprite.brick_exploded2, _animate, timeBrickCollapse);
 
-                gc.drawImage(curBrickSprite.getFxImage(),
-                        firstBrickDown.getX() * Sprite.SCALED_SIZE,
-                        (firstBrickDown.getY() + 1) * Sprite.SCALED_SIZE);
-
+//                gc.drawImage(curBrickSprite.getFxImage(),
+//                        firstBrickDown.getX() * Sprite.SCALED_SIZE,
+//                        (firstBrickDown.getY() + 1) * Sprite.SCALED_SIZE);
+                GraphicsManager.getGraphicsManager().renderRaw(firstBrickDown.getX() * Sprite.SCALED_SIZE,
+                        (firstBrickDown.getY() + 1) * Sprite.SCALED_SIZE, curBrickSprite.getFxImage());
                 brickDestroyCounterDown++;
 
                 if (brickDestroyCounterDown == 50) {
@@ -576,10 +576,11 @@ public class Bomb extends Entity {
                         Sprite.brick_exploded1,
                         Sprite.brick_exploded2, _animate, timeBrickCollapse);
 
-                gc.drawImage(curBrickSprite.getFxImage(),
-                        (firstBrickRight.getX() + 1) * Sprite.SCALED_SIZE,
-                        (firstBrickRight.getY()) * Sprite.SCALED_SIZE);
-
+//                gc.drawImage(curBrickSprite.getFxImage(),
+//                        (firstBrickRight.getX() + 1) * Sprite.SCALED_SIZE,
+//                        (firstBrickRight.getY()) * Sprite.SCALED_SIZE);
+                GraphicsManager.getGraphicsManager().renderRaw((firstBrickRight.getX() + 1) * Sprite.SCALED_SIZE,
+                        (firstBrickRight.getY()) * Sprite.SCALED_SIZE, curBrickSprite.getFxImage());
                 brickDestroyCounterRight++;
 
                 if (brickDestroyCounterRight == 50) {
@@ -599,10 +600,12 @@ public class Bomb extends Entity {
                         Sprite.brick_exploded1,
                         Sprite.brick_exploded2, _animate, timeBrickCollapse);
 
-                gc.drawImage(curBrickSprite.getFxImage(),
-                        (firstBrickLeft.getX() - 1) * Sprite.SCALED_SIZE,
-                        (firstBrickLeft.getY()) * Sprite.SCALED_SIZE);
+//                gc.drawImage(curBrickSprite.getFxImage(),
+//                        (firstBrickLeft.getX() - 1) * Sprite.SCALED_SIZE,
+//                        (firstBrickLeft.getY()) * Sprite.SCALED_SIZE);
 
+                GraphicsManager.getGraphicsManager().renderRaw((firstBrickLeft.getX() - 1) * Sprite.SCALED_SIZE,
+                        (firstBrickLeft.getY()) * Sprite.SCALED_SIZE, curBrickSprite.getFxImage());
                 brickDestroyCounterLeft++;
 
                 if (brickDestroyCounterLeft == 50) {
@@ -622,9 +625,12 @@ public class Bomb extends Entity {
                         Sprite.brick_exploded2,
                         _animate, timeBrickCollapse);
 
-                gc.drawImage(curBrickSprite.getFxImage(),
-                        (firstBrickTop.getX()) * Sprite.SCALED_SIZE,
-                        (firstBrickTop.getY() - 1) * Sprite.SCALED_SIZE);
+//                gc.drawImage(curBrickSprite.getFxImage(),
+//                        (firstBrickTop.getX()) * Sprite.SCALED_SIZE,
+//                        (firstBrickTop.getY() - 1) * Sprite.SCALED_SIZE);
+
+                GraphicsManager.getGraphicsManager().renderRaw((firstBrickTop.getX()) * Sprite.SCALED_SIZE,
+                        (firstBrickTop.getY() - 1) * Sprite.SCALED_SIZE, curBrickSprite.getFxImage());
 
                 brickDestroyCounterTop++;
 
@@ -643,7 +649,6 @@ public class Bomb extends Entity {
             explodedBrick.clear();
             findFirstBrickAt4Side();
         }
-
     }
 
 }

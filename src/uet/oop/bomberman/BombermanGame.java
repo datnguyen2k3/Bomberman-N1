@@ -150,7 +150,8 @@ public class BombermanGame {
         }
         itemManagement.update();
         enemyManagement.update();
-        GraphicsManager.getGraphicsManager().update(bomberman.isCollisionOn, bomberman.get_state(), bomberman.getSpeed());
+        GraphicsManager.getGraphicsManager().update(bomberman.getX(),bomberman.getY(),
+                bomberman.isCollisionOn, bomberman.get_state(), bomberman.getSpeed());
 
         board.update(bomberman.getHP(), enemyManagement.getNumEnemies(),
                     bombManagement.getMaxBomb(), bombManagement.getFlame(),
@@ -252,5 +253,9 @@ public class BombermanGame {
     private void setEnd(Group root) {
         board.popInRoot(root);
         isRun = false;
+    }
+
+    public char[][] getDiagramMap() {
+        return diagramMap;
     }
 }
