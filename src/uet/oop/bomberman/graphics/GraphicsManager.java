@@ -1,9 +1,11 @@
 package uet.oop.bomberman.graphics;
 
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.map.MapParser;
@@ -80,21 +82,17 @@ class Viewport {
 }
 
 public class GraphicsManager {
+    private static final int blockSize = Sprite.SCALED_SIZE;
+    private static final int screenWidth = WIDTH * Sprite.SCALED_SIZE;
+    private static final int screenHeight = HEIGHT * Sprite.SCALED_SIZE;
     private static GraphicsManager graphicsManager = null;
     private Canvas canvas;
     private GraphicsContext gc;
-    private int blockSize;
-    private int screenWidth;
-    private int screenHeight;
     private int mapWidth;
     private int mapHeight;
     private Viewport viewport;
 
     private GraphicsManager() {
-        blockSize = Sprite.SCALED_SIZE;
-        screenWidth = WIDTH * blockSize;
-        screenHeight = HEIGHT * blockSize;
-
         mapWidth = MapParser.getMapWidth(BombermanGame.diagramMap) * blockSize;
         mapHeight = MapParser.getMapHeight(BombermanGame.diagramMap) * blockSize;
 
