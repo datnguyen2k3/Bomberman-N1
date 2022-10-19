@@ -87,4 +87,12 @@ public class SoundManager {
             sound.setVolume(volume);
         }
     }
+
+    public ArrayList<MediaPlayer> getMusicList() {
+        return musicList;
+    }
+
+    public ArrayList<MediaPlayer> getSoundList() {
+        return soundList;
+    }
 }
