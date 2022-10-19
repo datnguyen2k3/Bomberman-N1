@@ -342,14 +342,14 @@ public class Bomb extends Entity {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_horizontal_right_last
                     , Sprite.explosion_horizontal_right_last1
                     , Sprite.explosion_horizontal_right_last2, _animate, TIME_EXPLODING / 2);
-            gc.drawImage(curFlameSprite.getFxImage()
+            super.render(gc, curFlameSprite.getFxImage()
                     , xUnit * Sprite.SCALED_SIZE
                     , get_yUnit() * Sprite.SCALED_SIZE);
         } else {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_horizontal
                     , Sprite.explosion_horizontal1
                     , Sprite.explosion_horizontal2, _animate, TIME_EXPLODING / 2);
-            gc.drawImage(curFlameSprite.getFxImage()
+            super.render(gc, curFlameSprite.getFxImage()
                     , xUnit * Sprite.SCALED_SIZE
                     , get_yUnit() * Sprite.SCALED_SIZE);
         }
@@ -360,14 +360,14 @@ public class Bomb extends Entity {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_horizontal_left_last
                     , Sprite.explosion_horizontal_left_last1
                     , Sprite.explosion_horizontal_left_last2, _animate, TIME_EXPLODING / 2);
-            gc.drawImage(curFlameSprite.getFxImage()
+            super.render(gc, curFlameSprite.getFxImage()
                     , xUnit * Sprite.SCALED_SIZE
                     , get_yUnit() * Sprite.SCALED_SIZE);
 
         } else {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_horizontal
                     , Sprite.explosion_horizontal1, Sprite.explosion_horizontal2, _animate, TIME_EXPLODING / 2);
-            gc.drawImage(curFlameSprite.getFxImage()
+            super.render(gc, curFlameSprite.getFxImage()
                     , xUnit * Sprite.SCALED_SIZE
                     , get_yUnit() * Sprite.SCALED_SIZE);
         }
@@ -378,14 +378,14 @@ public class Bomb extends Entity {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_vertical_top_last
                     , Sprite.explosion_vertical_top_last1
                     , Sprite.explosion_vertical_top_last2, _animate, TIME_EXPLODING / 2);
-            gc.drawImage(curFlameSprite.getFxImage()
+            super.render(gc, curFlameSprite.getFxImage()
                     , get_xUnit() * Sprite.SCALED_SIZE
                     , yUnit * Sprite.SCALED_SIZE);
         } else {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_vertical
                     , Sprite.explosion_vertical1
                     , Sprite.explosion_vertical2, _animate, TIME_EXPLODING / 2);
-            gc.drawImage(curFlameSprite.getFxImage()
+            super.render(gc, curFlameSprite.getFxImage()
                     , get_xUnit() * Sprite.SCALED_SIZE
                     , yUnit * Sprite.SCALED_SIZE);
         }
@@ -401,14 +401,14 @@ public class Bomb extends Entity {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_vertical_down_last
                     , Sprite.explosion_vertical_down_last1
                     , Sprite.explosion_vertical_down_last2, _animate, TIME_EXPLODING / 2);
-            gc.drawImage(curFlameSprite.getFxImage()
+            super.render(gc, curFlameSprite.getFxImage()
                     , get_xUnit() * Sprite.SCALED_SIZE
                     , yUnit * Sprite.SCALED_SIZE);
         } else {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_vertical
                     , Sprite.explosion_vertical1
                     , Sprite.explosion_vertical2, _animate, TIME_EXPLODING / 2);
-            gc.drawImage(curFlameSprite.getFxImage()
+            super.render(gc, curFlameSprite.getFxImage()
                     , get_xUnit() * Sprite.SCALED_SIZE
                     , yUnit * Sprite.SCALED_SIZE);
         }
@@ -550,7 +550,8 @@ public class Bomb extends Entity {
         choosingSprite();
         if (isEnd)
             return;
-        gc.drawImage(currentSprite.getFxImage(), x, y);
+        img = currentSprite.getFxImage();
+        super.render(gc);
         draw4SideFlame(gc);
         // _animate=0;
         renderExplodeBrick(gc);
@@ -572,7 +573,7 @@ public class Bomb extends Entity {
                         Sprite.brick_exploded1,
                         Sprite.brick_exploded2, _animate, timeBrickCollapse);
 
-                gc.drawImage(curBrickSprite.getFxImage(),
+                super.render(gc,curBrickSprite.getFxImage(),
                         firstBrickDown.getX() * Sprite.SCALED_SIZE,
                         (firstBrickDown.getY() + 1) * Sprite.SCALED_SIZE);
 
@@ -594,7 +595,7 @@ public class Bomb extends Entity {
                         Sprite.brick_exploded1,
                         Sprite.brick_exploded2, _animate, timeBrickCollapse);
 
-                gc.drawImage(curBrickSprite.getFxImage(),
+                super.render(gc,curBrickSprite.getFxImage(),
                         (firstBrickRight.getX() + 1) * Sprite.SCALED_SIZE,
                         (firstBrickRight.getY()) * Sprite.SCALED_SIZE);
 
@@ -617,7 +618,7 @@ public class Bomb extends Entity {
                         Sprite.brick_exploded1,
                         Sprite.brick_exploded2, _animate, timeBrickCollapse);
 
-                gc.drawImage(curBrickSprite.getFxImage(),
+                super.render(gc, curBrickSprite.getFxImage(),
                         (firstBrickLeft.getX() - 1) * Sprite.SCALED_SIZE,
                         (firstBrickLeft.getY()) * Sprite.SCALED_SIZE);
 
@@ -640,7 +641,7 @@ public class Bomb extends Entity {
                         Sprite.brick_exploded2,
                         _animate, timeBrickCollapse);
 
-                gc.drawImage(curBrickSprite.getFxImage(),
+                super.render(gc, curBrickSprite.getFxImage(),
                         (firstBrickTop.getX()) * Sprite.SCALED_SIZE,
                         (firstBrickTop.getY() - 1) * Sprite.SCALED_SIZE);
 

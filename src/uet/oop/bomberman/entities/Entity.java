@@ -152,6 +152,19 @@ public abstract class Entity  {
         gc.drawImage(img, xRender, yRender);
     }
 
+    public void render(GraphicsContext gc, Image img, int x, int y) {
+        int xRender = x;
+        int yRender = y;
+
+        if (game.getBomberman().getX() > Game.WIDTH_CAMERA / 2) {
+            xRender -= Math.min(game.getBomberman().getX() + game.getBomberman().getSolidArea().x - Game.WIDTH_CAMERA / 2,
+                    BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH_CAMERA);
+        }
+
+        //System.out.println(game.getBomberman().getX() - Game.WIDTH_CAMERA / 2);
+
+        gc.drawImage(img, xRender, yRender);
+    }
 
     public void chooseSpriteBrick() {
         if(_state == State.BE_DESTROYING) {
