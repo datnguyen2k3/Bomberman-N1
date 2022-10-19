@@ -11,7 +11,12 @@ import java.nio.IntBuffer;
 public class Sprite {
 
 	public static final int DEFAULT_SIZE = 16;
+
+
 	public static final int SCALE = 3;
+	public boolean isSolid;
+
+
 	public static final int SCALED_SIZE = DEFAULT_SIZE * SCALE;
     private  final int TRANSPARENT_COLOR = 0xffff00ff;
 	public   int SIZE;

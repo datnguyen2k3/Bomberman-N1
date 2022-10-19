@@ -11,6 +11,9 @@ import uet.oop.bomberman.entities.Character.Character;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.utils.State;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BombManagement extends Management {
     private BombermanGame game;
     private int currentTimeRefresh = 0;
@@ -163,11 +166,15 @@ public class BombManagement extends Management {
     private void updateRemoveBomb() {
         if (list.size() == 0)
             return;
-        Bomb firstBomb = (Bomb) list.get(list.size() - 1);
-        if (firstBomb.isEnd()) {
-            //BombermanGame.diagramMap[firstBomb.get_yUnit()][firstBomb.get_xUnit()] = ' ';
-            list.remove(firstBomb);
+
+        List<Entity> newList = new ArrayList<>();
+        for (Entity e : list) {
+            Bomb b = (Bomb) e;
+            if (!b.isEnd()) {
+                newList.add(b);
+            }
         }
+        list = newList;
     }
 
     public boolean isDestroyBrick(Brick brick) {
