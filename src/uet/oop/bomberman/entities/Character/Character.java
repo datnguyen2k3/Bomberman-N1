@@ -37,18 +37,27 @@ public abstract class Character extends Entity {
 
     protected boolean running, goNorth, goSouth, goEast, goWest;
     protected boolean passBrick = false;
+    protected boolean passFlame = false;
 
     public boolean getPassBrick() {
         return passBrick;
+    }
+
+    public boolean getPassFlame() {
+        return passFlame;
     }
 
     public void setPassBrick() {
         if (passBrick)
             return;
         passBrick = true;
-
     }
 
+    public void setPassFlame() {
+        if (passFlame)
+            return;
+        passFlame = true;
+    }
 
     public Character(int xUnit, int yUnit, Image img, BombermanGame game) {
         this(xUnit, yUnit, img);

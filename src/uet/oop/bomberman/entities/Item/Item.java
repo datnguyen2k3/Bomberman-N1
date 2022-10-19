@@ -11,7 +11,8 @@ public abstract class Item extends Entity {
     public static final char portalItemDiagram = 'x';
     public static final char hpItemDiagram = 'h';
     public static final char passBrickDiagram = 'w';
-    public static final char[] items = {'f', 'b', 's', 'x', 'h', 'w'};
+    public static final char flamePassDiagram = 'q';
+    public static final char[] items = {'f', 'b', 's', 'x', 'h', 'w', 'q'};
     protected char itemDiagram;
     protected boolean isActivate = false;
     protected boolean isTaken = false;

@@ -319,6 +319,9 @@ public class Bomber extends Character {
             case Item.passBrickDiagram:
                 setPassBrick();
                 break;
+            case Item.flamePassDiagram:
+                setPassFlame();
+                break;
         }
     }
 
