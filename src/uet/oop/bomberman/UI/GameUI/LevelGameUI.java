@@ -1,10 +1,9 @@
-package uet.oop.bomberman.UI;
+package uet.oop.bomberman.UI.GameUI;
 
-import javafx.scene.Group;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import uet.oop.bomberman.Game;
+import uet.oop.bomberman.UI.GameUI.Intro;
 
 public class LevelGameUI extends Intro {
     int level = 1;

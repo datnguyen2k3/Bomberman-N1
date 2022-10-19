@@ -42,7 +42,10 @@ public class Bomber extends Character {
 
     @Override
     public void initSolidArea() {
-        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 10 * Sprite.SCALE, 14 * Sprite.SCALE);
+        solidArea = new Rectangle(0 * Sprite.SCALE,
+                0 * Sprite.SCALE,
+                10 * Sprite.SCALE,
+                14 * Sprite.SCALE);
     }
 
     public Bomber(int x, int y, Image img) {
@@ -335,6 +338,7 @@ public class Bomber extends Character {
     @Override
     public void update() {
         super.update();
+        System.out.println(get_xUnit()+" " + get_yUnit() );
 
         entityLeftSideX = x + solidArea.x;
         entityRightSideX = entityLeftSideX + solidArea.width;

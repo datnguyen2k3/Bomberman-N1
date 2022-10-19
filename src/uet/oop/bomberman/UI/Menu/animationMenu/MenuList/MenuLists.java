@@ -3,6 +3,7 @@ package uet.oop.bomberman.UI.Menu.animationMenu.MenuList;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
+import uet.oop.bomberman.UI.Menu.Menu;
 import uet.oop.bomberman.UI.Menu.animationMenu.TextGraphicsList;
 
 import java.util.ArrayList;
@@ -12,15 +13,18 @@ import java.util.Objects;
 public class MenuLists {
     private static final String[] listTypes = {"MAIN", "OPTIONS", "HIGHSCORE", "INFO", "QUESTION", "START", "EXIT"};
     private List<TextGraphicsList> menuLists;
+    private Menu menu;
     private int currentIndex = 0;
 
-    public MenuLists(int screenWidth, int screenHeight, Scene scene) {
+    public MenuLists(int screenWidth, int screenHeight, Scene scene, Menu menu) {
         menuLists = new ArrayList<>();
         menuLists.add(new MainMenuList(screenWidth, screenHeight, scene));
         menuLists.add(new OptionList(screenWidth, screenHeight, scene));
         menuLists.add(new HighscoreList(screenWidth, screenHeight, scene));
         menuLists.add(new InfoList(screenWidth, screenHeight, scene));
         menuLists.add(new QuestionList(screenWidth, screenHeight, scene));
+        this.menu = menu;
+
     }
 
     public void render(GraphicsContext gc) {
@@ -42,6 +46,7 @@ public class MenuLists {
             //Delete this after adding start and exit functionalities
             if (currentIndex == 5) {
                 currentIndex = 0;
+                startGame();
             } else if (currentIndex == 6) {
                 currentIndex = 0;
             }
@@ -75,6 +80,7 @@ public class MenuLists {
                 }
             });
         }
+
     }
 
     public int getCurrentIndex(String type) {
@@ -108,5 +114,9 @@ public class MenuLists {
 
     public void exit(Stage stage) {
         stage.close();
+    }
+
+    public void startGame() {
+        menu.setEnd();
     }
 }

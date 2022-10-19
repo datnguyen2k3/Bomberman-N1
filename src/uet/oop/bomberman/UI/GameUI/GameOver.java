@@ -1,6 +1,6 @@
-package uet.oop.bomberman.UI;
+package uet.oop.bomberman.UI.GameUI;
 
-public class GameOver extends Intro{
+public class GameOver extends Intro {
     public GameOver() {
         super();
     }

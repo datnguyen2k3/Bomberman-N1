@@ -8,9 +8,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import uet.oop.bomberman.UI.GameOver;
-import uet.oop.bomberman.UI.GameWin;
-import uet.oop.bomberman.UI.LevelGameUI;
+
+
+import uet.oop.bomberman.UI.GameUI.GameOver;
+import uet.oop.bomberman.UI.GameUI.GameWin;
+import uet.oop.bomberman.UI.GameUI.LevelGameUI;
+
 import uet.oop.bomberman.UI.Menu.Menu;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.SpriteSheet;
@@ -22,8 +25,10 @@ public class Game extends Application {
     private int maxLevel = 2;
     private Canvas canvas;
     private GraphicsContext gc;
+    Group root;
     private BombermanGame bombermanGame = new BombermanGame(1);
     private LevelGameUI levelGameUI = new LevelGameUI(1);
+    private Menu menu;
     private GameOver gameOver = new GameOver();
     private GameWin gameWin = new GameWin();
     private boolean isWin = false;
@@ -36,11 +41,12 @@ public class Game extends Application {
         gc.setFill(Color.BLACK);
 
         // Tao root container
-        Group root = new Group();
+        root = new Group();
         root.getChildren().add(canvas);
 
         // Tao scene
         Scene scene = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
+        menu = new Menu(scene, this);
 
         // Them scene vao stage
         stage.setScene(scene);
@@ -50,6 +56,11 @@ public class Game extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
+                if (menu.isRun()) {
+                    menu.run(canvas, gc, stage);
+                    return;
+                }
+
                 if (levelGameUI.isRun()) {
                     levelGameUI.run(root);
                     return;
@@ -63,17 +74,19 @@ public class Game extends Application {
                 if (bombermanGame.isWin()) {
                     if (bombermanGame.getLevel() == maxLevel) {
                         if (!isWin) {
-                            restartCanvas(root);
+                            restartCanvas();
                         }
                         if (gameWin.isRun()) {
                             gameWin.run(root);
                             return;
                         }
-                        stage.close();
+                        setNewGame();
+                        menu.setStart();
                         return;
+                        //stage.close();
                     }
 
-                    setNextLevel(root);
+                    setNextLevel();
                     return;
                 }
 
@@ -83,12 +96,12 @@ public class Game extends Application {
                 }
 
                 if (gameOver.isRun()) {
-                    restartCanvas(root);
+                    restartCanvas();
                     gameOver.run(root);
                     return;
                 }
-
-                stage.close();
+                menu.setStart();
+                //stage.close();
             }
         };
         timer.start();
@@ -107,20 +120,27 @@ public class Game extends Application {
         bombermanGame = newBombermanGame;
         levelGameUI = new LevelGameUI(bombermanGame.getLevel());
 
-        restartCanvas(root);
+        restartCanvas();
     }
 
-    private void setNextLevel(Group root) {
+    private void setNextLevel() {
         BombermanGame newBombermanGame = new BombermanGame(bombermanGame.getLevel() + 1);
         newBombermanGame.setBomber(bombermanGame.getBomberman());
 
         bombermanGame = newBombermanGame;
         levelGameUI = new LevelGameUI(bombermanGame.getLevel());
 
-        restartCanvas(root);
+        restartCanvas();
     }
 
-    private void restartCanvas(Group root) {
+    private void setNewGame() {
+        bombermanGame = new BombermanGame(1);
+        levelGameUI = new LevelGameUI(1);
+
+        restartCanvas();
+    }
+
+    public void restartCanvas() {
         root.getChildren().remove(canvas);
         setCanvas();
         root.getChildren().add(canvas);
