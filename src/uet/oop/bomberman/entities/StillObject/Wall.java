@@ -11,8 +11,8 @@ public class Wall extends Entity {
     public void initSolidArea() {
     }
 
-    public Wall(int xUnit, int yUnit) {
-        super(xUnit, yUnit);
+    public Wall(int xUnit, int yUnit, BombermanGame game) {
+        super(xUnit, yUnit, game);
         initSolidArea();
     }
 

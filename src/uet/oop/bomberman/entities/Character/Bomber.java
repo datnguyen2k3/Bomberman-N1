@@ -34,8 +34,7 @@ public class Bomber extends Character {
     private int entityBottomY;
 
     public Bomber(int x, int y, Image img, BombermanGame game) {
-        this(x, y, img);
-        this.game = game;
+        super(x, y, img, game);
         bombManagement = new BombManagement(this.game);
         MAX_TIME_STOP = 20;
     }
@@ -43,19 +42,6 @@ public class Bomber extends Character {
     @Override
     public void initSolidArea() {
         solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 10 * Sprite.SCALE, 14 * Sprite.SCALE);
-    }
-
-    public Bomber(int x, int y, Image img) {
-        super(x, y, img);
-        initSolidArea();
-        this.worldX = x;
-        this.worldY = y;
-        initSprite();
-        initState();
-//        entityLeftSideX = getX() + solidArea.x;
-//        entityRightSideX = entityLeftSideX + solidArea.width;
-//        entityTopY = getY() + solidArea.y;
-//        entityBottomY = entityTopY + solidArea.height;
     }
 
     private boolean isBrickOrWall(int x, int y) {

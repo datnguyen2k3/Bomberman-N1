@@ -60,7 +60,7 @@ public class Bomb extends Entity {
 
 
     public Bomb(int xUnit, int yUnit, BombManagement bombManagement, BombermanGame game) {
-        super(xUnit, yUnit);
+        super(xUnit, yUnit, game);
         _state = State.WAITING_EXPLODING;
         initSolidArea();
         this.bombManagement = bombManagement;

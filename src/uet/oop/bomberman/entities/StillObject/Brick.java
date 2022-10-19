@@ -18,8 +18,8 @@ public class Brick extends Entity {
 
     }
 
-    public Brick(int xUnit, int yUnit) {
-        super(xUnit, yUnit);
+    public Brick(int xUnit, int yUnit, BombermanGame game) {
+        super(xUnit, yUnit, game);
         initSolidArea();
         BombermanGame.diagramMap[get_yUnit()][get_xUnit()] = '*';
         _state = State.EXISTING;

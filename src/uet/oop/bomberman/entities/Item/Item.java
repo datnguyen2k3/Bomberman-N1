@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.Item;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
 
 public abstract class Item extends Entity {
@@ -35,8 +36,8 @@ public abstract class Item extends Entity {
         return false;
     }
 
-    public Item(int xUnit, int yUnit) {
-        super(xUnit, yUnit);
+    public Item(int xUnit, int yUnit, BombermanGame game) {
+        super(xUnit, yUnit, game);
         initItemDiagram();
         initSolidArea();
     }
