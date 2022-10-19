@@ -21,9 +21,9 @@ import uet.oop.bomberman.BombermanGame;
 
 public class Bomber extends Character {
     private static final int EPSILON = 10 * Sprite.SCALE;
-
     private int speedMoveAtEdgeDivideBy = 15;
     private BombManagement bombManagement;
+    private boolean isPressSpace = false;
     private boolean isBombermanKillAllEnemies = false;
     private int hp = 3;
     private boolean isWin;
@@ -231,18 +231,22 @@ public class Bomber extends Character {
                     case SHIFT:
                         running = true;
                         break;
-                }
+                    case SPACE: {
+                        if (isPressSpace) {
+                            return;
+                        }
 
-                if (event.getCode() == KeyCode.SPACE) {
-                    int bomb_xUnit = get_xUnitCenter();
-                    int bomb_yUnit = get_yUnitCenter();
+                        isPressSpace = true;
+                        int bomb_xUnit = get_xUnitCenter();
+                        int bomb_yUnit = get_yUnitCenter();
 
-                    if (Brick.isBrick(bomb_xUnit, bomb_yUnit) || Wall.isWall(bomb_xUnit, bomb_yUnit)) {
-                        return;
+                        if (Brick.isBrick(bomb_xUnit, bomb_yUnit) || Wall.isWall(bomb_xUnit, bomb_yUnit)) {
+                            return;
+                        }
+
+                        Bomb b = new Bomb(bomb_xUnit, bomb_yUnit, bombManagement, game);
+                        bombManagement.add(b);
                     }
-
-                    Bomb b = new Bomb(bomb_xUnit, bomb_yUnit, bombManagement, game);
-                    bombManagement.add(b);
                 }
             }
         });
@@ -274,6 +278,8 @@ public class Bomber extends Character {
                     case SHIFT:
                         running = false;
                         break;
+                    case SPACE:
+                        isPressSpace = false;
                 }
             }
         });
