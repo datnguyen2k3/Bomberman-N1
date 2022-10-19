@@ -38,33 +38,37 @@ public abstract class Character extends Entity {
 
     protected boolean running, goNorth, goSouth, goEast, goWest;
     protected boolean passBrick = false;
+    protected boolean passFlame = false;
 
     public boolean getPassBrick() {
         return passBrick;
+    }
+
+    public boolean getPassFlame() {
+        return passFlame;
     }
 
     public void setPassBrick() {
         if (passBrick)
             return;
         passBrick = true;
-
     }
 
+    public void setPassFlame() {
+        if (passFlame)
+            return;
+        passFlame = true;
+    }
 
     public Character(int xUnit, int yUnit, Image img, BombermanGame game) {
-        this(xUnit, yUnit, img);
-        this.game = game;
-    }
-
-    public Character(int xUnit, int yUnit, Image img) {
-        super(xUnit, yUnit, img);
+        super(xUnit, yUnit, img, game);
         initSprite();
         initState();
         initSolidArea();
     }
 
-    public Character(int xUnit, int yUnit) {
-        super(xUnit, yUnit);
+    public Character(int xUnit, int yUnit, BombermanGame game) {
+        super(xUnit, yUnit, game);
     }
 
     public int get_xUnitCenter() {
@@ -288,6 +292,7 @@ public abstract class Character extends Entity {
         if (isEnd)
             return;
         choosingSprite();
-        gc.drawImage(_sprite.getFxImage(), x, y);
+        this.img = _sprite.getFxImage();
+        super.render(gc);
     }
 }

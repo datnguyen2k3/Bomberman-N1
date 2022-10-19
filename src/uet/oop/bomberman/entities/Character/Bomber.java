@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
 import uet.oop.bomberman.entities.Item.Item;
@@ -34,8 +35,7 @@ public class Bomber extends Character {
     private int entityBottomY;
 
     public Bomber(int x, int y, Image img, BombermanGame game) {
-        this(x, y, img);
-        this.game = game;
+        super(x, y, img, game);
         bombManagement = new BombManagement(this.game);
         MAX_TIME_STOP = 20;
     }
@@ -46,19 +46,6 @@ public class Bomber extends Character {
                 0 * Sprite.SCALE,
                 10 * Sprite.SCALE,
                 14 * Sprite.SCALE);
-    }
-
-    public Bomber(int x, int y, Image img) {
-        super(x, y, img);
-        initSolidArea();
-        this.worldX = x;
-        this.worldY = y;
-        initSprite();
-        initState();
-//        entityLeftSideX = getX() + solidArea.x;
-//        entityRightSideX = entityLeftSideX + solidArea.width;
-//        entityTopY = getY() + solidArea.y;
-//        entityBottomY = entityTopY + solidArea.height;
     }
 
     private boolean isBrickOrWall(int x, int y) {
@@ -324,6 +311,9 @@ public class Bomber extends Character {
             case Item.passBrickDiagram:
                 setPassBrick();
                 break;
+            case Item.flamePassDiagram:
+                setPassFlame();
+                break;
         }
     }
 
@@ -338,8 +328,6 @@ public class Bomber extends Character {
     @Override
     public void update() {
         super.update();
-        System.out.println(get_xUnit()+" " + get_yUnit() );
-
         entityLeftSideX = x + solidArea.x;
         entityRightSideX = entityLeftSideX + solidArea.width;
         entityTopY = y + solidArea.y;
@@ -356,6 +344,7 @@ public class Bomber extends Character {
         bombManagement.render(gc);
         super.render(gc);
     }
+
 
 
 }

@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities.Item;
 
 import javafx.scene.canvas.GraphicsContext;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.Entity;
@@ -8,25 +9,30 @@ import uet.oop.bomberman.entities.Management;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class ItemManagement extends Management {
-    public void add(int xUnit, int yUnit, char itemDiagram) {
+    public void add(int xUnit, int yUnit, char itemDiagram, BombermanGame game) {
         switch (itemDiagram) {
             case Item.flameItemDiagram:
-                list.add(new FlameItem(xUnit, yUnit));
+                list.add(new FlameItem(xUnit, yUnit, game));
                 break;
             case Item.bombItemDiagram:
-                list.add(new BombItem(xUnit, yUnit));
+                list.add(new BombItem(xUnit, yUnit, game));
                 break;
             case Item.speedItemDiagram:
-                list.add(new SpeedItem(xUnit, yUnit));
+                list.add(new SpeedItem(xUnit, yUnit, game));
                 break;
             case Item.portalItemDiagram:
                 //System.out.println(1);
-                list.add(new Portal(xUnit, yUnit));
+                list.add(new Portal(xUnit, yUnit, game));
                 break;
             case Item.hpItemDiagram:
-                list.add(new HpItem(xUnit, yUnit));
+                list.add(new HpItem(xUnit, yUnit, game));
+                break;
             case Item.passBrickDiagram:
-                list.add(new PassBrickItem(xUnit, yUnit));
+                list.add(new PassBrickItem(xUnit, yUnit, game));
+                break;
+            case Item.flamePassDiagram:
+                list.add(new FlamePassItem(xUnit, yUnit, game));
+                break;
         }
     }
 

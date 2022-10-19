@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import uet.oop.bomberman.Game;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
 
@@ -61,15 +62,16 @@ public abstract class Entity  {
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
 
 
-    public Entity(int xUnit, int yUnit, Image img) {
-        this(xUnit, yUnit);
+    public Entity(int xUnit, int yUnit, Image img, BombermanGame game) {
+        this(xUnit, yUnit, game);
         this.img = img;
     }
 
-    public Entity(int xUnit, int yUnit) {
+    public Entity(int xUnit, int yUnit, BombermanGame game) {
         this.x = xUnit * Sprite.SCALED_SIZE;
         this.y = yUnit * Sprite.SCALED_SIZE;
         initSprite();
+        this.game = game;
     }
 
     public int get_xUnit() {
@@ -85,6 +87,11 @@ public abstract class Entity  {
     public void setCoordinate(int xUnit, int yUnit) {
         this.x = xUnit * Sprite.SCALED_SIZE;
         this.y = yUnit * Sprite.SCALED_SIZE;
+    }
+
+
+    public void setImg(Image img) {
+        this.img = img;
     }
 
     public void animate(String state) {
@@ -137,9 +144,32 @@ public abstract class Entity  {
     }
 
     public void render(GraphicsContext gc) {
-        gc.drawImage(img, x, y);
+        int xRender = x;
+        int yRender = y;
+
+        if (game.getBomberman().getX() > Game.WIDTH_CAMERA / 2) {
+            xRender -= Math.min(game.getBomberman().getX() + game.getBomberman().getSolidArea().x - Game.WIDTH_CAMERA / 2,
+                                BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH_CAMERA);
+
+        }
+
+
+        gc.drawImage(img, xRender, yRender);
     }
 
+    public void render(GraphicsContext gc, Image img, int x, int y) {
+        int xRender = x;
+        int yRender = y;
+
+        if (game.getBomberman().getX() > Game.WIDTH_CAMERA / 2) {
+            xRender -= Math.min(game.getBomberman().getX() + game.getBomberman().getSolidArea().x - Game.WIDTH_CAMERA / 2,
+                    BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH_CAMERA);
+        }
+
+        //System.out.println(game.getBomberman().getX() - Game.WIDTH_CAMERA / 2);
+        System.out.println(xRender);
+        gc.drawImage(img, xRender, yRender);
+    }
 
     public void chooseSpriteBrick() {
         if(_state == State.BE_DESTROYING) {

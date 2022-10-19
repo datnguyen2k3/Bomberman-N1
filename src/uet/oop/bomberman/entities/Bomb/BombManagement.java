@@ -185,6 +185,10 @@ public class BombManagement extends Management {
     }
 
     public boolean isDestroyEnemy(Character enemy) {
+        if (enemy.getPassFlame()) {
+            return false;
+        }
+
         for (Entity e : list) {
             Bomb bomb = (Bomb) e;
             for (Pair<Integer, Integer> bombCoordinate : bomb.explodedCells) {

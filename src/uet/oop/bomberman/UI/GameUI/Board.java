@@ -11,6 +11,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 
 public class Board {
+    public static int WIDTH = 4 * Sprite.SCALED_SIZE;
     Rectangle rectangle = new Rectangle();
     int size = 15;
     Font font = Font.loadFont("file:res/Font/game_font.ttf", size);
@@ -22,9 +23,9 @@ public class Board {
     boolean isAdd = false;
 
     public Board() {
-        rectangle.setX(BombermanGame.WIDTH * Sprite.SCALED_SIZE);
+        rectangle.setX(Game.WIDTH - Board.WIDTH);
         rectangle.setY(0);
-        rectangle.setWidth(Game.WIDTH - BombermanGame.WIDTH * Sprite.SCALED_SIZE);
+        rectangle.setWidth(WIDTH);
         rectangle.setHeight(Game.HEIGHT);
         rectangle.setFill(Color.DARKGREY);
 

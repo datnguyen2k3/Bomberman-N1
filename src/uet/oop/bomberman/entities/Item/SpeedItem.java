@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities.Item;
 
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class SpeedItem extends Item{
@@ -8,8 +9,8 @@ public class SpeedItem extends Item{
 
     }
 
-    public SpeedItem(int xUnit, int yUnit) {
-        super(xUnit, yUnit);
+    public SpeedItem(int xUnit, int yUnit, BombermanGame game) {
+        super(xUnit, yUnit, game);
     }
 
     @Override

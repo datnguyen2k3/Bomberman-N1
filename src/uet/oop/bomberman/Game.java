@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
+import uet.oop.bomberman.UI.GameUI.Board;
+
 import uet.oop.bomberman.UI.GameUI.GameOver;
 import uet.oop.bomberman.UI.GameUI.GameWin;
 import uet.oop.bomberman.UI.GameUI.LevelGameUI;
@@ -19,9 +21,10 @@ import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.SpriteSheet;
 
 public class Game extends Application {
-    
+
+    public static final int WIDTH_CAMERA = Sprite.SCALED_SIZE * 16;
     public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT;
-    public static final int WIDTH = Sprite.SCALED_SIZE * (BombermanGame.WIDTH + 6);
+    public static final int WIDTH = WIDTH_CAMERA + Board.WIDTH;
     private int maxLevel = 2;
     private Canvas canvas;
     private GraphicsContext gc;
@@ -101,6 +104,7 @@ public class Game extends Application {
                     return;
                 }
                 menu.setStart();
+                setNewGame();
                 //stage.close();
             }
         };

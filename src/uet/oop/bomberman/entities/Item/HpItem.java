@@ -1,10 +1,11 @@
 package uet.oop.bomberman.entities.Item;
 
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class HpItem extends Item{
-    public HpItem(int xUnit, int yUnit) {
-        super(xUnit, yUnit);
+    public HpItem(int xUnit, int yUnit, BombermanGame game) {
+        super(xUnit, yUnit, game);
     }
 
     @Override

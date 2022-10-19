@@ -42,7 +42,22 @@ public class BombermanGame {
     private BombManagement bombManagement = bomberman.getBombManagement();
     private boolean isRun = true;
     private boolean isAdd = false;
+
     private boolean isWin = false;
+
+    public List<Entity> getStillObjects() {
+        return stillObjects;
+    }
+
+    public void findBrickAndDelete(int xUnit, int yUnit) {
+        for (Entity e : stillObjects) {
+            if (e instanceof Brick) {
+                if (e.get_xUnit() == xUnit && e.get_yUnit() == yUnit) {
+                    e.setImg(Sprite.grass.getFxImage());
+                }
+            }
+        }
+    }
 
     public BombManagement getBombManagement() {
         return this.bombManagement;
@@ -119,17 +134,17 @@ public class BombermanGame {
                 char currentDiagramObject = diagramMap[j][i];
 
                 if (Wall.isWall(currentDiagramObject)) {
-                    object = new Wall(i, j);
+                    object = new Wall(i, j, this);
                 } else if (Brick.isBrick(currentDiagramObject)) {
-                    object = new Brick(i, j);
+                    object = new Brick(i, j, this);
                 } else if (Item.isItem(currentDiagramObject)) {
-                    object = new Brick(i, j);
-                    itemManagement.add(i, j, currentDiagramObject);
+                    object = new Brick(i, j, this);
+                    itemManagement.add(i, j, currentDiagramObject, this);
                 } else if (Enemy.isEnemy(currentDiagramObject)) {
-                    object = new Grass(i, j);
+                    object = new Grass(i, j, this);
                     enemyManagement.add(i, j, currentDiagramObject, this);
                 } else {
-                    object = new Grass(i, j);
+                    object = new Grass(i, j, this);
                 }
 
                 stillObjects.add(object);
