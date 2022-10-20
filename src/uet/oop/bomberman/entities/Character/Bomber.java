@@ -244,9 +244,12 @@ public class Bomber extends Character {
                         int bomb_xUnit = get_xUnitCenter();
                         int bomb_yUnit = get_yUnitCenter();
 
-                        if (Brick.isBrick(bomb_xUnit, bomb_yUnit) || Wall.isWall(bomb_xUnit, bomb_yUnit)) {
+                        if (Brick.isBrick(bomb_xUnit, bomb_yUnit)
+                                || Wall.isWall(bomb_xUnit, bomb_yUnit)
+                                || bombManagement.isBomb(bomb_xUnit,bomb_yUnit)) {
                             return;
                         }
+                        game.getSoundTrack().playPlaceBomb();
                         Bomb b = new Bomb(bomb_xUnit, bomb_yUnit, bombManagement, game);
                         bombManagement.add(b);
                     }
@@ -289,21 +292,29 @@ public class Bomber extends Character {
 
     }
 
+    private void playTakeItem() {
+        game.getSoundTrack().playTakeItem();
+    }
+
     public void takeItem(Item item) {
         if (isDead)
             return;
 
         switch (item.getDiagramItem()) {
             case Item.bombItemDiagram:
+                playTakeItem();
                 bombManagement.powerUpMaxBomb();
                 break;
             case Item.speedItemDiagram:
+                playTakeItem();
                 speed += 1;
                 break;
             case Item.flameItemDiagram:
+                playTakeItem();
                 bombManagement.powerUpFlameBomb();
                 break;
             case Item.hpItemDiagram:
+                playTakeItem();
                 hp++;
                 break;
             case Item.portalItemDiagram:
@@ -312,11 +323,14 @@ public class Bomber extends Character {
                 }
                 break;
             case Item.passBrickDiagram:
+                playTakeItem();
                 setPassBrick();
                 break;
             case Item.flamePassDiagram:
+                playTakeItem();
                 setPassFlame();
                 break;
+
         }
     }
 
@@ -331,6 +345,7 @@ public class Bomber extends Character {
     @Override
     public void update() {
         super.update();
+
         entityLeftSideX = x + solidArea.x;
         entityRightSideX = entityLeftSideX + solidArea.width;
         entityTopY = y + solidArea.y;

@@ -21,6 +21,7 @@ import uet.oop.bomberman.entities.StillObject.Grass;
 import uet.oop.bomberman.entities.StillObject.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.entities.Character.Bomber;
+import uet.oop.bomberman.sound.Soundtrack;
 import uet.oop.bomberman.utils.CollisionChecker;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
 
@@ -31,7 +32,7 @@ public class BombermanGame {
     private int currentTimeWin = 0;
     private Canvas canvas;
     private GraphicsContext gc;
-
+    private Soundtrack soundTrack = new Soundtrack();
 
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), this);
@@ -44,6 +45,12 @@ public class BombermanGame {
     private boolean isAdd = false;
 
     private boolean isWin = false;
+    private int levelDone = 0;
+    private int justDie = 0;
+
+    public Soundtrack getSoundTrack() {
+        return soundTrack;
+    }
 
     public List<Entity> getStillObjects() {
         return stillObjects;
@@ -67,6 +74,7 @@ public class BombermanGame {
     int level = 1;
 
     public boolean isRun() {
+
         return isRun;
     }
 
@@ -81,6 +89,7 @@ public class BombermanGame {
     public int getLevel() {
         return level;
     }
+
     public EnemyManagement getEnemyManagement() {
         return enemyManagement;
     }
@@ -98,6 +107,7 @@ public class BombermanGame {
         gc.setFill(Color.BLACK);
         this.level = level;
         createMap(level);
+
     }
 
     public Bomber getBomberman() {
@@ -164,8 +174,8 @@ public class BombermanGame {
         itemManagement.update();
         enemyManagement.update();
         board.update(bomberman.getHP(), enemyManagement.getNumEnemies(),
-                    bombManagement.getMaxBomb(), bombManagement.getFlame(),
-                    bomberman.getSpeed());
+                bombManagement.getMaxBomb(), bombManagement.getFlame(),
+                bomberman.getSpeed());
     }
 
     public void updateInput(Scene scene) {
@@ -177,8 +187,8 @@ public class BombermanGame {
         // destroy brick
         for (Entity e : stillObjects) {
             if (e instanceof Brick) {
-                if (bomberman.getBombManagement().isDestroyBrick((Brick)e)) {
-                    ((Brick)e).setDestroyed();
+                if (bomberman.getBombManagement().isDestroyBrick((Brick) e)) {
+                    ((Brick) e).setDestroyed();
                     itemManagement.setItemIfBrickIsDestroyed((Brick) e);
                 }
             }
@@ -191,12 +201,16 @@ public class BombermanGame {
         enemyManagement.updateEnemyIsKilledByBomb(bomberman.getBombManagement());
 
         // Bomb kill bomber
-        if (bomberman.getBombManagement().isDestroyEnemy(bomberman)) {
-            bomberman.setDead();
-        }
+//        if (bomberman.getBombManagement().isDestroyEnemy(bomberman)) {
+//            bomberman.setDead();
+//        }
 
         // Enemy kill bomber
         if (enemyManagement.isEnemyKillCharacter(bomberman)) {
+            if (justDie == 0) {
+                justDie = 1;
+                soundTrack.playJustDie();
+            }
             bomberman.setDead();
         }
 
@@ -227,6 +241,11 @@ public class BombermanGame {
         }
 
         if (isWin) {
+            if (levelDone == 0) {
+                levelDone = 1;
+                soundTrack.playLevelDone();
+            }
+            soundTrack.stopLevelThemeAt(level);
             currentTimeWin++;
             if (currentTimeWin > TIME_WIN) {
                 setEnd(root);

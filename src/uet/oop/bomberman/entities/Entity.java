@@ -19,7 +19,7 @@ public abstract class Entity  {
     public static final int MAX_ANIMATION = 7500;
     protected int x; //Tọa độ X tính từ góc trái trên trong Canvas
     protected int y; //Tọa độ Y tính từ góc trái trên trong Canvas
-    protected  int speed = 4;
+    protected  int speed = 2;
 
     protected Image img;
 
@@ -137,6 +137,18 @@ public abstract class Entity  {
         } else {
             this._animate = 0;
         }
+    }
+
+    public int animate(int animation ) {
+        if (animation < MAX_ANIMATION ) {
+            animation ++;
+            return animation;
+        }
+        else {
+            animation = 0;
+            return animation;
+        }
+
     }
 
     public State get_state() {

@@ -19,6 +19,8 @@ import uet.oop.bomberman.UI.GameUI.LevelGameUI;
 import uet.oop.bomberman.UI.Menu.Menu;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.SpriteSheet;
+import uet.oop.bomberman.sound.SoundManager;
+import uet.oop.bomberman.sound.Soundtrack;
 
 public class Game extends Application {
 
@@ -35,6 +37,9 @@ public class Game extends Application {
     private GameOver gameOver = new GameOver();
     private GameWin gameWin = new GameWin();
     private boolean isWin = false;
+
+
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -55,7 +60,6 @@ public class Game extends Application {
         stage.setScene(scene);
         stage.show();
 
-
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -65,11 +69,15 @@ public class Game extends Application {
                 }
 
                 if (levelGameUI.isRun()) {
+
+                    menu.stop(stage);
+                    bombermanGame.getSoundTrack().playStageStart();
                     levelGameUI.run(root);
                     return;
                 }
 
                 if (bombermanGame.isRun()) {
+                    bombermanGame.getSoundTrack().playLevelThemeAt(bombermanGame.getLevel());
                     bombermanGame.run(canvas, gc, scene, root);
                     return;
                 }
@@ -77,12 +85,15 @@ public class Game extends Application {
                 if (bombermanGame.isWin()) {
                     if (bombermanGame.getLevel() == maxLevel) {
                         if (!isWin) {
+
+                            //bombermanGame.getSoundTrack().stopLevelThemeAt(bombermanGame.getLevel());
                             restartCanvas();
                         }
                         if (gameWin.isRun()) {
                             gameWin.run(root);
                             return;
                         }
+
                         setNewGame();
                         menu.setStart();
                         return;
@@ -94,6 +105,8 @@ public class Game extends Application {
                 }
 
                 if (bombermanGame.getBomberman().getHP() > 0) {
+                    System.out.println("Die");
+                    bombermanGame.getSoundTrack().stopLevelThemeAt(bombermanGame.getLevel());
                     setRestartGame(root);
                     return;
                 }

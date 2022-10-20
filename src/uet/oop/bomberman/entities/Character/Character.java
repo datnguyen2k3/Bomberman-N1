@@ -15,7 +15,7 @@ import uet.oop.bomberman.utils.State;
 
 public abstract class Character extends Entity {
 
-    private int delayTime = 90;
+    private int delayTime = 600 ;
     protected boolean isDead = false;
     protected boolean isEnd = false;
     protected int worldX;

@@ -55,10 +55,14 @@ public class Bomb extends Entity {
     private Sprite bombExploding1 = Sprite.bomb_exploded1;
     private Sprite bombExploding2 = Sprite.bomb_exploded2;
 
+    private int animateWaitingToExplode = 0 ;
+    private int animateExploding = 0;
+
     Coordinate firstBrickRight;
     Coordinate firstBrickLeft;
     Coordinate firstBrickTop;
     Coordinate firstBrickDown;
+    private boolean isPlayExplosionSound = false;
 
 
     public Bomb(int xUnit, int yUnit, BombManagement bombManagement, BombermanGame game) {
@@ -361,11 +365,15 @@ public class Bomb extends Entity {
 
         switch (_state) {
             case WAITING_EXPLODING: {
-                currentSprite = Sprite.movingSprite(bomb, bomb1, bomb2, _animate, TIME_WAIT_TO_EXPLODING / 2);
+                currentSprite = Sprite.movingSprite(bomb, bomb1, bomb2, animateWaitingToExplode, TIME_WAIT_TO_EXPLODING / 2);
                 break;
             }
             case EXPLODING: {
-                currentSprite = Sprite.movingSprite(bombExploding, bombExploding1, bombExploding2, _animate, TIME_EXPLODING / 2);
+                if (isPlayExplosionSound == false) {
+                    game.getSoundTrack().playExplosion();
+                    isPlayExplosionSound = true;
+                }
+                currentSprite = Sprite.movingSprite(bombExploding, bombExploding1, bombExploding2, animateExploding, TIME_EXPLODING / 2);
                 break;
             }
         }
@@ -571,8 +579,10 @@ public class Bomb extends Entity {
 
     @Override
     public void update(){
-        bombList = bombManagement.getList();
 
+        bombList = bombManagement.getList();
+        animateExploding = animate(animateExploding);
+        animateWaitingToExplode = animate(animateWaitingToExplode);
         animate();
         running();
         updateCharacterInBomb();
