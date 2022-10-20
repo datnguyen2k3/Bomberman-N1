@@ -69,7 +69,7 @@ public class Bomb extends Entity {
         this.game = game;
         findFirstBrickAt4Side();
         initCharacterInBomb();
-        bombList = bombManagement.getList();
+
         explodedLength = bombManagement.getExplodedLength();
     }
 
@@ -123,6 +123,7 @@ public class Bomb extends Entity {
 
     public void activeExploding() {
         this._state = State.EXPLODING;
+        isWaitedToExploding = true;
     }
 
     public boolean isWaitedToExploding() {
@@ -141,7 +142,7 @@ public class Bomb extends Entity {
         if (!isWaitedToExploding) {
             img = Sprite.bomb.getFxImage();
             isWaitedToExploding = true;
-            _state = State.WAITING_EXPLODING;
+            _state = State.WAITING_EXPLODING    ;
         }
         currentTimeWaitToExploding--;
     }
@@ -165,8 +166,10 @@ public class Bomb extends Entity {
             if (e instanceof Bomb) {
                 if (_state == State.EXPLODING
                         && e.get_state() == State.WAITING_EXPLODING
-                        && ((Bomb) e).isOnExplodingArea(this)) {
+                        && ((Bomb)e).isOnExplodingArea(this)) {
+                    System.out.println(true);
                     ((Bomb) e).activeExploding();
+                    ((Bomb) e).explode();
                 }
             }
         }
@@ -570,7 +573,8 @@ public class Bomb extends Entity {
     }
 
     @Override
-    public void update() {
+    public void update(){
+        bombList = bombManagement.getList();
         animate();
         running();
         updateCharacterInBomb();
@@ -587,6 +591,7 @@ public class Bomb extends Entity {
         draw4SideFlame(gc);
         // _animate=0;
         renderExplodeBrick(gc);
+
 
     }
 

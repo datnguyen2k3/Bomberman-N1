@@ -167,7 +167,7 @@ public abstract class Entity  {
         }
 
         //System.out.println(game.getBomberman().getX() - Game.WIDTH_CAMERA / 2);
-        System.out.println(xRender);
+        // System.out.println(xRender);
         gc.drawImage(img, xRender, yRender);
     }
 

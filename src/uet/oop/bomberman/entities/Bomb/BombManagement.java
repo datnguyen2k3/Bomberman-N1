@@ -20,7 +20,7 @@ public class BombManagement extends Management {
 
     //    private int explodedLength = 1;
     private int explodedLength = 1;
-    private int maxBomb = 1;
+    private int maxBomb = 5;
 
     public int getMaxBomb() {
         return maxBomb;
