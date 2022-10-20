@@ -11,7 +11,7 @@ import java.net.URL;
  */
 public class SpriteSheet {
 
-	public static String _path ="/textures/classic2.png" ;
+	public static String _path ="/textures/classic4.png" ;
 	public final int SIZE;
 	public int[] _pixels;
 	public BufferedImage image;

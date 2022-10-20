@@ -69,7 +69,6 @@ public class Game extends Application {
                 }
 
                 if (levelGameUI.isRun()) {
-
                     menu.stop(stage);
                     bombermanGame.getSoundTrack().playStageStart();
                     levelGameUI.run(root);
