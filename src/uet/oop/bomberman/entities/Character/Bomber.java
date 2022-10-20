@@ -6,6 +6,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.util.Pair;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
@@ -16,6 +17,7 @@ import uet.oop.bomberman.entities.StillObject.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.awt.*;
+import java.util.List;
 
 import uet.oop.bomberman.utils.State;
 import uet.oop.bomberman.BombermanGame;
@@ -318,7 +320,7 @@ public class Bomber extends Character {
                 hp++;
                 break;
             case Item.portalItemDiagram:
-                if (isBombermanKillAllEnemies()) {
+                if (isBombermanKillAllEnemies() && isInCell(item.get_xUnit(), item.get_yUnit())) {
                     setBomberWin();
                 }
                 break;
@@ -332,6 +334,24 @@ public class Bomber extends Character {
                 break;
 
         }
+    }
+
+    public boolean isInCell(int xUnit, int yUnit) {
+        List<Pair<Integer, Integer>> points = pointsOfRectangle();
+        int scale = 2;
+        for (Pair<Integer, Integer> point : points) {
+            int xPoint = point.getKey();
+            int yPoint = point.getValue();
+            if (!isPointInRectangle(xPoint, yPoint,
+                                    xUnit * Sprite.SCALED_SIZE - scale,
+                                    yUnit * Sprite.SCALED_SIZE - scale,
+                                    (xUnit + 1) * Sprite.SCALED_SIZE + scale,
+                                    (yUnit + 1) * Sprite.SCALED_SIZE + scale)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public void setBomberWin() {
