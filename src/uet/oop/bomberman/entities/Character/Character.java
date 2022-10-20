@@ -217,21 +217,29 @@ public abstract class Character extends Entity {
     }
 
     public boolean isImpact(int startX, int startY, int endX, int endY) {
+        List<Pair<Integer, Integer>> points = pointsOfRectangle();
+
+        for (Pair<Integer, Integer> point : points) {
+            int xPoint = point.getKey();
+            int yPoint = point.getValue();
+            if (isPointInRectangle(xPoint, yPoint, startX, startY, endX, endY)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isPointInRectangle(int xPoint, int yPoint, int startX, int startY, int endX, int endY) {
+        return startX < xPoint && xPoint < endX && startY < yPoint && yPoint < endY;
+    }
+
+    protected List<Pair<Integer, Integer>> pointsOfRectangle() {
         List<Pair<Integer, Integer>> points = new ArrayList<>();
         points.add(new Pair<>(solidArea.x + x, solidArea.y + y));
         points.add(new Pair<>(x + solidArea.x + solidArea.width, y + solidArea.y));
         points.add(new Pair<>(x + solidArea.x, y + solidArea.y + solidArea.height));
         points.add(new Pair<>(x + solidArea.x + solidArea.width, y + solidArea.y + solidArea.height));
-
-        for (Pair<Integer, Integer> point : points) {
-            int xPoint = point.getKey();
-            int yPoint = point.getValue();
-            if (startX < xPoint && xPoint < endX
-                    && startY < yPoint && yPoint < endY) {
-                return true;
-            }
-        }
-        return false;
+        return  points;
     }
 
     public boolean isImpact(int xUnitOfCell, int yUnitOfCell) {

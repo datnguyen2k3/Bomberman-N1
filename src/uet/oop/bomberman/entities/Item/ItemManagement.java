@@ -74,7 +74,8 @@ public class ItemManagement extends Management {
             }
 
             if (((Item) e) instanceof Portal) {
-                if (bomber.isBombermanKillAllEnemies()) {
+                if (bomber.isBombermanKillAllEnemies() && bomber.isInCell(e.get_xUnit(), e.get_yUnit())) {
+
                     bomber.setBomberWin();
                 }
                 continue;

@@ -41,12 +41,16 @@ public class Soundtrack {
         powerUp = new AudioClip(new File("res/Sounds/powerup.wav").toURI().toString());
         themeSong = new MediaPlayer(new Media(new File("res/newSound/theme_song.mp3").toURI().toString()));
         stageStart = new MediaPlayer(new Media(new File("res/Sounds/stage_start.wav").toURI().toString()));
-        levelThemeAt[1] = new MediaPlayer(new Media(new File("res/Sounds/level_theme1.mp3").toURI().toString()));
+        levelThemeAt[3] = new MediaPlayer(new Media(new File("res/Sounds/level_theme1.mp3").toURI().toString()));
         levelThemeAt[2] = new MediaPlayer(new Media(new File("res/Sounds/level_theme2.mp3").toURI().toString()));
+        levelThemeAt[1] = new MediaPlayer(new Media(new File("res/newSound/wibu.mp3").toURI().toString()));
+        levelThemeAt[1].setVolume(1);
         justDie = new AudioClip(new File("res/Sounds/died.mp3").toURI().toString());
         levelDone = new AudioClip(new File("res/Sounds/level_done.mp3").toURI().toString());
         takeItem = new AudioClip(new File("res/Sounds/cddata_00325.wav").toURI().toString());
+
         switchButton = new AudioClip(new File("res/Sounds/button.mp3").toURI().toString());
+
 
     }
 

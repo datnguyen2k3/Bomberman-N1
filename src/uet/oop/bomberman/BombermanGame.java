@@ -30,7 +30,15 @@ public class BombermanGame {
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
     public static final int TIME_WIN = 180;
+    public static final int TIME_LOSE = 150;
+    public static final int TIME_GAME = 60 * 500;
+    public static final int TIME_ADD_ENEMY = 30;
     private int currentTimeWin = 0;
+    private int currentTimeLose = 0;
+    private int currentTimeGame = TIME_GAME;
+    private int currentTimeAddEnemy = 0;
+    private static final int NUM_ENEMIES_IS_ADDED = 15;
+    private int currentNumEnemiesIsAdded = 0;
     private Canvas canvas;
     private GraphicsContext gc;
     private Soundtrack soundTrack = new Soundtrack();
@@ -46,6 +54,7 @@ public class BombermanGame {
     private boolean isAdd = false;
 
     private boolean isWin = false;
+    private boolean isLose = false;
     private int levelDone = 0;
     private int justDie = 0;
 
@@ -75,12 +84,16 @@ public class BombermanGame {
     int level = 1;
 
     public boolean isRun() {
-
         return isRun;
     }
 
     private void setWin() {
+        if (isWin)
+            return;
+
         isWin = true;
+        soundTrack.stopLevelThemeAt(level);
+        soundTrack.playLevelDone();
     }
 
     public boolean isWin() {
@@ -89,6 +102,15 @@ public class BombermanGame {
 
     public int getLevel() {
         return level;
+    }
+    public int getCurrentTimeGame() {
+        return currentTimeGame / 60;
+    }
+    private void updateCurrentTimeGame() {
+        if (currentTimeGame <= 0)
+            return;
+
+        currentTimeGame--;
     }
 
     public EnemyManagement getEnemyManagement() {
@@ -175,8 +197,9 @@ public class BombermanGame {
         itemManagement.update();
         enemyManagement.update();
         board.update(bomberman.getHP(), enemyManagement.getNumEnemies(),
-                bombManagement.getMaxBomb(), bombManagement.getFlame(),
-                bomberman.getSpeed());
+                bombManagement.getLeftBomb(), bombManagement.getFlame(),
+                bomberman.getSpeed(), getCurrentTimeGame());
+        updateCurrentTimeGame();
     }
 
     public void updateInput(Scene scene) {
@@ -208,10 +231,6 @@ public class BombermanGame {
 
         // Enemy kill bomber
         if (enemyManagement.isEnemyKillCharacter(bomberman)) {
-            if (justDie == 0) {
-                justDie = 1;
-                soundTrack.playJustDie();
-            }
             bomberman.setDead();
         }
 
@@ -220,11 +239,29 @@ public class BombermanGame {
             bomberman.setBombermanKillAllEnemies();
         }
 
+        if (currentTimeGame <= 0) {
+            updateAddEnemyWhenEndTimeGame();
+        }
+
         // Bomber win
         if (bomberman.isWin()) {
             setWin();
         }
 
+        // Bomber lose
+        if (bomberman.isDead()) {
+            setLose();
+        }
+
+    }
+
+    private void updateAddEnemyWhenEndTimeGame() {
+        currentTimeAddEnemy++;
+        if (currentTimeAddEnemy == TIME_ADD_ENEMY && currentNumEnemiesIsAdded < NUM_ENEMIES_IS_ADDED) {
+            enemyManagement.add(1, 1, '1', this);
+            currentTimeAddEnemy = 0;
+            currentNumEnemiesIsAdded++;
+        }
     }
 
     public void render(Canvas canvas, GraphicsContext gc) {
@@ -243,18 +280,21 @@ public class BombermanGame {
         }
 
         if (isWin) {
-            if (levelDone == 0) {
-                levelDone = 1;
-                soundTrack.playLevelDone();
-            }
-            soundTrack.stopLevelThemeAt(level);
             currentTimeWin++;
             if (currentTimeWin > TIME_WIN) {
                 setEnd(root);
             }
-
             return;
         }
+
+        if (isLose) {
+            currentTimeLose++;
+            if (currentTimeLose > TIME_LOSE) {
+                setEnd(root);
+            }
+        }
+
+
 
         if (!isAdd) {
             setAdd(root);
@@ -278,5 +318,13 @@ public class BombermanGame {
     private void setEnd(Group root) {
         board.popInRoot(root);
         isRun = false;
+    }
+
+    private void setLose() {
+        if (isLose)
+            return;
+        isLose = true;
+        soundTrack.stopLevelThemeAt(level);
+        soundTrack.playJustDie();
     }
 }

@@ -20,6 +20,7 @@ public class Board {
     Text speedText;
     Text bombText;
     Text flameText;
+    Text timeText;
     boolean isAdd = false;
 
     public Board() {
@@ -34,6 +35,7 @@ public class Board {
         speedText = initText(3);
         bombText = initText(4);
         flameText = initText(5);
+        timeText = initText(6);
     }
 
     private Text initText(int order) {
@@ -45,12 +47,13 @@ public class Board {
         return text;
     }
 
-    public void update(int hp, int enemies, int bomb, int flame, int spead) {
+    public void update(int hp, int enemies, int bomb, int flame, int speed, int time) {
         hpText.setText("HP:" + hp);
         enemyText.setText("Enemy:" + enemies);
         bombText.setText("Bomb:" + bomb);
         flameText.setText("Flame:" + flame);
-        speedText.setText("Speed:" + spead);
+        speedText.setText("Speed:" + speed);
+        timeText.setText("Time:" + time);
     }
 
     public void pushInRoot(Group root) {
@@ -60,6 +63,7 @@ public class Board {
         root.getChildren().add(flameText);
         root.getChildren().add(speedText);
         root.getChildren().add(bombText);
+        root.getChildren().add(timeText);
     }
 
     public void popInRoot(Group root) {
@@ -69,6 +73,7 @@ public class Board {
         root.getChildren().remove(flameText);
         root.getChildren().remove(speedText);
         root.getChildren().remove(bombText);
+        root.getChildren().remove(timeText);
     }
 
 }

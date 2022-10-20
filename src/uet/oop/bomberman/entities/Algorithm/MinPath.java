@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.Algorithm;
 
 import javafx.util.Pair;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Character.Character;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.StillObject.Wall;
@@ -16,7 +17,7 @@ public class MinPath {
     public static int[] moveY = {1, -1, 0, 0};
 
     public static boolean isCanMove(char diagram) {
-        return diagram != Brick.diagramBrick && diagram != Wall.diagramWall;
+        return diagram != Brick.diagramBrick && diagram != Wall.diagramWall && diagram != Bomb.bombDiagram;
     }
 
     public static int findMinPath(int startX, int startY, int endX, int endY, char[][] map) {

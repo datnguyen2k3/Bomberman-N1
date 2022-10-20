@@ -27,7 +27,7 @@ public class Game extends Application {
     public static final int WIDTH_CAMERA = Sprite.SCALED_SIZE * 16;
     public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT;
     public static final int WIDTH = WIDTH_CAMERA + Board.WIDTH;
-    private int maxLevel = 2;
+    private int maxLevel = 3;
     private Canvas canvas;
     private GraphicsContext gc;
     Group root;
@@ -44,7 +44,8 @@ public class Game extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * BombermanGame.WIDTH, Sprite.SCALED_SIZE * BombermanGame.HEIGHT);
+        canvas = new Canvas(BombermanGame.WIDTH * Sprite.SCALED_SIZE, BombermanGame.HEIGHT * Sprite.SCALED_SIZE);
+
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
 
@@ -54,10 +55,12 @@ public class Game extends Application {
 
         // Tao scene
         Scene scene = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
+
         menu = new Menu(scene, this);
 
         // Them scene vao stage
         stage.setScene(scene);
+        //stage.setFullScreen(true);
         stage.show();
 
         AnimationTimer timer = new AnimationTimer() {
@@ -84,8 +87,7 @@ public class Game extends Application {
                 if (bombermanGame.isWin()) {
                     if (bombermanGame.getLevel() == maxLevel) {
                         if (!isWin) {
-
-                            //bombermanGame.getSoundTrack().stopLevelThemeAt(bombermanGame.getLevel());
+                            isWin = true;
                             restartCanvas();
                         }
                         if (gameWin.isRun()) {
@@ -152,7 +154,7 @@ public class Game extends Application {
     private void setNewGame() {
         bombermanGame = new BombermanGame(1);
         levelGameUI = new LevelGameUI(1);
-
+        isWin = false;
         restartCanvas();
     }
 
