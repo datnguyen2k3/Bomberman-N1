@@ -120,7 +120,7 @@ public class BombManagement extends Management {
         if (list.size() == maxBomb)
             return;
         list.add(b);
-        //BombermanGame.diagramMap[b.get_yUnit()][b.get_xUnit()] = '*';
+        BombermanGame.diagramMap[b.get_yUnit()][b.get_xUnit()] = Bomb.bombDiagram;
     }
 
     public boolean isCanMoveThroughBomb(int xUnit, int yUnit, Character other) {
@@ -161,6 +161,8 @@ public class BombManagement extends Management {
             Bomb b = (Bomb) e;
             if (!b.isEnd()) {
                 newList.add(b);
+            } else {
+                BombermanGame.diagramMap[b.get_yUnit()][b.get_xUnit()] = ' ';
             }
         }
         list = newList;

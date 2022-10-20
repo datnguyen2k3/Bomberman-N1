@@ -33,7 +33,8 @@ public class Game extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * BombermanGame.WIDTH, Sprite.SCALED_SIZE * BombermanGame.HEIGHT);
+        canvas = new Canvas(BombermanGame.WIDTH * Sprite.SCALED_SIZE, BombermanGame.HEIGHT * Sprite.SCALED_SIZE);
+
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
 
@@ -43,10 +44,12 @@ public class Game extends Application {
 
         // Tao scene
         Scene scene = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
+
         menu = new Menu(scene, this);
 
         // Them scene vao stage
         stage.setScene(scene);
+        //stage.setFullScreen(true);
         stage.show();
 
         AnimationTimer timer = new AnimationTimer() {
