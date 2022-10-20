@@ -1,5 +1,6 @@
 package uet.oop.bomberman.utils;
 
+import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.StillObject.Wall;
@@ -16,10 +17,13 @@ public class CollisionChecker {
 
     private boolean isBomb(int xUnit, int yUnit, Entity e) {
         return !game.getBombManagement().isCanMoveThroughBomb(xUnit, yUnit, (Character) e);
-         // return game.getBombManagement().isBomb(xUnit, yUnit, e);
+        // return game.getBombManagement().isBomb(xUnit, yUnit, e);
     }
 
     public void checkTile(Entity e) {
+        int gameWidth = BombermanGame.WIDTH;
+        int gameHeight = BombermanGame.HEIGHT;
+        int tileSize = Sprite.SCALED_SIZE;
         // get 4 point at x-axis, y-axis represent entity's rectangle.
         int entityLeftSideX = e.getX() + e.solidArea.x;
         int entityRightSideX = entityLeftSideX + e.solidArea.width;
@@ -27,10 +31,10 @@ public class CollisionChecker {
         int entityBottomY = entityTopY + e.solidArea.height;
 
         // get col and row of each side by divide coordinate by sprite scaled size.
-        int entityLeftCol = entityLeftSideX / Sprite.SCALED_SIZE;
-        int entityRightCol = entityRightSideX / Sprite.SCALED_SIZE;
-        int entityTopRow = entityTopY / Sprite.SCALED_SIZE;
-        int entityBottomRow = entityBottomY / Sprite.SCALED_SIZE;
+        int entityLeftCol = entityLeftSideX / tileSize;
+        int entityRightCol = entityRightSideX / tileSize;
+        int entityTopRow = entityTopY / tileSize;
+        int entityBottomRow = entityBottomY / tileSize;
 
         char typeTileLeft, typeTileRight;
         char typeTileUp, typeTileDown;
@@ -40,13 +44,14 @@ public class CollisionChecker {
             checkBrick = !((Character) e).getPassBrick();
         }
 
+        int speed = e.getSpeed();
 
         switch (e.get_state()) {
             case GO_NORTH: {
-                entityTopRow = (entityTopY - e.getSpeed()) / Sprite.SCALED_SIZE;
+                entityTopRow = (entityTopY - e.getSpeed()) / tileSize;
                 typeTileLeft = BombermanGame.diagramMap[entityTopRow][entityLeftCol];
                 typeTileRight = BombermanGame.diagramMap[entityTopRow][entityRightCol];
-                if (isBomb(entityLeftCol, entityTopRow, e) || isBomb(entityRightCol, entityTopRow,e)
+                if (isBomb(entityLeftCol, entityTopRow, e) || isBomb(entityRightCol, entityTopRow, e)
                         || Brick.isBrick(typeTileLeft, checkBrick) || Wall.isWall(typeTileRight)
                         || Brick.isBrick(typeTileRight, checkBrick) || Wall.isWall(typeTileLeft)) {
                     e.isCollisionOn = true;
@@ -54,7 +59,8 @@ public class CollisionChecker {
                 break;
             }
             case GO_SOUTH: {
-                entityBottomRow = (entityBottomY + e.getSpeed()) / Sprite.SCALED_SIZE;
+                entityBottomRow = (entityBottomY + e.getSpeed()) / tileSize;
+
                 typeTileLeft = BombermanGame.diagramMap[entityBottomRow][entityLeftCol];
                 typeTileRight = BombermanGame.diagramMap[entityBottomRow][entityRightCol];
                 if (isBomb(entityLeftCol, entityBottomRow, e) || isBomb(entityRightCol, entityBottomRow, e)
@@ -65,7 +71,9 @@ public class CollisionChecker {
                 break;
             }
             case GO_EAST: {
-                entityRightCol = (entityRightSideX + e.getSpeed()) / Sprite.SCALED_SIZE;
+
+                entityRightCol = (entityRightSideX + e.getSpeed()) / tileSize;
+
                 typeTileUp = BombermanGame.diagramMap[entityTopRow][entityRightCol];
                 typeTileDown = BombermanGame.diagramMap[entityBottomRow][entityRightCol];
                 if (isBomb(entityRightCol, entityBottomRow, e) || isBomb(entityRightCol, entityTopRow, e)
@@ -76,7 +84,8 @@ public class CollisionChecker {
                 break;
             }
             case GO_WEST: {
-                entityLeftCol = (entityLeftSideX - e.getSpeed()) / Sprite.SCALED_SIZE;
+                entityLeftCol = (entityLeftSideX - e.getSpeed()) / tileSize;
+
                 typeTileUp = BombermanGame.diagramMap[entityTopRow][entityLeftCol];
                 typeTileDown = BombermanGame.diagramMap[entityBottomRow][entityLeftCol];
                 if (isBomb(entityLeftCol, entityBottomRow, e) || isBomb(entityLeftCol, entityTopRow, e)
@@ -88,5 +97,6 @@ public class CollisionChecker {
 
             }
         }
+
     }
 }

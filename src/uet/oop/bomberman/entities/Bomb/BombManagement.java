@@ -20,7 +20,7 @@ public class BombManagement extends Management {
 
     //    private int explodedLength = 1;
     private int explodedLength = 1;
-    private int maxBomb = 1;
+    private int maxBomb = 5;
 
     public int getMaxBomb() {
         return maxBomb;
@@ -87,6 +87,17 @@ public class BombManagement extends Management {
             return (bomberXUnit == xUnit && bomberYUnit == yUnit)
                     || (bomberY + Sprite.SCALED_SIZE - yUnit * Sprite.SCALED_SIZE > Sprite.SCALED_SIZE / 3
                     && bomberXUnit == xUnit);
+        }
+        return false;
+    }
+
+    public boolean isBomb(int xUnit, int yUnit) {
+        for (Entity b : list) {
+            if (b instanceof  Bomb) {
+                if (b.get_xUnit() == xUnit && b.get_yUnit() == yUnit) {
+                    return true;
+                }
+            }
         }
         return false;
     }

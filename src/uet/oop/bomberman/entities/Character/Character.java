@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities.Character;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.util.Pair;
+import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.BombermanGame;
@@ -14,7 +15,7 @@ import uet.oop.bomberman.utils.State;
 
 public abstract class Character extends Entity {
 
-    private int delayTime = 90;
+    private int delayTime = 600 ;
     protected boolean isDead = false;
     protected boolean isEnd = false;
     protected int worldX;
@@ -244,19 +245,27 @@ public abstract class Character extends Entity {
         if (!isImpactWall()) {
             switch (_state) {
                 case GO_NORTH: {
+
                     y -= speed;
+
                     break;
                 }
                 case GO_SOUTH: {
+
                     y += speed;
+
                     break;
                 }
                 case GO_EAST: {
+
                     x += speed;
+
                     break;
                 }
                 case GO_WEST: {
+
                     x -= speed;
+
                     break;
                 }
             }
@@ -265,7 +274,6 @@ public abstract class Character extends Entity {
 
     @Override
     public void update() {
-
         if (isEnd)
             return;
         //animate();

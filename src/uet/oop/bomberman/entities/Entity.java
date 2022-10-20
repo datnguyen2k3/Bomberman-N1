@@ -19,7 +19,7 @@ public abstract class Entity  {
     public static final int MAX_ANIMATION = 7500;
     protected int x; //Tọa độ X tính từ góc trái trên trong Canvas
     protected int y; //Tọa độ Y tính từ góc trái trên trong Canvas
-    protected  int speed = 4;
+    protected  int speed = 2;
 
     protected Image img;
 
@@ -89,6 +89,11 @@ public abstract class Entity  {
         this.y = yUnit * Sprite.SCALED_SIZE;
     }
 
+
+    public void setImg(Image img) {
+        this.img = img;
+    }
+
     public void animate(String state) {
         if(state.equals("up")) {
             if (animateUp < MAX_ANIMATION) {
@@ -134,6 +139,18 @@ public abstract class Entity  {
         }
     }
 
+    public int animate(int animation ) {
+        if (animation < MAX_ANIMATION ) {
+            animation ++;
+            return animation;
+        }
+        else {
+            animation = 0;
+            return animation;
+        }
+
+    }
+
     public State get_state() {
         return this._state;
     }
@@ -145,9 +162,9 @@ public abstract class Entity  {
         if (game.getBomberman().getX() > Game.WIDTH_CAMERA / 2) {
             xRender -= Math.min(game.getBomberman().getX() + game.getBomberman().getSolidArea().x - Game.WIDTH_CAMERA / 2,
                                 BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH_CAMERA);
+
         }
 
-        //System.out.println(game.getBomberman().getX() - Game.WIDTH_CAMERA / 2);
 
         gc.drawImage(img, xRender, yRender);
     }
@@ -162,7 +179,7 @@ public abstract class Entity  {
         }
 
         //System.out.println(game.getBomberman().getX() - Game.WIDTH_CAMERA / 2);
-
+        // System.out.println(xRender);
         gc.drawImage(img, xRender, yRender);
     }
 

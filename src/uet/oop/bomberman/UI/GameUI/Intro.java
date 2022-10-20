@@ -13,7 +13,7 @@ public abstract class Intro {
     Text text;
     protected boolean isAdd = false;
     protected boolean isRun = true;
-
+    private int delayTime = 70;
     public boolean isRun() {
         return isRun;
     }
@@ -44,7 +44,7 @@ public abstract class Intro {
         }
 
         currentTime++;
-        if (currentTime > TIME_RUN) {
+        if (currentTime > TIME_RUN + delayTime ) {
             root.getChildren().remove(text);
             isRun = false;
         }

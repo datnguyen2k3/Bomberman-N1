@@ -31,6 +31,7 @@ public class Menu {
     private AnimatedGraphic background;
     private MenuLists menuLists;
 
+
     public Menu(Scene scene, Game game) {
         int screenWidth = Game.WIDTH;
         int screenHeight = Game.HEIGHT;
@@ -47,6 +48,7 @@ public class Menu {
 
         menuLists = new MenuLists(screenWidth, screenHeight, scene, this);
         this.game = game;
+
     }
 
     public boolean isRun() {
@@ -99,6 +101,10 @@ public class Menu {
         animatedGraphic.update();
         menuLists.update(stage);
         background.update();
+    }
+
+    public void stop(Stage stage) {
+        SoundManager.getSoundManager().stop();
     }
 
     public void render(Canvas canvas, GraphicsContext gc) {

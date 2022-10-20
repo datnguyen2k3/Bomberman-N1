@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import static javafx.scene.media.MediaPlayer.INDEFINITE;
 
 public class SoundManager {
-    public static final String mainMusicFilepath = "res/menu_music.mp3";
+    public static final String mainMusicFilepath = "res/newSound/theme_song.mp3";
     private static SoundManager soundManager;
     private ArrayList<MediaPlayer> musicList;
     private ArrayList<MediaPlayer> soundList;
@@ -65,6 +65,13 @@ public class SoundManager {
             });
         }
     }
+
+    public void stop() {
+        for (MediaPlayer music : musicList) {
+            music.stop();
+        }
+    }
+
 
     public void setMasterVolume(double volume) {
         for (MediaPlayer music: musicList) {

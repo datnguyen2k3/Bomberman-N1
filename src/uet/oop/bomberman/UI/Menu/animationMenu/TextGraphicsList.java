@@ -33,7 +33,6 @@ public class TextGraphicsList {
         this.scene = scene;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
-
         mainIndex = 0;
 
         this.textGraphicsList = new ArrayList<>();

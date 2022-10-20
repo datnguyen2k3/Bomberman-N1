@@ -10,23 +10,22 @@ import java.nio.IntBuffer;
  */
 public class Sprite {
 
-
-
 	public static final int DEFAULT_SIZE = 16;
+
 
 	public static final int SCALE = 3;
 	public boolean isSolid;
 
 
 	public static final int SCALED_SIZE = DEFAULT_SIZE * SCALE;
+    private  final int TRANSPARENT_COLOR = 0xffff00ff;
+	public   int SIZE;
+	private  int _x, _y;
+	public  int[] _pixels;
+	protected  int _realWidth;
+	protected  int _realHeight;
+	public  SpriteSheet _sheet;
 
-    private static final int TRANSPARENT_COLOR = 0xffff00ff;
-	public final int SIZE;
-	private int _x, _y;
-	public int[] _pixels;
-	protected int _realWidth;
-	protected int _realHeight;
-	private SpriteSheet _sheet;
 
 	/*
 	|--------------------------------------------------------------------------
@@ -216,7 +215,7 @@ public class Sprite {
 		}
 	}
 
-	private void load() {
+	public void load() {
 		for (int y = 0; y < SIZE; y++) {
 			for (int x = 0; x < SIZE; x++) {
 				_pixels[x + y * SIZE] = _sheet._pixels[(x + _x) + (y + _y) * _sheet.SIZE];
