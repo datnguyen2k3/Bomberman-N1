@@ -27,7 +27,7 @@ public class Game extends Application {
     public static final int WIDTH_CAMERA = Sprite.SCALED_SIZE * 16;
     public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT;
     public static final int WIDTH = WIDTH_CAMERA + Board.WIDTH;
-    private int maxLevel = 2;
+    private int maxLevel = 3;
     private Canvas canvas;
     private GraphicsContext gc;
     Group root;

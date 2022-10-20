@@ -29,7 +29,9 @@ public class BombermanGame {
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
     public static final int TIME_WIN = 180;
+    public static final int TIME_LOSE = 150;
     private int currentTimeWin = 0;
+    private int currentTimeLose = 0;
     private Canvas canvas;
     private GraphicsContext gc;
     private Soundtrack soundTrack = new Soundtrack();
@@ -45,6 +47,7 @@ public class BombermanGame {
     private boolean isAdd = false;
 
     private boolean isWin = false;
+    private boolean isLose = false;
     private int levelDone = 0;
     private int justDie = 0;
 
@@ -79,7 +82,12 @@ public class BombermanGame {
     }
 
     private void setWin() {
+        if (isWin)
+            return;
+
         isWin = true;
+        soundTrack.stopLevelThemeAt(level);
+        soundTrack.playLevelDone();
     }
 
     public boolean isWin() {
@@ -207,10 +215,6 @@ public class BombermanGame {
 
         // Enemy kill bomber
         if (enemyManagement.isEnemyKillCharacter(bomberman)) {
-            if (justDie == 0) {
-                justDie = 1;
-                soundTrack.playJustDie();
-            }
             bomberman.setDead();
         }
 
@@ -222,6 +226,10 @@ public class BombermanGame {
         // Bomber win
         if (bomberman.isWin()) {
             setWin();
+        }
+
+        if (bomberman.isDead()) {
+            setLose();
         }
 
     }
@@ -241,18 +249,21 @@ public class BombermanGame {
         }
 
         if (isWin) {
-            if (levelDone == 0) {
-                levelDone = 1;
-                soundTrack.playLevelDone();
-            }
-            soundTrack.stopLevelThemeAt(level);
             currentTimeWin++;
             if (currentTimeWin > TIME_WIN) {
                 setEnd(root);
             }
-
             return;
         }
+
+        if (isLose) {
+            currentTimeLose++;
+            if (currentTimeLose > TIME_LOSE) {
+                setEnd(root);
+            }
+        }
+
+
 
         if (!isAdd) {
             setAdd(root);
@@ -276,5 +287,13 @@ public class BombermanGame {
     private void setEnd(Group root) {
         board.popInRoot(root);
         isRun = false;
+    }
+
+    private void setLose() {
+        if (isLose)
+            return;
+        isLose = true;
+        soundTrack.stopLevelThemeAt(level);
+        soundTrack.playJustDie();
     }
 }
