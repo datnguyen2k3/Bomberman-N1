@@ -26,6 +26,10 @@ public class BombManagement extends Management {
         return maxBomb;
     }
 
+    public int getLeftBomb() {
+        return maxBomb - list.size();
+    }
+
     public void setMaxBomb(int maxBomb) {
         this.maxBomb = maxBomb;
     }
