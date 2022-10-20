@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import uet.oop.bomberman.BombermanGame;
 
 import java.util.ArrayList;
 import java.util.List;
