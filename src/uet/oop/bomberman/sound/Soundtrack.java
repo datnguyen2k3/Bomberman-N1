@@ -17,7 +17,7 @@ public class Soundtrack {
     private AudioClip justDie = null;
     private AudioClip levelDone = null;
     private AudioClip takeItem = null;
-    private AudioClip switchButton = null;
+    private static AudioClip switchButton = null;
 
     private MediaPlayer themeSong = null;
     private MediaPlayer stageStart = null;
@@ -44,12 +44,12 @@ public class Soundtrack {
         levelThemeAt[3] = new MediaPlayer(new Media(new File("res/Sounds/level_theme1.mp3").toURI().toString()));
         levelThemeAt[2] = new MediaPlayer(new Media(new File("res/Sounds/level_theme2.mp3").toURI().toString()));
         levelThemeAt[1] = new MediaPlayer(new Media(new File("res/newSound/wibu.mp3").toURI().toString()));
-        levelThemeAt[1].setVolume(1);
+
         justDie = new AudioClip(new File("res/Sounds/died.mp3").toURI().toString());
         levelDone = new AudioClip(new File("res/Sounds/level_done.mp3").toURI().toString());
         takeItem = new AudioClip(new File("res/Sounds/cddata_00325.wav").toURI().toString());
-
         switchButton = new AudioClip(new File("res/Sounds/button.mp3").toURI().toString());
+
 
 
     }
@@ -118,11 +118,16 @@ public class Soundtrack {
         stopPreviousTheme(level);
         if (playTheme == 0) {
             playTheme = 1;
-            levelThemeAt[level].setVolume(0.5);
+            levelThemeAt[level].setVolume(0.1);
             levelThemeAt[level].play();
         }
 
         stageStart.stop();
+    }
+
+    public static void playSwitchButtonSound() {
+        switchButton.setVolume(0.1);
+        switchButton.play();
     }
 }
 

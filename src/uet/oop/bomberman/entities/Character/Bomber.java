@@ -36,6 +36,7 @@ public class Bomber extends Character {
     private int entityTopY;
     private int entityBottomY;
 
+
     public Bomber(int x, int y, Image img, BombermanGame game) {
         super(x, y, img, game);
         bombManagement = new BombManagement(this.game);
@@ -248,7 +249,7 @@ public class Bomber extends Character {
 
                         if (Brick.isBrick(bomb_xUnit, bomb_yUnit)
                                 || Wall.isWall(bomb_xUnit, bomb_yUnit)
-                                || bombManagement.isBomb(bomb_xUnit,bomb_yUnit)) {
+                                || bombManagement.isBomb(bomb_xUnit, bomb_yUnit)) {
                             return;
                         }
                         game.getSoundTrack().playPlaceBomb();
@@ -343,10 +344,10 @@ public class Bomber extends Character {
             int xPoint = point.getKey();
             int yPoint = point.getValue();
             if (!isPointInRectangle(xPoint, yPoint,
-                                    xUnit * Sprite.SCALED_SIZE - scale,
-                                    yUnit * Sprite.SCALED_SIZE - scale,
-                                    (xUnit + 1) * Sprite.SCALED_SIZE + scale,
-                                    (yUnit + 1) * Sprite.SCALED_SIZE + scale)) {
+                    xUnit * Sprite.SCALED_SIZE - scale,
+                    yUnit * Sprite.SCALED_SIZE - scale,
+                    (xUnit + 1) * Sprite.SCALED_SIZE + scale,
+                    (yUnit + 1) * Sprite.SCALED_SIZE + scale)) {
                 return false;
             }
         }
@@ -382,7 +383,6 @@ public class Bomber extends Character {
         bombManagement.render(gc);
         super.render(gc);
     }
-
 
 
 }
