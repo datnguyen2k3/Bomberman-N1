@@ -425,9 +425,6 @@ public class Bomb extends Entity {
         }
     }
 
-    private void explodeAllBrick(GraphicsContext gc) {
-
-    }
 
     private void renderFlameDown(GraphicsContext gc, int yUnit, boolean isLast) {
 
@@ -575,6 +572,7 @@ public class Bomb extends Entity {
     @Override
     public void update(){
         bombList = bombManagement.getList();
+
         animate();
         running();
         updateCharacterInBomb();
