@@ -87,8 +87,7 @@ public class Game extends Application {
                 if (bombermanGame.isWin()) {
                     if (bombermanGame.getLevel() == maxLevel) {
                         if (!isWin) {
-
-                            //bombermanGame.getSoundTrack().stopLevelThemeAt(bombermanGame.getLevel());
+                            isWin = true;
                             restartCanvas();
                         }
                         if (gameWin.isRun()) {
@@ -155,7 +154,7 @@ public class Game extends Application {
     private void setNewGame() {
         bombermanGame = new BombermanGame(1);
         levelGameUI = new LevelGameUI(1);
-
+        isWin = false;
         restartCanvas();
     }
 

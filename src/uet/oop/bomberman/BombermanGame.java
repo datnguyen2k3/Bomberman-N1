@@ -30,7 +30,7 @@ public class BombermanGame {
     public static final int HEIGHT = 13;
     public static final int TIME_WIN = 180;
     public static final int TIME_LOSE = 150;
-    public static final int TIME_GAME = 60 * 20;
+    public static final int TIME_GAME = 60 * 500;
     public static final int TIME_ADD_ENEMY = 30;
     private int currentTimeWin = 0;
     private int currentTimeLose = 0;
