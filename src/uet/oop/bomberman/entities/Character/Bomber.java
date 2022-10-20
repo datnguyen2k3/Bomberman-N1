@@ -205,12 +205,9 @@ public class Bomber extends Character {
         isBombermanKillAllEnemies = true;
     }
 
-
     public void updateInput(Scene scene) {
-//        System.out.println(speed);
         if (isDead)
             return;
-
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -227,6 +224,11 @@ public class Bomber extends Character {
                         break;
                     case A:
                     case LEFT:
+                        if (getX() == Sprite.SCALED_SIZE && passBrick == true ) {
+                            System.out.println("Fault here");
+                            y += speed;
+                            return;
+                        }
                         _state = State.GO_WEST;
                         goWest = true;
                         break;
@@ -259,7 +261,6 @@ public class Bomber extends Character {
                 }
             }
         });
-
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {

@@ -15,7 +15,7 @@ import uet.oop.bomberman.utils.State;
 
 public abstract class Character extends Entity {
 
-    private int delayTime = 600 ;
+    private int delayTime = 600;
     protected boolean isDead = false;
     protected boolean isEnd = false;
     protected int worldX;
@@ -155,7 +155,8 @@ public abstract class Character extends Entity {
                 break;
             }
             case GO_WEST:
-            case STATIONARY: {
+            case STATIONARY:
+            case FAKE_GO_WEST: {
                 animate("left");
                 _sprite = Sprite.movingSprite(sprite_character_left,
                         sprite_character_left_1,
@@ -239,7 +240,7 @@ public abstract class Character extends Entity {
         points.add(new Pair<>(x + solidArea.x + solidArea.width, y + solidArea.y));
         points.add(new Pair<>(x + solidArea.x, y + solidArea.y + solidArea.height));
         points.add(new Pair<>(x + solidArea.x + solidArea.width, y + solidArea.y + solidArea.height));
-        return  points;
+        return points;
     }
 
     public boolean isImpact(int xUnitOfCell, int yUnitOfCell) {
@@ -253,27 +254,19 @@ public abstract class Character extends Entity {
         if (!isImpactWall()) {
             switch (_state) {
                 case GO_NORTH: {
-
                     y -= speed;
-
                     break;
                 }
                 case GO_SOUTH: {
-
                     y += speed;
-
                     break;
                 }
                 case GO_EAST: {
-
                     x += speed;
-
                     break;
                 }
                 case GO_WEST: {
-
                     x -= speed;
-
                     break;
                 }
             }
@@ -284,7 +277,6 @@ public abstract class Character extends Entity {
     public void update() {
         if (isEnd)
             return;
-        //animate();
         if (!isDead)
             updateCoordinate();
     }
