@@ -154,6 +154,8 @@ public class Game extends Application {
     private void setNewGame() {
         bombermanGame = new BombermanGame(1);
         levelGameUI = new LevelGameUI(1);
+        gameOver = new GameOver();
+        gameWin = new GameWin();
         isWin = false;
         restartCanvas();
     }

@@ -14,13 +14,19 @@ import uet.oop.bomberman.utils.State;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BombManagement extends Management {
+public class BombManagement extends Management<Bomb> {
     private BombermanGame game;
     private int currentTimeRefresh = 0;
 
     //    private int explodedLength = 1;
     private int explodedLength = 1;
     private int maxBomb = 5;
+
+    public BombManagement(int maxBomb, int explodedLength, BombermanGame game) {
+        this.maxBomb = maxBomb;
+        this.explodedLength = explodedLength;
+        this.game = game;
+    }
 
     public int getMaxBomb() {
         return maxBomb;
@@ -143,8 +149,7 @@ public class BombManagement extends Management {
             return true;
         }
 
-        for (Entity e : list) {
-            Bomb b = (Bomb) e;
+        for (Bomb b : list) {
             if (b.get_xUnit() != xUnit || b.get_yUnit() != yUnit)
                 continue;
             if (!b.isCharacterInBomb(other)) {
@@ -171,9 +176,8 @@ public class BombManagement extends Management {
         if (list.size() == 0)
             return;
 
-        List<Entity> newList = new ArrayList<>();
-        for (Entity e : list) {
-            Bomb b = (Bomb) e;
+        List<Bomb> newList = new ArrayList<>();
+        for (Bomb b : list) {
             if (!b.isEnd()) {
                 newList.add(b);
             } else {
@@ -184,9 +188,8 @@ public class BombManagement extends Management {
     }
 
     public boolean isDestroyBrick(Brick brick) {
-        for (Entity e : list) {
-            // Bomb bomb = (Bomb) e;
-            for (Pair<Integer, Integer> bombCoordinate : ((Bomb) e).destroyedBricks) {
+        for (Bomb b : list) {
+            for (Pair<Integer, Integer> bombCoordinate : b.destroyedBricks) {
                 int bomb_xUnit = bombCoordinate.getKey();
                 int bomb_yUnit = bombCoordinate.getValue();
                 if (bomb_xUnit == brick.get_xUnit() && bomb_yUnit == brick.get_yUnit())
@@ -202,8 +205,7 @@ public class BombManagement extends Management {
             return false;
         }
 
-        for (Entity e : list) {
-            Bomb bomb = (Bomb) e;
+        for (Bomb bomb : list) {
             for (Pair<Integer, Integer> bombCoordinate : bomb.explodedCells) {
                 int bomb_xUnit = bombCoordinate.getKey();
                 int bomb_yUnit = bombCoordinate.getValue();

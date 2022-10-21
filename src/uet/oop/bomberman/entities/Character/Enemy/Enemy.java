@@ -15,7 +15,9 @@ public abstract class Enemy extends Character {
     public static final char dollDiagram = '3';
     public static final char minvoDiagram = '4';
     public static final char doraDiagram = '5';
-    public static char lastEnemy = '5';
+    public static final char catDiagram = '6';
+
+    public static final int lastEnemyDiagram = '6';
 
     Bomber bomber = game.getBomberman();
 
@@ -31,7 +33,7 @@ public abstract class Enemy extends Character {
 
 
     public static boolean isEnemy(char diagram) {
-        return '1' <= diagram && diagram <= lastEnemy;
+        return '1' <= diagram && diagram <= lastEnemyDiagram;
     }
 
     @Override

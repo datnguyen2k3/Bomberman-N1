@@ -4,20 +4,20 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Management {
-    protected List<Entity> list = new ArrayList<>();
+public abstract class Management<T extends Entity> {
+    protected List<T> list = new ArrayList<>();
 
-    public List<Entity> getList() {
+    public List<T> getList() {
         return list;
     }
 
     public void render(GraphicsContext gc) {
-        for(Entity e : list) {
+        for(T e : list) {
             e.render(gc);
         }
     }
     public void update() {
-        for(Entity e : list) {
+        for(T e : list) {
             e.update();
         }
     }

@@ -10,12 +10,12 @@ import uet.oop.bomberman.BombermanGame;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnemyManagement extends Management {
+public class EnemyManagement extends Management<Enemy> {
     private List<Enemy> addLater = new ArrayList<>();
     public int getNumEnemies() {
         return list.size();
     }
-    public List<Entity> getList() {
+    public List<Enemy> getList() {
         return list;
     }
 
@@ -38,14 +38,15 @@ public class EnemyManagement extends Management {
                 return new Minvo(xUnit, yUnit, Sprite.minvo_left1.getFxImage(), game);
             case Enemy.doraDiagram:
                 return new Dora(xUnit, yUnit, Sprite.kondoria_left1.getFxImage(), game);
+            case Enemy.catDiagram:
+                return new Cat(xUnit, yUnit, Sprite.cat_left1.getFxImage(), game);
         }
 
         return null;
     }
 
     public boolean isEnemyKillCharacter(Character character) {
-        for (Entity entity : list) {
-            Enemy enemy = (Enemy) entity;
+        for (Enemy enemy : list) {
             if (!enemy.isDead() && character.isImpact(enemy)) {
                 return true;
             }
@@ -54,8 +55,7 @@ public class EnemyManagement extends Management {
     }
 
     public void updateEnemyIsKilledByBomb(BombManagement bombManagement) {
-        for (Entity e : list) {
-            Enemy enemy = (Enemy) e;
+        for (Enemy enemy : list) {
             if (!enemy.isDead() && bombManagement.isDestroyEnemy(enemy)) {
                 enemy.setDead();
             }
@@ -64,7 +64,7 @@ public class EnemyManagement extends Management {
 
     public void updateRemoveEnemy() {
         for (int i = 0; i < list.size(); i++) {
-            Enemy enemy = (Enemy) list.get(i);
+            Enemy enemy = list.get(i);
             if (enemy.isEnd()) {
                 list.remove(i);
                 i--;

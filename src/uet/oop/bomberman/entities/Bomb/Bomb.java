@@ -37,7 +37,7 @@ public class Bomb extends Entity {
     private int currentTimeExploding = TIME_EXPLODING;
     private int timeBrickCollapse = 100;
     private List<Character> charactersInBomb = new ArrayList<>();
-    private List<Entity> bombList = new ArrayList<>();
+    private List<Bomb> bombList = new ArrayList<>();
     private int explodedLength;
 
 
@@ -64,6 +64,9 @@ public class Bomb extends Entity {
     Coordinate firstBrickDown;
     private boolean isPlayExplosionSound = false;
 
+    public void setCurrentTimeWaitToExploding(int currentTimeWaitToExploding) {
+        this.currentTimeWaitToExploding = currentTimeWaitToExploding;
+    }
 
     public Bomb(int xUnit, int yUnit, BombManagement bombManagement, BombermanGame game) {
         super(xUnit, yUnit, game);

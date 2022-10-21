@@ -8,7 +8,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Management;
 import uet.oop.bomberman.graphics.Sprite;
 
-public class ItemManagement extends Management {
+public class ItemManagement extends Management<Item> {
     public void add(int xUnit, int yUnit, char itemDiagram, BombermanGame game) {
         switch (itemDiagram) {
             case Item.flameItemDiagram:
@@ -41,8 +41,7 @@ public class ItemManagement extends Management {
 
     // Combat
     public void removeItem(Bomber bomber) {
-        for (Entity e : list) {
-            Item item = (Item) e;
+        for (Item item : list) {
             if (!item.isTaken()) {
                 list.remove(item);
                 break;
@@ -51,46 +50,44 @@ public class ItemManagement extends Management {
     }
 
     public void setItemIfBrickIsDestroyed(Brick brick) {
-        for (Entity entity : list) {
-//            Item item = (Item) entity;
-            if (Entity.isEqualsCoordinate(((Item)entity), brick)) {
-                ((Item)entity).setActivate();
+        for (Item item : list) {
+            if (Entity.isEqualsCoordinate(item, brick)) {
+                item.setActivate();
                 return;
             }
         }
     }
 
     public void updateBomberTakeItem(Bomber bomber) {
-        for (Entity e : list) {
+        for (Item item : list) {
             // Item item = (Item) e;
-            if (!bomber.isImpact(((Item) e).getX(), ((Item) e).getY(),
-                    ((Item) e).getX() + Sprite.SCALED_SIZE,
-                    ((Item) e).getY() + Sprite.SCALED_SIZE)) {
+            if (!bomber.isImpact(item.getX(), item.getY(),
+                    item.getX() + Sprite.SCALED_SIZE,
+                    item.getY() + Sprite.SCALED_SIZE)) {
                 continue;
             }
 
-            if (!((Item) e).isActivate()) {
+            if (!item.isActivate()) {
                 continue;
             }
 
-            if (((Item) e) instanceof Portal) {
-                if (bomber.isBombermanKillAllEnemies() && bomber.isInCell(e.get_xUnit(), e.get_yUnit())) {
+            if (item instanceof Portal) {
+                if (bomber.isBombermanKillAllEnemies() && bomber.isInCell(item.get_xUnit(), item.get_yUnit())) {
 
                     bomber.setBomberWin();
                 }
                 continue;
             }
 
-            ((Item) e).setTaken();
-            bomber.takeItem(((Item) e));
+            ((Item) item).setTaken();
+            bomber.takeItem(((Item) item));
         }
     }
 
     // render
     @Override
     public void render(GraphicsContext gc) {
-        for (Entity entity : list) {
-            Item item = (Item) entity;
+        for (Item item : list) {
             if (item.isActivate()) {
                 item.render(gc);
             }

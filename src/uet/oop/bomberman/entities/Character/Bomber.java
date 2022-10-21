@@ -10,6 +10,7 @@ import javafx.util.Pair;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
+import uet.oop.bomberman.entities.Character.Enemy.EnemyManagement;
 import uet.oop.bomberman.entities.Item.Item;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.StillObject.Grass;
@@ -201,8 +202,8 @@ public class Bomber extends Character {
         return isBombermanKillAllEnemies;
     }
 
-    public void setBombermanKillAllEnemies() {
-        isBombermanKillAllEnemies = true;
+    public void updateBombermanKillAllEnemies(EnemyManagement enemyManagement) {
+        isBombermanKillAllEnemies = enemyManagement.getList().size() == 0;
     }
 
 
