@@ -17,7 +17,7 @@ public class CollisionChecker {
 
     private boolean isBomb(int xUnit, int yUnit, Entity e) {
         return !game.getBomberBombManagement().isCanMoveThroughBomb(xUnit, yUnit, (Character) e)
-                && game.getEnemyBombManagement().isCanMoveThroughBomb(xUnit, yUnit, (Character) e);
+                || !game.getEnemyBombManagement().isCanMoveThroughBomb(xUnit, yUnit, (Character) e);
         // return game.getBombManagement().isBomb(xUnit, yUnit, e);
     }
 

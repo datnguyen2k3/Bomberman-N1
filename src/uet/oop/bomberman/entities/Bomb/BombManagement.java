@@ -152,7 +152,7 @@ public class BombManagement extends Management<Bomb> {
         for (Bomb b : list) {
             if (b.get_xUnit() != xUnit || b.get_yUnit() != yUnit)
                 continue;
-            if (!b.isCharacterInBomb(other)) {
+            if (!b.isCharacterInBomb(other) && !b.isExploded()) {
                 return false;
             }
         }
