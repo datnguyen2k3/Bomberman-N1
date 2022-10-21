@@ -33,6 +33,8 @@ public class ItemManagement extends Management<Item> {
             case Item.flamePassDiagram:
                 list.add(new FlamePassItem(xUnit, yUnit, game));
                 break;
+            case Item.bombPassDiagram:
+                list.add(new BombPassItem(xUnit, yUnit, game));
         }
     }
 

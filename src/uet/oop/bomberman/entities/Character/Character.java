@@ -208,6 +208,24 @@ public abstract class Character extends Entity {
         return startX < xPoint && xPoint < endX && startY < yPoint && yPoint < endY;
     }
 
+    public boolean isInCell(int xUnit, int yUnit) {
+        List<Pair<Integer, Integer>> points = pointsOfRectangle();
+        int scale = 1;
+        for (Pair<Integer, Integer> point : points) {
+            int xPoint = point.getKey();
+            int yPoint = point.getValue();
+            if (!isPointInRectangle(xPoint, yPoint,
+                    xUnit * Sprite.SCALED_SIZE - scale,
+                    yUnit * Sprite.SCALED_SIZE - scale,
+                    (xUnit + 1) * Sprite.SCALED_SIZE + scale,
+                    (yUnit + 1) * Sprite.SCALED_SIZE + scale)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     protected List<Pair<Integer, Integer>> pointsOfRectangle() {
         List<Pair<Integer, Integer>> points = new ArrayList<>();
         points.add(new Pair<>(solidArea.x + x, solidArea.y + y));

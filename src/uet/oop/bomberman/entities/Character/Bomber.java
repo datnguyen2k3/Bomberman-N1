@@ -334,26 +334,14 @@ public class Bomber extends Character {
                 playTakeItem();
                 setPassFlame();
                 break;
-
+            case Item.bombPassDiagram:
+                setPassBomb();
+                break;
         }
     }
 
-    public boolean isInCell(int xUnit, int yUnit) {
-        List<Pair<Integer, Integer>> points = pointsOfRectangle();
-        int scale = 2;
-        for (Pair<Integer, Integer> point : points) {
-            int xPoint = point.getKey();
-            int yPoint = point.getValue();
-            if (!isPointInRectangle(xPoint, yPoint,
-                    xUnit * Sprite.SCALED_SIZE - scale,
-                    yUnit * Sprite.SCALED_SIZE - scale,
-                    (xUnit + 1) * Sprite.SCALED_SIZE + scale,
-                    (yUnit + 1) * Sprite.SCALED_SIZE + scale)) {
-                return false;
-            }
-        }
-
-        return true;
+    private void setPassBomb() {
+        passBomb = true;
     }
 
     public void setBomberWin() {

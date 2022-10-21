@@ -40,6 +40,8 @@ public class EnemyManagement extends Management<Enemy> {
                 return new Dora(xUnit, yUnit, Sprite.kondoria_left1.getFxImage(), game);
             case Enemy.catDiagram:
                 return new Cat(xUnit, yUnit, Sprite.cat_left1.getFxImage(), game);
+            case Enemy.coinDiagram:
+                return new Coin(xUnit, yUnit, Sprite.orange_coin_right.getFxImage(), game);
         }
 
         return null;

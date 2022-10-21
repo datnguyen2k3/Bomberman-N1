@@ -16,10 +16,11 @@ public abstract class Enemy extends Character {
     public static final char minvoDiagram = '4';
     public static final char doraDiagram = '5';
     public static final char catDiagram = '6';
+    public static final char coinDiagram = '7';
 
-    public static final int lastEnemyDiagram = '6';
+    public static final int lastEnemyDiagram = '7';
 
-    public static final int TIME_RANDOM_STATE = 300;
+    protected int TIME_RANDOM_STATE = 300;
     private int currentTimeRandomState = 0;
 
     Bomber bomber = game.getBomberman();
