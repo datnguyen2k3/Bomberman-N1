@@ -1,15 +1,16 @@
-package uet.oop.bomberman.entities.Character.Enemy;
+package uet.oop.bomberman.entities.Character.Enemy.RedEnemy;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Algorithm.CanGo;
 import uet.oop.bomberman.entities.Algorithm.MinPath;
+import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
 
 import java.util.PriorityQueue;
 
-public class Doll extends Enemy{
+public class Doll extends Enemy {
     public Doll(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
         this.x = xUnit * Sprite.SCALED_SIZE + 1;
@@ -66,7 +67,7 @@ public class Doll extends Enemy{
         if (x % Sprite.SCALED_SIZE != 1 || y % Sprite.SCALED_SIZE != 1)
             return;
 
-        int direction = MinPath.findDirection(this, bomber.get_xUnitCenter(), bomber.get_yUnitCenter());
+        int direction = MinPath.findDirection(this, game.getBomberman().get_xUnitCenter(), game.getBomberman().get_yUnitCenter());
         //System.out.println(direction);
 
         if (direction == CanGo.CANT_MOVE) {

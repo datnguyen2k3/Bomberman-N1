@@ -12,7 +12,6 @@ import java.util.List;
 
 import uet.oop.bomberman.UI.GameUI.Board;
 import uet.oop.bomberman.entities.*;
-import uet.oop.bomberman.entities.Character.Enemy.Cat;
 import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.entities.Character.Enemy.EnemyManagement;
 import uet.oop.bomberman.entities.Item.Item;
