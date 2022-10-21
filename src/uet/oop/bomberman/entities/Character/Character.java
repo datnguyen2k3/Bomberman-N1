@@ -38,6 +38,7 @@ public abstract class Character extends Entity {
 
     protected boolean running, goNorth, goSouth, goEast, goWest;
     protected boolean passBrick = false;
+    protected boolean passBomb = false;
     protected boolean passFlame = false;
 
     public boolean getPassBrick() {
@@ -95,32 +96,6 @@ public abstract class Character extends Entity {
 
     public boolean isEnd() {
         return isEnd;
-    }
-
-    public void setRandomSpeed() {
-        if (isEnd)
-            return;
-
-        running = true;
-        int maxSpeed = 2;
-        speed = rand.nextInt(maxSpeed) % maxSpeed + 1;
-        // System.out.println(speed);
-    }
-
-    protected void updateRunning() {
-        if (isImpactWall()) {
-            setRandomSpeed();
-        }
-
-        if (!running) {
-            return;
-        }
-
-        currentTimeRunning++;
-        if (currentTimeRunning > TIME_RUNNING) {
-            currentTimeRunning = 0;
-            running = false;
-        }
     }
 
     /**
@@ -302,5 +277,9 @@ public abstract class Character extends Entity {
         choosingSprite();
         this.img = _sprite.getFxImage();
         super.render(gc);
+    }
+
+    public boolean getPassBomb() {
+        return passBomb;
     }
 }

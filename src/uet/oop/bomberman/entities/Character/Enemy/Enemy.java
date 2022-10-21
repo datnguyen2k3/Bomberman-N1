@@ -19,6 +19,9 @@ public abstract class Enemy extends Character {
 
     public static final int lastEnemyDiagram = '6';
 
+    public static final int TIME_RANDOM_STATE = 300;
+    private int currentTimeRandomState = 0;
+
     Bomber bomber = game.getBomberman();
 
     public Enemy(int xUnit, int yUnit, Image img, BombermanGame game) {
@@ -49,6 +52,26 @@ public abstract class Enemy extends Character {
         this._state = State.values()[choice];
     }
 
+    @Override
+    protected void updateCurrentState() {
+        if (isImpactWall()) {
+            setState();
+        }
+
+        updateRandomStateByTime();
+    }
+
+    public void updateRandomStateByTime() {
+        if (isDead)
+            return;
+        currentTimeRandomState++;
+
+        if (currentTimeRandomState > TIME_RANDOM_STATE) {
+            currentTimeRandomState = 0;
+            setRandomState();
+        }
+    }
+
     public void setState() {
         setRandomState();
     }
@@ -58,9 +81,7 @@ public abstract class Enemy extends Character {
         super.update();
 
 
-        if (isImpactWall()) {
-            setState();
-        }
+        updateCurrentState();
 
         if(isDead) {
             currentTimeDead++;

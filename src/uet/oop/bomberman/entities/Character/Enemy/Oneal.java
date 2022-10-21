@@ -6,6 +6,8 @@ import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
 
 import java.awt.*;
+import java.util.Random;
+
 import uet.oop.bomberman.BombermanGame;
 public class Oneal extends Enemy {
 
@@ -46,10 +48,28 @@ public class Oneal extends Enemy {
         this.sprite_character_dead_3 = Sprite.mob_dead3;
     }
 
+    public void setRandomSpeed() {
+        Random random = new Random();
+        int randomNum = random.nextInt(3);
+
+        if (randomNum == 0) {
+            speed = 1;
+        } else {
+            speed = 3;
+        }
+
+    }
+
     @Override
     public void update() {
         super.update();
-        updateRunning();
+        updateSpeed();
+    }
+
+    protected void updateSpeed() {
+        if (isImpactWall()) {
+            setRandomSpeed();
+        }
     }
 
 

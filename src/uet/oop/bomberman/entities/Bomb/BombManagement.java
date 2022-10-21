@@ -145,7 +145,7 @@ public class BombManagement extends Management<Bomb> {
     }
 
     public boolean isCanMoveThroughBomb(int xUnit, int yUnit, Character other) {
-        if (other.getPassBrick()) {
+        if (other.getPassBomb()) {
             return true;
         }
 

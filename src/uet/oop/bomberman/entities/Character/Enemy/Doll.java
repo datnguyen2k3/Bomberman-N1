@@ -14,7 +14,7 @@ public class Doll extends Enemy{
         super(xUnit, yUnit, img, game);
         this.x = xUnit * Sprite.SCALED_SIZE + 1;
         this.y = yUnit * Sprite.SCALED_SIZE + 1;
-        this.speed = 2;
+        this.speed = 4;
     }
 
     @Override
@@ -55,10 +55,6 @@ public class Doll extends Enemy{
         this.sprite_character_dead_3 = Sprite.mob_dead3;
     }
 
-    @Override
-    public void setState() {
-
-    }
 
     // find min path from doll to bomberman
     @Override
@@ -90,7 +86,6 @@ public class Doll extends Enemy{
 
     @Override
     public void update() {
-        updateCurrentState();
         super.update();
 
     }

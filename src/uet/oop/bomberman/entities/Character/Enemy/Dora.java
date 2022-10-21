@@ -6,24 +6,12 @@ import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
 
 public class Dora extends Enemy {
-    public static int TIME_CHANGE_STAGE = 60;
-    public static int currentTimeChangeStage = 0;
-
     public Dora(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
         setPassBrick();
     }
 
-    @Override
-    public void updateCurrentState() {
-        if (_state == State.DEAD) return;
-        if (currentTimeChangeStage > TIME_CHANGE_STAGE) {
-            setRandomState();
-            currentTimeChangeStage = 0;
-        }
 
-        currentTimeChangeStage++;
-    }
 
     @Override
     protected void initSprite() {
@@ -60,7 +48,6 @@ public class Dora extends Enemy {
 
     @Override
     public void update() {
-        updateCurrentState();
         super.update();
     }
 }
