@@ -6,7 +6,9 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -31,7 +33,7 @@ public class Game extends Application {
     private Canvas canvas;
     private GraphicsContext gc;
     Group root;
-    private BombermanGame bombermanGame = new BombermanGame(1);
+    private BombermanGame bombermanGame = new BombermanGame(4);
     private LevelGameUI levelGameUI = new LevelGameUI(1);
     private Menu menu;
     private GameOver gameOver = new GameOver();
@@ -55,12 +57,12 @@ public class Game extends Application {
 
         // Tao scene
         Scene scene = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
-
         menu = new Menu(scene, this);
 
         // Them scene vao stage
         stage.setScene(scene);
-        //stage.setFullScreen(true);
+        stage.setTitle("Bomberman");
+        stage.setResizable(false);
         stage.show();
 
         AnimationTimer timer = new AnimationTimer() {

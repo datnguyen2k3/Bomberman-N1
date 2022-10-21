@@ -44,6 +44,7 @@ public class Soundtrack {
         levelThemeAt[3] = new MediaPlayer(new Media(new File("res/Sounds/level_theme1.mp3").toURI().toString()));
         levelThemeAt[2] = new MediaPlayer(new Media(new File("res/Sounds/level_theme2.mp3").toURI().toString()));
         levelThemeAt[1] = new MediaPlayer(new Media(new File("res/newSound/wibu.mp3").toURI().toString()));
+        levelThemeAt[4] = new MediaPlayer(new Media(new File("res/Sounds/level_theme1.mp3").toURI().toString()));
 
         justDie = new AudioClip(new File("res/Sounds/died.mp3").toURI().toString());
         levelDone = new AudioClip(new File("res/Sounds/level_done.mp3").toURI().toString());

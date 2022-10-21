@@ -6,6 +6,7 @@ import uet.oop.bomberman.entities.Character.Enemy.BlueEnemy.Dora;
 import uet.oop.bomberman.entities.Character.Enemy.BlueEnemy.Oneal;
 import uet.oop.bomberman.entities.Character.Enemy.RedEnemy.Doll;
 import uet.oop.bomberman.entities.Character.Enemy.RedEnemy.Ghost;
+import uet.oop.bomberman.entities.Character.Enemy.RedEnemy.RedCoin;
 import uet.oop.bomberman.entities.Character.Enemy.YellowEnemy.Balloom;
 import uet.oop.bomberman.entities.Character.Enemy.YellowEnemy.Cat;
 import uet.oop.bomberman.entities.Character.Enemy.YellowEnemy.Coin;
@@ -51,6 +52,8 @@ public class EnemyManagement extends Management<Enemy> {
                 return new Coin(xUnit, yUnit, Sprite.orange_coin_right.getFxImage(), game);
             case Enemy.ghostDiagram:
                 return new Ghost(xUnit, yUnit, Sprite.ghost_right1.getFxImage(), game);
+            case Enemy.redCoinDiagram:
+                return new RedCoin(xUnit, yUnit, Sprite.red_segment.getFxImage(), game);
         }
 
         return null;

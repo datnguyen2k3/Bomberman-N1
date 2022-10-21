@@ -81,8 +81,8 @@ public class ItemManagement extends Management<Item> {
                 continue;
             }
 
-            ((Item) item).setTaken();
-            bomber.takeItem(((Item) item));
+            bomber.takeItem( item);
+            item.setTaken();
         }
     }
 

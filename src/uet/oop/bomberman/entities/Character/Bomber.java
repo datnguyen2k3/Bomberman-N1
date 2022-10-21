@@ -301,7 +301,7 @@ public class Bomber extends Character {
     }
 
     public void takeItem(Item item) {
-        if (isDead)
+        if (isDead || item.isTaken())
             return;
 
         switch (item.getDiagramItem()) {
@@ -338,10 +338,6 @@ public class Bomber extends Character {
                 setPassBomb();
                 break;
         }
-    }
-
-    private void setPassBomb() {
-        passBomb = true;
     }
 
     public void setBomberWin() {

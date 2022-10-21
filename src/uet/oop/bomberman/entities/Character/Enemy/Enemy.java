@@ -18,8 +18,8 @@ public abstract class Enemy extends Character {
     public static final char catDiagram = '6';
     public static final char coinDiagram = '7';
     public static final char ghostDiagram = '8';
-
-    public static final int lastEnemyDiagram = '8';
+    public static final char redCoinDiagram = '9';
+    public static final int lastEnemyDiagram = '9';
 
     protected int TIME_RANDOM_STATE = 300;
     private int currentTimeRandomState = 0;

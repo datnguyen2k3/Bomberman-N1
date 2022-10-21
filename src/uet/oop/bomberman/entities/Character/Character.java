@@ -61,6 +61,10 @@ public abstract class Character extends Entity {
         passFlame = true;
     }
 
+    protected void setPassBomb() {
+        passBomb = true;
+    }
+
     public Character(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
         initSprite();
