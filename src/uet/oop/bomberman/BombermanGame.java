@@ -30,7 +30,7 @@ public class BombermanGame {
     public static final int HEIGHT = 13;
     public static final int TIME_WIN = 180;
     public static final int TIME_LOSE = 330;
-    public static final int TIME_GAME = 60 * 500;
+    public static final int TIME_GAME = 60 * 20;
     public static final int TIME_ADD_ENEMY = 30;
     private int currentTimeWin = 0;
     private int currentTimeLose = 0;
@@ -265,7 +265,7 @@ public class BombermanGame {
     private void updateAddEnemyWhenEndTimeGame() {
         currentTimeAddEnemy++;
         if (currentTimeAddEnemy == TIME_ADD_ENEMY && currentNumEnemiesIsAdded < NUM_ENEMIES_IS_ADDED) {
-            enemyManagement.add(1, 1, '1', this);
+            enemyManagement.add(1, 1, '7', this);
             currentTimeAddEnemy = 0;
             currentNumEnemiesIsAdded++;
         }

@@ -17,8 +17,8 @@ public class Balloom extends Enemy {
 
         this._sprite = Sprite.balloom_right1;
 
-        this.sprite_character_left = Sprite.balloom_left2;
-        this.sprite_character_right = Sprite.balloom_right2;
+        this.sprite_character_left = Sprite.balloom_left1;
+        this.sprite_character_right = Sprite.balloom_right1;
 
         this.last_sprite_left = Sprite.balloom_left3;
         this.last_sprite_right = Sprite.balloom_right3;
@@ -40,12 +40,12 @@ public class Balloom extends Enemy {
 
 
         this.sprite_character_up = Sprite.balloom_right1;
-        this.sprite_character_up_1 = Sprite.balloom_right1;
-        this.sprite_character_up_2 = Sprite.balloom_right1;
+        this.sprite_character_up_1 = Sprite.balloom_right2;
+        this.sprite_character_up_2 = Sprite.balloom_right3;
 
         this.sprite_character_down = Sprite.balloom_left1;
-        this.sprite_character_down_1 = Sprite.balloom_left1;
-        this.sprite_character_down_2 = Sprite.balloom_left2;
+        this.sprite_character_down_1 = Sprite.balloom_left2;
+        this.sprite_character_down_2 = Sprite.balloom_left3;
 
 
     }

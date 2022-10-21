@@ -11,6 +11,8 @@ import java.util.Random;
 
 import uet.oop.bomberman.BombermanGame;
 public class Oneal extends Enemy {
+    protected int TimeChangeSpeed = 240;
+    protected int currentTimeChangeSpeed = 0;
 
     public Oneal(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
@@ -51,14 +53,7 @@ public class Oneal extends Enemy {
 
     public void setRandomSpeed() {
         Random random = new Random();
-        int randomNum = random.nextInt(3);
-
-        if (randomNum == 0) {
-            speed = 1;
-        } else {
-            speed = 3;
-        }
-
+        speed = random.nextInt(3) + 1;
     }
 
     @Override
@@ -71,6 +66,12 @@ public class Oneal extends Enemy {
         if (isImpactWall()) {
             setRandomSpeed();
         }
+        currentTimeChangeSpeed++;
+        if (currentTimeChangeSpeed > TimeChangeSpeed) {
+            currentTimeChangeSpeed = 0;
+            setRandomSpeed();
+        }
+
     }
 
 
