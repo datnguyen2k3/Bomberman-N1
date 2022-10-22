@@ -112,6 +112,8 @@ public class BombManagement extends Management<Bomb> {
     }
 
     public void updatePressKey(KeyEvent event) {
+        if (game.getBomberman().isDead())
+            return;
         if (event.getCode() ==  KeyCode.SPACE) {
             if (isPressSpace) {
                 return;
