@@ -2,14 +2,22 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import uet.oop.bomberman.Game;
+import uet.oop.bomberman.UI.Menu.animationMenu.TextGraphics;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
 
 import java.awt.*;
 import java.util.Random;
 import uet.oop.bomberman.BombermanGame;
+
+import static javafx.scene.paint.Color.WHITE;
+
 public abstract class Entity  {
+
+    protected TextGraphics deadPoint = new TextGraphics("");
+
     protected int _animate = 0;
     protected int animateRight = 0;
     protected int animateLeft = 0;
@@ -21,6 +29,8 @@ public abstract class Entity  {
     protected int y; //Tọa độ Y tính từ góc trái trên trong Canvas
     protected  int speed = 4;
 
+    private int worldX;
+    private int worldY;
     protected Image img;
 
     public Rectangle solidArea;
@@ -161,11 +171,15 @@ public abstract class Entity  {
 
         if (game.getBomberman().getX() > Game.WIDTH_CAMERA / 2) {
             xRender -= Math.min(game.getBomberman().getX() + game.getBomberman().getSolidArea().x - Game.WIDTH_CAMERA / 2,
-                                BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH_CAMERA);
+                    BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH_CAMERA);
 
         }
 
-
+        if (_state == State.DEAD) {
+            deadPoint.setX(xRender + Sprite.SCALED_SIZE);
+            deadPoint.setY(yRender);
+            deadPoint.render(gc);
+        }
         gc.drawImage(img, xRender, yRender);
     }
 

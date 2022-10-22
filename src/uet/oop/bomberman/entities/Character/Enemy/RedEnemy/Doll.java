@@ -6,6 +6,7 @@ import uet.oop.bomberman.entities.Algorithm.CanGo;
 import uet.oop.bomberman.entities.Algorithm.MinPath;
 import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.utils.Badge;
 import uet.oop.bomberman.utils.State;
 
 import java.util.PriorityQueue;
@@ -16,6 +17,7 @@ public class Doll extends Enemy {
         this.x = xUnit * Sprite.SCALED_SIZE + 1;
         this.y = yUnit * Sprite.SCALED_SIZE + 1;
         this.speed = 4;
+        deadPoint = Badge.dollPoint;
     }
 
     @Override

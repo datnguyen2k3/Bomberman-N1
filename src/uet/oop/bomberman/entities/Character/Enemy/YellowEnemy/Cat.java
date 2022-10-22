@@ -6,6 +6,7 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.utils.Badge;
 
 public class Cat extends Enemy {
     protected boolean isExplodeBomb = false;
@@ -14,6 +15,7 @@ public class Cat extends Enemy {
 
     public Cat(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
+        deadPoint = Badge.catPoint;
     }
 
     private void updateExplodingBombAfterDead() {

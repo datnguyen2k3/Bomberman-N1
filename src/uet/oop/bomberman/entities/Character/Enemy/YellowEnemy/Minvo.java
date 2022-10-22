@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.utils.Badge;
 import uet.oop.bomberman.utils.State;
 
 public class Minvo extends Enemy {
@@ -11,6 +12,7 @@ public class Minvo extends Enemy {
     public Minvo(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
         this.speed = 3;
+        deadPoint = Badge.minvoPoint;
     }
 
     @Override

@@ -1,7 +1,9 @@
 package uet.oop.bomberman.entities.Character.Enemy;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.UI.Menu.animationMenu.TextGraphics;
 import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Character.Character;
 import uet.oop.bomberman.graphics.Sprite;
@@ -10,6 +12,9 @@ import uet.oop.bomberman.utils.State;
 import java.awt.*;
 
 public abstract class Enemy extends Character {
+
+
+
     public static final char balloomDiagram = '1';
     public static final char onealDiagram = '2';
     public static final char dollDiagram = '3';
@@ -81,16 +86,14 @@ public abstract class Enemy extends Character {
     @Override
     public void update() {
         super.update();
-
-
         updateCurrentState();
-
         if(isDead) {
             currentTimeDead++;
             if(currentTimeDead >= TIME_DEAD) {
                 isEnd = true;
             }
         }
-
     }
+
+
 }

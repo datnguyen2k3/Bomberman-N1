@@ -16,6 +16,22 @@ public class TextGraphics {
         textGraphics.setFont(Font.loadFont("file:res/Font/game_font.ttf", defaultSize));
     }
 
+    public TextGraphics(String text,Color color, double size) {
+        this(text);
+        setColor(color);
+        setSize(size);
+    }
+
+    public TextGraphics(String text, int x, int y) {
+        textGraphics = new Text(x, y, text);
+        textGraphics.setFont(Font.loadFont("file:res/Font/game_font.ttf", defaultSize));
+    }
+
+    public TextGraphics(String text, int x, int y,Color color) {
+        this(text, x, y);
+        setColor(color);
+    }
+
     public void setColor(Color color) {
         this.color = color;
         textGraphics.setFill(color);
@@ -73,4 +89,6 @@ public class TextGraphics {
         //Set to old opacity after draw
         gc.setGlobalAlpha(preAlpha);
     }
+
+
 }

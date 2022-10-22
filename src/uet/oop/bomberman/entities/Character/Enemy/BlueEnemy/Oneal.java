@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.graphics.Sprite;
 
+import uet.oop.bomberman.utils.Badge;
 import uet.oop.bomberman.utils.State;
 
 import java.awt.*;
@@ -16,6 +17,7 @@ public class Oneal extends Enemy {
 
     public Oneal(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
+        deadPoint = Badge.onealPoint;
     }
 
     @Override
