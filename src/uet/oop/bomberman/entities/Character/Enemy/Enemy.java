@@ -98,7 +98,9 @@ public abstract class Enemy extends Character {
                 addBonustime = true;
                 // update bonus time
                 int bonusTime = Integer.parseInt(deadPoint.getText());
-                game.updateCurrentTimeGame(game.getRealCurrentTimeGame() + bonusTime * 60 );
+                int before = game.getRealCurrentTimeGame() / 60;
+                game.updateCurrentTimeGame(game.getRealCurrentTimeGame() + bonusTime * 60);
+                System.out.println(game.getRealCurrentTimeGame() / 60 - before);
             }
         }
     }

@@ -15,7 +15,7 @@ import uet.oop.bomberman.utils.State;
 
 public abstract class Character extends Entity {
 
-    private int delayTime = 600 ;
+    private int delayTime = 600;
     protected boolean isDead = false;
     protected boolean isEnd = false;
     protected int worldX;
@@ -236,7 +236,7 @@ public abstract class Character extends Entity {
         points.add(new Pair<>(x + solidArea.x + solidArea.width, y + solidArea.y));
         points.add(new Pair<>(x + solidArea.x, y + solidArea.y + solidArea.height));
         points.add(new Pair<>(x + solidArea.x + solidArea.width, y + solidArea.y + solidArea.height));
-        return  points;
+        return points;
     }
 
     public boolean isImpact(int xUnitOfCell, int yUnitOfCell) {

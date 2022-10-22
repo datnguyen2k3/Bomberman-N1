@@ -122,8 +122,7 @@ public class BombermanGame {
     }
 
     public void updateCurrentTimeGame(int timeAfterBonus) {
-        currentTimeGame += timeAfterBonus * 60;
-        currentTimeGame /= 60;
+        currentTimeGame = timeAfterBonus;
     }
 
     private void updateCurrentTimeGame() {
