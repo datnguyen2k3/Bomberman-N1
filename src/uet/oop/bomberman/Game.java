@@ -2,7 +2,9 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -23,6 +25,8 @@ import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.SpriteSheet;
 import uet.oop.bomberman.sound.SoundManager;
 import uet.oop.bomberman.sound.Soundtrack;
+
+import java.io.File;
 
 public class Game extends Application {
 
@@ -54,14 +58,15 @@ public class Game extends Application {
 
         // Tao scene
         Scene scene = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
+        stage.getIcons().add(
+                new Image(
+                        getClass().getResourceAsStream( "/bomb2.png" )));
         menu = new Menu(scene, this);
-
         // Them scene vao stage
-        stage.setScene(scene);
         stage.setTitle("Bomberman");
-        stage.setResizable(false);
+        stage.setScene(scene);
         stage.show();
-
+        scene.setCursor(new ImageCursor(new Image(new File("res/sprites/cursor1.png").toURI().toString())));
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
