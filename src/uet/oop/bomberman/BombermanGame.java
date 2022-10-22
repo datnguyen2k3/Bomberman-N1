@@ -53,8 +53,8 @@ public class BombermanGame {
     private List<Entity> stillObjects = new ArrayList<>();
     private ItemManagement itemManagement = new ItemManagement();
     private EnemyManagement enemyManagement = new EnemyManagement();
-    private BombManagement bomberBombManagement = new BombManagement(1, 1,this);
-    private BombManagement enemyBombManagement = new BombManagement(50, 6,this);
+    private BombManagement bomberBombManagement = new BombManagement(1, 1, this);
+    private BombManagement enemyBombManagement = new BombManagement(50, 6, this);
     private boolean isRun = true;
     private boolean isAdd = false;
 
@@ -112,9 +112,20 @@ public class BombermanGame {
     public int getLevel() {
         return level;
     }
+
     public int getCurrentTimeGame() {
         return currentTimeGame / 60;
     }
+
+    public int getRealCurrentTimeGame() {
+        return currentTimeGame;
+    }
+
+    public void updateCurrentTimeGame(int timeAfterBonus) {
+        currentTimeGame += timeAfterBonus * 60;
+        currentTimeGame /= 60;
+    }
+
     private void updateCurrentTimeGame() {
         if (currentTimeGame <= 0)
             return;
@@ -317,11 +328,10 @@ public class BombermanGame {
 
         if (isLose) {
             currentTimeLose++;
-            if (currentTimeLose > TIME_LOSE ) {
+            if (currentTimeLose > TIME_LOSE) {
                 setEnd(root);
             }
         }
-
 
 
         if (!isAdd) {

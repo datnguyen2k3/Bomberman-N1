@@ -16,7 +16,7 @@ import static javafx.scene.paint.Color.WHITE;
 
 public abstract class Entity  {
 
-    protected TextGraphics deadPoint = new TextGraphics("");
+    protected TextGraphics deadPoint = new TextGraphics("10");
 
     protected int _animate = 0;
     protected int animateRight = 0;

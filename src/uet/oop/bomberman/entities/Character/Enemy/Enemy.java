@@ -14,7 +14,7 @@ import java.awt.*;
 public abstract class Enemy extends Character {
 
 
-
+    private boolean addBonustime = false;
     public static final char balloomDiagram = '1';
     public static final char onealDiagram = '2';
     public static final char dollDiagram = '3';
@@ -38,7 +38,7 @@ public abstract class Enemy extends Character {
 
     @Override
     public void initSolidArea() {
-        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 15 * Sprite.SCALE , 15 * Sprite.SCALE);
+        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 15 * Sprite.SCALE, 15 * Sprite.SCALE);
     }
 
 
@@ -52,7 +52,7 @@ public abstract class Enemy extends Character {
     }
 
     public void setRandomState() {
-        if(isEnd)
+        if (isEnd)
             return;
 
         int choice = rand.nextInt(4);
@@ -87,10 +87,18 @@ public abstract class Enemy extends Character {
     public void update() {
         super.update();
         updateCurrentState();
-        if(isDead) {
+        if (isDead) {
             currentTimeDead++;
-            if(currentTimeDead >= TIME_DEAD) {
+            if (currentTimeDead >= TIME_DEAD) {
                 isEnd = true;
+            }
+        }
+        if (_state == State.DEAD) {
+            if (!addBonustime) {
+                addBonustime = true;
+                // update bonus time
+                int bonusTime = Integer.parseInt(deadPoint.getText());
+                game.updateCurrentTimeGame(game.getRealCurrentTimeGame() + bonusTime * 60 );
             }
         }
     }
