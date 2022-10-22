@@ -258,9 +258,9 @@ public class BombermanGame {
 
 
         // Enemy kill bomber
-        if (enemyManagement.isEnemyKillCharacter(bomberman)) {
-            bomberman.setDead();
-        }
+//        if (enemyManagement.isEnemyKillCharacter(bomberman)) {
+//            bomberman.setDead();
+//        }
 
         // Bomber kill all enemies
         bomberman.updateBombermanKillAllEnemies(enemyManagement);

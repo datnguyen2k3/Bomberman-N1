@@ -18,7 +18,11 @@ public class Bomb extends Entity {
 
     public static final char bombDiagram = '@';
     List<Coordinate> explodedBrick = new ArrayList<>();
-    private int countBricksRemain;
+
+    private int animateFlameRight = 0;
+    private int animateFlameLeft = 0;
+    private int animateFlameTop = 0;
+    private int animateFlameDown = 0;
 
     private int explodingCounter = 0;
     private int brickDestroyCounterRight = 0;
@@ -30,9 +34,9 @@ public class Bomb extends Entity {
     private boolean isEnd = false;
     private boolean isWaitedToExploding = false;
     private boolean isExploded = false;
-    public static final int TIME_WAIT_TO_EXPLODING = 60 * 2;
-    public static final int TIME_EXPLODING = 30;
-    public static final int timeRefresh = Bomb.TIME_EXPLODING + Bomb.TIME_WAIT_TO_EXPLODING;
+    public int TIME_WAIT_TO_EXPLODING = 60 * 2;
+    public int TIME_EXPLODING = 30;
+    public int timeRefresh = TIME_EXPLODING + TIME_WAIT_TO_EXPLODING;
     private int currentTimeWaitToExploding = TIME_WAIT_TO_EXPLODING;
     private int currentTimeExploding = TIME_EXPLODING;
     private int timeBrickCollapse = 100;
@@ -55,7 +59,7 @@ public class Bomb extends Entity {
     private Sprite bombExploding1 = Sprite.bomb_exploded1;
     private Sprite bombExploding2 = Sprite.bomb_exploded2;
 
-    private int animateWaitingToExplode = 0 ;
+    private int animateWaitingToExplode = 0;
     private int animateExploding = 0;
 
     Coordinate firstBrickRight;
@@ -149,23 +153,81 @@ public class Bomb extends Entity {
         if (!isWaitedToExploding) {
             img = Sprite.bomb.getFxImage();
             isWaitedToExploding = true;
-            _state = State.WAITING_EXPLODING    ;
+            _state = State.WAITING_EXPLODING;
         }
         currentTimeWaitToExploding--;
     }
 
-    public boolean isOnExplodingArea(Bomb b) {
-        if (b.get_xUnit() != get_xUnit()
-                && get_yUnit() == b.get_yUnit()
-                && (b.get_xUnit() <= get_xUnit() + explodedLength && b.get_xUnit() >= get_xUnit() - explodedLength)) {
-            return true;
+    public boolean isOnCurrentAreaExploding(Bomb b) {
+        System.out.println(explodedLength);
+        if (b.get_yUnit() == get_yUnit() && b.get_xUnit() > get_xUnit()) {
+            if (firstBrickRight.get_xUnit() == get_xUnit() + explodedLength) {
+                if ((b.get_xUnit() <= get_xUnit() + explodedLength && b.get_xUnit() > get_xUnit())) {
+                    return true;
+                }
+            } else {
+                if (b.get_xUnit() != get_xUnit()
+                        && get_yUnit() == b.get_yUnit()
+                        && (b.get_xUnit() <= firstBrickRight.getX() && b.get_xUnit() >= get_xUnit())) {
+                    return true;
+                }
+            }
+            return false;
         }
-        if (b.get_yUnit() != get_yUnit()
-                && get_xUnit() == b.get_xUnit()
-                && (b.get_yUnit() >= get_yUnit() - explodedLength && b.get_yUnit() <= get_yUnit() + explodedLength)) {
-            return true;
+
+        if (b.get_yUnit() == get_yUnit() && b.get_xUnit() < get_xUnit()) {
+            if (firstBrickLeft.get_xUnit() == get_xUnit() - explodedLength) {
+                if ((b.get_xUnit() < get_xUnit() && b.get_xUnit() >= get_xUnit() - explodedLength)) {
+                    return true;
+                }
+            } else {
+                if (b.get_xUnit() != get_xUnit()
+                        && get_yUnit() == b.get_yUnit()
+                        && (b.get_xUnit() >= firstBrickLeft.getX()  && b.get_xUnit() < get_xUnit())) {
+                    return true;
+                }
+            }
+            return false;
         }
+
+        if (b.get_xUnit() == get_xUnit() && b.get_yUnit() < get_yUnit()) {
+
+            if (firstBrickTop.get_yUnit() == get_yUnit() - explodedLength) {
+                if ((b.get_yUnit() < get_yUnit() && b.get_yUnit() >= get_yUnit() - explodedLength)) {
+                    return true;
+                }
+            } else {
+                if (b.get_yUnit() != get_yUnit()
+                        && get_xUnit() == b.get_xUnit()
+                        && (b.get_yUnit() >= firstBrickTop.get_yUnit()  && b.get_yUnit() < get_yUnit())) {
+                    System.out.println("Bomb on top");
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        if (b.get_xUnit() == get_xUnit() && b.get_yUnit() > get_yUnit()) {
+            if (firstBrickDown.get_yUnit() == get_yUnit() + explodedLength) {
+                if ((b.get_yUnit() <= get_yUnit() + explodedLength && b.get_yUnit() >= get_yUnit())) {
+                    return true;
+                }
+            } else {
+                if (b.get_yUnit() != get_yUnit()
+                        && get_xUnit() == b.get_xUnit()
+                        && (b.get_yUnit() <= firstBrickDown.get_yUnit() && b.get_yUnit() > get_yUnit())) {
+                    return true;
+                }
+            }
+        }
+
+//        if (b.get_yUnit() != get_yUnit()
+//                && get_xUnit() == b.get_xUnit()
+//                && (b.get_yUnit() >= get_yUnit() - explodedLength && b.get_yUnit() <= get_yUnit() + explodedLength)) {
+//            return true;
+//        }
         return false;
+
     }
 
     public void setAdjacentBombExplode() {
@@ -173,7 +235,7 @@ public class Bomb extends Entity {
             if (e instanceof Bomb) {
                 if (_state == State.EXPLODING
                         && e.get_state() == State.WAITING_EXPLODING
-                        && ((Bomb)e).isOnExplodingArea(this)) {
+                        && this.isOnCurrentAreaExploding((Bomb) e)) {
                     System.out.println(true);
                     ((Bomb) e).activeExploding();
                     ((Bomb) e).explode();
@@ -212,7 +274,6 @@ public class Bomb extends Entity {
         if (Wall.isWall(xUnit, yUnit))
             return false;
         if (Brick.isBrick(xUnit, yUnit)) {
-
             destroyedBricks.add(new Pair<>(xUnit, yUnit));
             return false;
         }
@@ -386,14 +447,14 @@ public class Bomb extends Entity {
         if (isLast) {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_horizontal_right_last
                     , Sprite.explosion_horizontal_right_last1
-                    , Sprite.explosion_horizontal_right_last2, _animate, TIME_EXPLODING / 2);
+                    , Sprite.explosion_horizontal_right_last2, animateFlameRight, TIME_EXPLODING / 2);
             super.render(gc, curFlameSprite.getFxImage()
                     , xUnit * Sprite.SCALED_SIZE
                     , get_yUnit() * Sprite.SCALED_SIZE);
         } else {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_horizontal
                     , Sprite.explosion_horizontal1
-                    , Sprite.explosion_horizontal2, _animate, TIME_EXPLODING / 2);
+                    , Sprite.explosion_horizontal2, animateFlameRight, TIME_EXPLODING / 2);
             super.render(gc, curFlameSprite.getFxImage()
                     , xUnit * Sprite.SCALED_SIZE
                     , get_yUnit() * Sprite.SCALED_SIZE);
@@ -404,14 +465,14 @@ public class Bomb extends Entity {
         if (isLast) {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_horizontal_left_last
                     , Sprite.explosion_horizontal_left_last1
-                    , Sprite.explosion_horizontal_left_last2, _animate, TIME_EXPLODING / 2);
+                    , Sprite.explosion_horizontal_left_last2, animateFlameLeft, TIME_EXPLODING / 2);
             super.render(gc, curFlameSprite.getFxImage()
                     , xUnit * Sprite.SCALED_SIZE
                     , get_yUnit() * Sprite.SCALED_SIZE);
 
         } else {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_horizontal
-                    , Sprite.explosion_horizontal1, Sprite.explosion_horizontal2, _animate, TIME_EXPLODING / 2);
+                    , Sprite.explosion_horizontal1, Sprite.explosion_horizontal2, animateFlameLeft, TIME_EXPLODING / 2);
             super.render(gc, curFlameSprite.getFxImage()
                     , xUnit * Sprite.SCALED_SIZE
                     , get_yUnit() * Sprite.SCALED_SIZE);
@@ -422,14 +483,14 @@ public class Bomb extends Entity {
         if (isLast) {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_vertical_top_last
                     , Sprite.explosion_vertical_top_last1
-                    , Sprite.explosion_vertical_top_last2, _animate, TIME_EXPLODING / 2);
+                    , Sprite.explosion_vertical_top_last2, animateFlameTop, TIME_EXPLODING / 2);
             super.render(gc, curFlameSprite.getFxImage()
                     , get_xUnit() * Sprite.SCALED_SIZE
                     , yUnit * Sprite.SCALED_SIZE);
         } else {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_vertical
                     , Sprite.explosion_vertical1
-                    , Sprite.explosion_vertical2, _animate, TIME_EXPLODING / 2);
+                    , Sprite.explosion_vertical2, animateFlameTop, TIME_EXPLODING / 2);
             super.render(gc, curFlameSprite.getFxImage()
                     , get_xUnit() * Sprite.SCALED_SIZE
                     , yUnit * Sprite.SCALED_SIZE);
@@ -442,14 +503,14 @@ public class Bomb extends Entity {
         if (isLast) {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_vertical_down_last
                     , Sprite.explosion_vertical_down_last1
-                    , Sprite.explosion_vertical_down_last2, _animate, TIME_EXPLODING / 2);
+                    , Sprite.explosion_vertical_down_last2, animateFlameDown, TIME_EXPLODING / 2);
             super.render(gc, curFlameSprite.getFxImage()
                     , get_xUnit() * Sprite.SCALED_SIZE
                     , yUnit * Sprite.SCALED_SIZE);
         } else {
             curFlameSprite = Sprite.movingSprite(Sprite.explosion_vertical
                     , Sprite.explosion_vertical1
-                    , Sprite.explosion_vertical2, _animate, TIME_EXPLODING / 2);
+                    , Sprite.explosion_vertical2, animateFlameDown, TIME_EXPLODING / 2);
             super.render(gc, curFlameSprite.getFxImage()
                     , get_xUnit() * Sprite.SCALED_SIZE
                     , yUnit * Sprite.SCALED_SIZE);
@@ -581,7 +642,11 @@ public class Bomb extends Entity {
     }
 
     @Override
-    public void update(){
+    public void update() {
+        animateFlameRight = animate(animateFlameRight);
+        animateFlameLeft = animate(animateFlameLeft);
+        animateFlameTop = animate(animateFlameTop);
+        animateFlameDown = animate(animateFlameDown);
 
         bombList = bombManagement.getList();
         animateExploding = animate(animateExploding);
@@ -594,6 +659,7 @@ public class Bomb extends Entity {
 
     @Override
     public void render(GraphicsContext gc) {
+        explodedLength = bombManagement.getExplodedLength();
         choosingSprite();
         if (isEnd)
             return;

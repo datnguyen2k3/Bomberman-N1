@@ -1,5 +1,7 @@
 package uet.oop.bomberman.utils;
 
+import uet.oop.bomberman.graphics.Sprite;
+
 public class Coordinate {
     private int X;
     private int Y;
@@ -23,6 +25,14 @@ public class Coordinate {
 
     public void setY(int y) {
         Y = y;
+    }
+
+    public int get_xUnit() {
+        return getX() ;
+    }
+
+    public int get_yUnit() {
+        return getY() ;
     }
 
     @Override

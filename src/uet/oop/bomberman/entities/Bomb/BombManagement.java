@@ -22,7 +22,7 @@ public class BombManagement extends Management<Bomb> {
 
     //    private int explodedLength = 1;
     private int explodedLength = 1;
-    private int maxBomb = 5;
+    private int maxBomb = 1;
 
     private boolean isPressSpace = false;
 
