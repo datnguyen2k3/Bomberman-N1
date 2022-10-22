@@ -1,9 +1,11 @@
 package uet.oop.bomberman;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
 import java.io.*;
@@ -12,6 +14,7 @@ import java.util.List;
 
 import uet.oop.bomberman.UI.GameUI.Board;
 import uet.oop.bomberman.entities.*;
+import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.entities.Character.Enemy.EnemyManagement;
 import uet.oop.bomberman.entities.Item.Item;
@@ -24,13 +27,14 @@ import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.sound.Soundtrack;
 import uet.oop.bomberman.utils.CollisionChecker;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
+import uet.oop.bomberman.utils.State;
 
 public class BombermanGame {
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
     public static final int TIME_WIN = 180;
     public static final int TIME_LOSE = 330;
-    public static final int TIME_GAME = 60 * 20;
+    public static final int TIME_GAME = 60 * 300;
     public static final int TIME_ADD_ENEMY = 30;
     private int currentTimeWin = 0;
     private int currentTimeLose = 0;
@@ -38,6 +42,7 @@ public class BombermanGame {
     private int currentTimeAddEnemy = 0;
     private static final int NUM_ENEMIES_IS_ADDED = 15;
     private int currentNumEnemiesIsAdded = 0;
+    private Game game;
     private Canvas canvas;
     private GraphicsContext gc;
     private Soundtrack soundTrack = new Soundtrack();
@@ -48,7 +53,7 @@ public class BombermanGame {
     private List<Entity> stillObjects = new ArrayList<>();
     private ItemManagement itemManagement = new ItemManagement();
     private EnemyManagement enemyManagement = new EnemyManagement();
-    private BombManagement bomberBombManagement = bomberman.getBombManagement();
+    private BombManagement bomberBombManagement = new BombManagement(1, 1,this);
     private BombManagement enemyBombManagement = new BombManagement(50, 6,this);
     private boolean isRun = true;
     private boolean isAdd = false;
@@ -128,13 +133,13 @@ public class BombermanGame {
         this.bomberman.getBombManagement().setFlame(bomberman.getBombManagement().getFlame());
     }
 
-    public BombermanGame(int level) {
+    public BombermanGame(int level, Game game) {
         canvas = new Canvas(Sprite.SCALED_SIZE * BombermanGame.WIDTH, Sprite.SCALED_SIZE * BombermanGame.HEIGHT);
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
         this.level = level;
         createMap(level);
-
+        this.game = game;
     }
 
     public Bomber getBomberman() {
@@ -204,11 +209,26 @@ public class BombermanGame {
                 bomberBombManagement.getLeftBomb(), bomberBombManagement.getFlame(),
                 bomberman.getSpeed(), getCurrentTimeGame());
         updateCurrentTimeGame();
+        bomberBombManagement.update();
         enemyBombManagement.update();
     }
 
     public void updateInput(Scene scene) {
-        bomberman.updateInput(scene);
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                bomberman.updatePressKey(event);
+                bomberBombManagement.updatePressKey(event);
+            }
+        });
+
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                bomberman.updateReleaseKey(event);
+                bomberBombManagement.updateReleaseKey(event);
+            }
+        });
     }
 
     public void updateCombat(Scene scene) {
@@ -276,9 +296,10 @@ public class BombermanGame {
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
         itemManagement.render(gc);
-        bomberman.render(gc);
-        enemyManagement.render(gc);
+        bomberBombManagement.render(gc);
         enemyBombManagement.render(gc);
+        enemyManagement.render(gc);
+        bomberman.render(gc);
     }
 
     public void run(Canvas canvas, GraphicsContext gc, Scene scene, Group root) {

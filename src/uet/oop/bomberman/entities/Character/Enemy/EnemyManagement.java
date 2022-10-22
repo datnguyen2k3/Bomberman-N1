@@ -70,7 +70,7 @@ public class EnemyManagement extends Management<Enemy> {
 
     public void updateEnemyIsKilledByBomb(BombManagement bombManagement) {
         for (Enemy enemy : list) {
-            if (!enemy.isDead() && bombManagement.isDestroyEnemy(enemy)) {
+            if (!enemy.isDead() && bombManagement.isDestroyCharacter(enemy)) {
                 enemy.setDead();
             }
         }

@@ -1,17 +1,15 @@
 package uet.oop.bomberman.entities.Character;
 
-import javafx.event.EventHandler;
-import javafx.scene.Scene;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.util.Pair;
-import uet.oop.bomberman.Game;
+
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
 import uet.oop.bomberman.entities.Character.Enemy.EnemyManagement;
 import uet.oop.bomberman.entities.Item.Item;
+import uet.oop.bomberman.entities.Item.Portal;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.StillObject.Grass;
 import uet.oop.bomberman.entities.StillObject.Wall;
@@ -26,7 +24,6 @@ import uet.oop.bomberman.BombermanGame;
 public class Bomber extends Character {
     private static final int EPSILON = 10 * Sprite.SCALE;
     private int speedMoveAtEdgeDivideBy = 15;
-    private BombManagement bombManagement;
     private boolean isPressSpace = false;
     private boolean isBombermanKillAllEnemies = false;
     private int hp = 3;
@@ -40,7 +37,6 @@ public class Bomber extends Character {
 
     public Bomber(int x, int y, Image img, BombermanGame game) {
         super(x, y, img, game);
-        bombManagement = new BombManagement(this.game);
         MAX_TIME_STOP = 20;
     }
 
@@ -138,7 +134,7 @@ public class Bomber extends Character {
     }
 
     public BombManagement getBombManagement() {
-        return bombManagement;
+        return game.getBomberBombManagement();
     }
 
     public int getHP() {
@@ -206,94 +202,64 @@ public class Bomber extends Character {
         isBombermanKillAllEnemies = enemyManagement.getList().size() == 0;
     }
 
-
-    public void updateInput(Scene scene) {
-//        System.out.println(speed);
+    public void updatePressKey(KeyEvent event) {
         if (isDead)
             return;
+        switch (event.getCode()) {
+            case W:
+            case UP:
+                _state = State.GO_NORTH;
+                goNorth = true;
+                break;
+            case S:
+            case DOWN:
+                _state = State.GO_SOUTH;
+                goSouth = true;
+                break;
+            case A:
+            case LEFT:
+                _state = State.GO_WEST;
+                goWest = true;
+                break;
+            case D:
+            case RIGHT:
+                _state = State.GO_EAST;
+                goEast = true;
+                break;
+            case SHIFT:
+                running = true;
+                break;
+        }
+    }
 
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()) {
-                    case W:
-                    case UP:
-                        _state = State.GO_NORTH;
-                        goNorth = true;
-                        break;
-                    case S:
-                    case DOWN:
-                        _state = State.GO_SOUTH;
-                        goSouth = true;
-                        break;
-                    case A:
-                    case LEFT:
-                        _state = State.GO_WEST;
-                        goWest = true;
-                        break;
-                    case D:
-                    case RIGHT:
-                        _state = State.GO_EAST;
-                        goEast = true;
-                        break;
-                    case SHIFT:
-                        running = true;
-                        break;
-                    case SPACE: {
-                        if (isPressSpace) {
-                            return;
-                        }
-
-                        isPressSpace = true;
-                        int bomb_xUnit = get_xUnitCenter();
-                        int bomb_yUnit = get_yUnitCenter();
-
-                        if (Brick.isBrick(bomb_xUnit, bomb_yUnit)
-                                || Wall.isWall(bomb_xUnit, bomb_yUnit)
-                                || bombManagement.isBomb(bomb_xUnit, bomb_yUnit)) {
-                            return;
-                        }
-                        game.getSoundTrack().playPlaceBomb();
-                        Bomb b = new Bomb(bomb_xUnit, bomb_yUnit, bombManagement, game);
-                        bombManagement.add(b);
-                    }
-                }
-            }
-        });
-
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()) {
-                    case W:
-                    case UP:
-                        goNorth = false;
-                        previousState = State.GO_NORTH;
-                        break;
-                    case S:
-                    case DOWN:
-                        previousState = State.GO_SOUTH;
-                        goSouth = false;
-                        break;
-                    case A:
-                    case LEFT:
-                        previousState = State.GO_WEST;
-                        goWest = false;
-                        break;
-                    case D:
-                    case RIGHT:
-                        previousState = State.GO_EAST;
-                        goEast = false;
-                        break;
-                    case SHIFT:
-                        running = false;
-                        break;
-                    case SPACE:
-                        isPressSpace = false;
-                }
-            }
-        });
-
+    public void updateReleaseKey(KeyEvent event) {
+        if (isDead)
+            return;
+        switch (event.getCode()) {
+            case W:
+            case UP:
+                goNorth = false;
+                previousState = State.GO_NORTH;
+                break;
+            case S:
+            case DOWN:
+                previousState = State.GO_SOUTH;
+                goSouth = false;
+                break;
+            case A:
+            case LEFT:
+                previousState = State.GO_WEST;
+                goWest = false;
+                break;
+            case D:
+            case RIGHT:
+                previousState = State.GO_EAST;
+                goEast = false;
+                break;
+            case SHIFT:
+                running = false;
+                break;
+        }
     }
 
     private void playTakeItem() {
@@ -304,21 +270,21 @@ public class Bomber extends Character {
         if (isDead || item.isTaken())
             return;
 
+        if (!(item instanceof Portal)) {
+            playTakeItem();
+        }
+
         switch (item.getDiagramItem()) {
             case Item.bombItemDiagram:
-                playTakeItem();
-                bombManagement.powerUpMaxBomb();
+                game.getBomberBombManagement().powerUpMaxBomb();
                 break;
             case Item.speedItemDiagram:
-                playTakeItem();
                 speed += 1;
                 break;
             case Item.flameItemDiagram:
-                playTakeItem();
-                bombManagement.powerUpFlameBomb();
+                game.getBomberBombManagement().powerUpFlameBomb();
                 break;
             case Item.hpItemDiagram:
-                playTakeItem();
                 hp++;
                 break;
             case Item.portalItemDiagram:
@@ -327,11 +293,9 @@ public class Bomber extends Character {
                 }
                 break;
             case Item.passBrickDiagram:
-                playTakeItem();
                 setPassBrick();
                 break;
             case Item.flamePassDiagram:
-                playTakeItem();
                 setPassFlame();
                 break;
             case Item.bombPassDiagram:
@@ -359,13 +323,11 @@ public class Bomber extends Character {
 
         updateCurrentState();
         smoothMovement();
-        bombManagement.update();
     }
 
     @Override
     public void render(GraphicsContext gc) {
         updateCurrentState();
-        bombManagement.render(gc);
         super.render(gc);
     }
 

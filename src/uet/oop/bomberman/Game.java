@@ -26,25 +26,22 @@ import uet.oop.bomberman.sound.Soundtrack;
 
 public class Game extends Application {
 
-    public static final int WIDTH_CAMERA = Sprite.SCALED_SIZE * 16;
+    public static final int WIDTH_CAMERA = Sprite.SCALED_SIZE * 20;
     public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT;
     public static final int WIDTH = WIDTH_CAMERA + Board.WIDTH;
-    private int maxLevel = 3;
+    private int maxLevel = 4;
     private Canvas canvas;
     private GraphicsContext gc;
     Group root;
-    private BombermanGame bombermanGame = new BombermanGame(4);
+    private BombermanGame bombermanGame = new BombermanGame(4, this);
     private LevelGameUI levelGameUI = new LevelGameUI(1);
     private Menu menu;
     private GameOver gameOver = new GameOver();
     private GameWin gameWin = new GameWin();
     private boolean isWin = false;
 
-
-
-
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         // Tao Canvas
         canvas = new Canvas(BombermanGame.WIDTH * Sprite.SCALED_SIZE, BombermanGame.HEIGHT * Sprite.SCALED_SIZE);
 
@@ -134,7 +131,7 @@ public class Game extends Application {
     }
 
     private void setRestartGame(Group root) {
-        BombermanGame newBombermanGame = new BombermanGame(bombermanGame.getLevel());
+        BombermanGame newBombermanGame = new BombermanGame(bombermanGame.getLevel(), this);
         newBombermanGame.getBomberman().setHP(bombermanGame.getBomberman().getHP());
 
         bombermanGame = newBombermanGame;
@@ -144,7 +141,7 @@ public class Game extends Application {
     }
 
     private void setNextLevel() {
-        BombermanGame newBombermanGame = new BombermanGame(bombermanGame.getLevel() + 1);
+        BombermanGame newBombermanGame = new BombermanGame(bombermanGame.getLevel() + 1, this);
         newBombermanGame.setBomber(bombermanGame.getBomberman());
 
         bombermanGame = newBombermanGame;
@@ -154,7 +151,7 @@ public class Game extends Application {
     }
 
     private void setNewGame() {
-        bombermanGame = new BombermanGame(1);
+        bombermanGame = new BombermanGame(1, this);
         levelGameUI = new LevelGameUI(1);
         gameOver = new GameOver();
         gameWin = new GameWin();

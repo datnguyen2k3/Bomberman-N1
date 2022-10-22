@@ -41,6 +41,17 @@ public abstract class Character extends Entity {
     protected boolean passBomb = false;
     protected boolean passFlame = false;
 
+    public Character(int xUnit, int yUnit, Image img, BombermanGame game) {
+        super(xUnit, yUnit, img, game);
+        initSprite();
+        initState();
+        initSolidArea();
+    }
+
+    public Character(int xUnit, int yUnit, BombermanGame game) {
+        super(xUnit, yUnit, game);
+    }
+
     public boolean getPassBrick() {
         return passBrick;
     }
@@ -63,17 +74,6 @@ public abstract class Character extends Entity {
 
     protected void setPassBomb() {
         passBomb = true;
-    }
-
-    public Character(int xUnit, int yUnit, Image img, BombermanGame game) {
-        super(xUnit, yUnit, img, game);
-        initSprite();
-        initState();
-        initSolidArea();
-    }
-
-    public Character(int xUnit, int yUnit, BombermanGame game) {
-        super(xUnit, yUnit, game);
     }
 
     public int get_xUnitCenter() {
@@ -250,27 +250,19 @@ public abstract class Character extends Entity {
         if (!isImpactWall()) {
             switch (_state) {
                 case GO_NORTH: {
-
                     y -= speed;
-
                     break;
                 }
                 case GO_SOUTH: {
-
                     y += speed;
-
                     break;
                 }
                 case GO_EAST: {
-
                     x += speed;
-
                     break;
                 }
                 case GO_WEST: {
-
                     x -= speed;
-
                     break;
                 }
             }

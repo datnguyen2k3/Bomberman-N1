@@ -606,7 +606,6 @@ public class Bomb extends Entity {
 
     }
 
-
     public void renderExplodeBrick(GraphicsContext gc) {
 
         if (_state == State.EXPLODING) {

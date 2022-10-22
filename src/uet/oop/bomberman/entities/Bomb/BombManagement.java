@@ -1,11 +1,14 @@
 package uet.oop.bomberman.entities.Bomb;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.Pair;
 import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Management;
+import uet.oop.bomberman.entities.StillObject.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.entities.Character.Character;
 import uet.oop.bomberman.BombermanGame;
@@ -16,11 +19,12 @@ import java.util.List;
 
 public class BombManagement extends Management<Bomb> {
     private BombermanGame game;
-    private int currentTimeRefresh = 0;
 
     //    private int explodedLength = 1;
     private int explodedLength = 1;
     private int maxBomb = 5;
+
+    private boolean isPressSpace = false;
 
     public BombManagement(int maxBomb, int explodedLength, BombermanGame game) {
         this.maxBomb = maxBomb;
@@ -72,35 +76,6 @@ public class BombManagement extends Management<Bomb> {
         return explodedLength;
     }
 
-
-    // xUnit, yUnit is coordinate of bomb.
-    public boolean checkPosBombAndBomber(int xUnit, int yUnit) {
-        int bomberX = game.getBomberman().getX();
-        int bomberY = game.getBomberman().getY();
-        int bomberXUnit = game.getBomberman().get_xUnit();
-        int bomberYUnit = game.getBomberman().get_yUnit();
-
-        if (game.getBomberman().get_state() == State.GO_EAST) {
-            // 2 truong hop
-            return (bomberXUnit == xUnit && bomberYUnit == yUnit)
-                    || (bomberX + Sprite.SCALED_SIZE - xUnit * Sprite.SCALED_SIZE > Sprite.SCALED_SIZE / 3
-                    && bomberYUnit == yUnit);
-        } else if (game.getBomberman().get_state() == State.GO_WEST) {
-            return (bomberXUnit == xUnit && bomberYUnit == yUnit)
-                    || ((xUnit + 1) * Sprite.SCALED_SIZE - bomberX > Sprite.SCALED_SIZE / 3
-                    && bomberYUnit == yUnit);
-        } else if (game.getBomberman().get_state() == State.GO_NORTH) {
-            return (bomberXUnit == xUnit && bomberYUnit == yUnit)
-                    || ((yUnit + 1) * Sprite.SCALED_SIZE - bomberY > Sprite.SCALED_SIZE / 3
-                    && bomberXUnit == xUnit);
-        } else if (game.getBomberman().get_state() == State.GO_SOUTH) {
-            return (bomberXUnit == xUnit && bomberYUnit == yUnit)
-                    || (bomberY + Sprite.SCALED_SIZE - yUnit * Sprite.SCALED_SIZE > Sprite.SCALED_SIZE / 3
-                    && bomberXUnit == xUnit);
-        }
-        return false;
-    }
-
     public boolean isBomb(int xUnit, int yUnit) {
         for (Entity b : list) {
             if (b instanceof  Bomb) {
@@ -112,64 +87,60 @@ public class BombManagement extends Management<Bomb> {
         return false;
     }
 
-    public boolean isBomb(int xUnit, int yUnit, Entity entity) {
-        for (Entity b : list) {
-            if (b instanceof Bomb) {
-                if (b.get_xUnit() == xUnit && b.get_yUnit() == yUnit) {
-                    /*
-                     * if recent bomb and bomberman is at same position (unit coordinate)
-                     * we consider bomberman does not collide with bomb.
-                     */
-                    if (entity instanceof Enemy) {
-                        return true;
-                    } else if (entity instanceof Bomber) {
-                        if (checkPosBombAndBomber(xUnit, yUnit)) {
-                            return false;
-                        }
-                        return true;
-                    }
-
-                    return true;
-
-                }
-            }
-        }
-        return false;
-    }
-
     public void add(Bomb b) {
         if (list.size() == maxBomb)
             return;
+        game.getSoundTrack().playPlaceBomb();
         list.add(b);
         BombermanGame.diagramMap[b.get_yUnit()][b.get_xUnit()] = Bomb.bombDiagram;
     }
 
-    public boolean isCanMoveThroughBomb(int xUnit, int yUnit, Character other) {
+    public boolean isCharacterCanMoveThroughBomb(int xUnit, int yUnit, Character other) {
         if (other.getPassBomb()) {
-            return true;
+            return false;
         }
 
         for (Bomb b : list) {
             if (b.get_xUnit() != xUnit || b.get_yUnit() != yUnit)
                 continue;
             if (!b.isCharacterInBomb(other) && !b.isExploded()) {
-                return false;
+                return true;
             }
         }
 
-        return true;
+        return false;
+    }
+
+    public void updatePressKey(KeyEvent event) {
+        if (event.getCode() ==  KeyCode.SPACE) {
+            if (isPressSpace) {
+                return;
+            }
+
+            isPressSpace = true;
+            int bomb_xUnit = game.getBomberman().get_xUnitCenter();
+            int bomb_yUnit = game.getBomberman().get_yUnitCenter();
+
+            if (Brick.isBrick(bomb_xUnit, bomb_yUnit)
+                    || Wall.isWall(bomb_xUnit, bomb_yUnit)
+                    || game.getBomberBombManagement().isBomb(bomb_xUnit, bomb_yUnit)) {
+                return;
+            }
+            Bomb b = new Bomb(bomb_xUnit, bomb_yUnit, game.getBomberBombManagement(), game);
+            game.getBomberBombManagement().add(b);
+        }
+    }
+
+    public void updateReleaseKey(KeyEvent event) {
+        if (event.getCode() ==  KeyCode.SPACE) {
+            isPressSpace = false;
+        }
     }
 
     @Override
     public void update() {
         super.update();
-        updateCurrentTimeRefresh();
         updateRemoveBomb();
-    }
-
-    private void updateCurrentTimeRefresh() {
-        if (currentTimeRefresh > 0)
-            currentTimeRefresh--;
     }
 
     private void updateRemoveBomb() {
@@ -200,8 +171,8 @@ public class BombManagement extends Management<Bomb> {
         return false;
     }
 
-    public boolean isDestroyEnemy(Character enemy) {
-        if (enemy.getPassFlame()) {
+    public boolean isDestroyCharacter(Character character) {
+        if (character.getPassFlame()) {
             return false;
         }
 
@@ -209,7 +180,7 @@ public class BombManagement extends Management<Bomb> {
             for (Pair<Integer, Integer> bombCoordinate : bomb.explodedCells) {
                 int bomb_xUnit = bombCoordinate.getKey();
                 int bomb_yUnit = bombCoordinate.getValue();
-                if (enemy.isImpact(bomb_xUnit * Sprite.SCALED_SIZE,
+                if (character.isImpact(bomb_xUnit * Sprite.SCALED_SIZE,
                         bomb_yUnit * Sprite.SCALED_SIZE,
                         bomb_xUnit * Sprite.SCALED_SIZE + Sprite.SCALED_SIZE,
                         bomb_yUnit * Sprite.SCALED_SIZE + Sprite.SCALED_SIZE)) {
@@ -221,6 +192,4 @@ public class BombManagement extends Management<Bomb> {
 
         return false;
     }
-
-
 }
