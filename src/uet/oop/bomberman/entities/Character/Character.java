@@ -71,7 +71,7 @@ public abstract class Character extends Entity {
         passFlame = true;
     }
 
-    protected void setPassBomb() {
+    public void setPassBomb() {
         passBomb = true;
     }
 

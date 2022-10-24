@@ -39,7 +39,6 @@ public abstract class MiniInfo extends Entity {
         text.setScaleY(2);
         text.setFill(Color.WHITE);
         game.getGame().getRoot().getChildren().add(text);
-        System.out.println("Start");
     }
 
 
@@ -74,7 +73,6 @@ public abstract class MiniInfo extends Entity {
     protected void setEnd() {
         isEnd = true;
         game.getGame().getRoot().getChildren().remove(text);
-        System.out.println("End");
     }
 
 }

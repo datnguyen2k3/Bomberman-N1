@@ -7,4 +7,10 @@ public class MiniInfoManagement extends Management<MiniInfo> {
         list.add(miniInfo);
     }
 
+    public void clear() {
+        for (MiniInfo miniInfo : list) {
+            miniInfo.setEnd();
+        }
+    }
+
 }

@@ -119,6 +119,7 @@ public class BombermanGame {
         if (isWin)
             return;
 
+        bomberScore.setScore(bomberScore.getCurrentScore() + getCurrentTimeGame() * 5);
         isWin = true;
         soundTrack.stopLevelThemeAt(level);
         soundTrack.playLevelDone();
@@ -156,6 +157,15 @@ public class BombermanGame {
         this.bomberman.setSpeed(bomberman.getSpeed());
         this.bomberman.getBombManagement().setMaxBomb(bomberman.getBombManagement().getMaxBomb());
         this.bomberman.getBombManagement().setFlame(bomberman.getBombManagement().getFlame());
+        if (bomberman.getPassBrick()) {
+            this.bomberman.setPassBrick();
+        }
+        if (bomberman.getPassBomb()) {
+            this.bomberman.setPassBomb();
+        }
+        if (bomberman.getPassFlame()) {
+            this.bomberman.setPassFlame();
+        }
     }
 
     public BombermanGame(int level, Game game) {
@@ -371,6 +381,7 @@ public class BombermanGame {
 
     private void setEnd(Group root) {
         board.popInRoot(root);
+        miniInfoManagement.clear();
         isRun = false;
     }
 
@@ -380,5 +391,12 @@ public class BombermanGame {
         isLose = true;
         soundTrack.stopLevelThemeAt(level);
         soundTrack.playJustDie();
+    }
+
+    public BombermanGame newLevel(int level) {
+        BombermanGame newBomberGame = new BombermanGame(level, game);
+        newBomberGame.setBomber(bomberman);
+        newBomberGame.getBomberScore().setScore(bomberScore.getCurrentScore());
+        return newBomberGame;
     }
 }

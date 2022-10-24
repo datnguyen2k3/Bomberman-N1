@@ -65,5 +65,7 @@ public class Score {
     }
 
 
-
+    public void setScore(int score) {
+        currentScore = score;
+    }
 }

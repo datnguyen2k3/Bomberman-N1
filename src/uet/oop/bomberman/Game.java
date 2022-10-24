@@ -19,6 +19,7 @@ import uet.oop.bomberman.UI.GameUI.GameWin;
 import uet.oop.bomberman.UI.GameUI.LevelGameUI;
 
 import uet.oop.bomberman.UI.Menu.Menu;
+import uet.oop.bomberman.entities.Score.HighScore;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
@@ -36,6 +37,7 @@ public class Game extends Application {
     }
 
     private Group root;
+    Scene scene;
     private BombermanGame bombermanGame = new BombermanGame(1, this);
     private LevelGameUI levelGameUI = new LevelGameUI(1);
     private Menu menu;
@@ -56,7 +58,7 @@ public class Game extends Application {
         root.getChildren().add(canvas);
 
         // Tao scene
-        Scene scene = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
+        scene = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
         stage.getIcons().add(
                 new Image(
                         getClass().getResourceAsStream( "/textures/icon.png" )));
@@ -92,6 +94,7 @@ public class Game extends Application {
                         if (!isWin) {
                             isWin = true;
                             restartCanvas();
+                            HighScore.addScore(bombermanGame.getBomberScore().getCurrentScore());
                         }
                         if (gameWin.isRun()) {
                             gameWin.run(root);
@@ -99,7 +102,6 @@ public class Game extends Application {
                         }
 
                         setNewGame();
-                        menu.setStart();
                         return;
                         //stage.close();
                     }
@@ -136,7 +138,9 @@ public class Game extends Application {
 
     private void setRestartGame(Group root) {
         BombermanGame newBombermanGame = new BombermanGame(bombermanGame.getLevel(), this);
-        newBombermanGame.getBomberman().setHP(bombermanGame.getBomberman().getHP());
+        newBombermanGame.setBomber(bombermanGame.getBomberman());
+        newBombermanGame.getBomberScore().setScore(
+                Math.max(bombermanGame.getBomberScore().getCurrentScore() - 1000, 0));
 
         bombermanGame = newBombermanGame;
         levelGameUI = new LevelGameUI(bombermanGame.getLevel());
@@ -145,16 +149,13 @@ public class Game extends Application {
     }
 
     private void setNextLevel() {
-        BombermanGame newBombermanGame = new BombermanGame(bombermanGame.getLevel() + 1, this);
-        newBombermanGame.setBomber(bombermanGame.getBomberman());
-
-        bombermanGame = newBombermanGame;
+        bombermanGame = bombermanGame.newLevel(bombermanGame.getLevel() + 1);
         levelGameUI = new LevelGameUI(bombermanGame.getLevel());
-
         restartCanvas();
     }
 
     private void setNewGame() {
+        menu = new Menu(scene, this);
         bombermanGame = new BombermanGame(1, this);
         levelGameUI = new LevelGameUI(1);
         gameOver = new GameOver();
