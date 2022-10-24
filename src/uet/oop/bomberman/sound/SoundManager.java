@@ -42,23 +42,23 @@ public class SoundManager {
     }
 
     public void play() {
-        for (MediaPlayer music: musicList) {
+        for (MediaPlayer music : musicList) {
             music.play();
         }
-        for (MediaPlayer sound: soundList) {
+        for (MediaPlayer sound : soundList) {
             sound.play();
         }
     }
 
     public void update() {
-        for (MediaPlayer music: musicList) {
+        for (MediaPlayer music : musicList) {
             music.setOnEndOfMedia(() -> {
                 music.dispose();
                 musicList.remove(music);
             });
         }
 
-        for (MediaPlayer sound: soundList) {
+        for (MediaPlayer sound : soundList) {
             sound.setOnEndOfMedia(() -> {
                 sound.dispose();
                 soundList.remove(sound);
@@ -74,23 +74,23 @@ public class SoundManager {
 
 
     public void setMasterVolume(double volume) {
-        for (MediaPlayer music: musicList) {
+        for (MediaPlayer music : musicList) {
             music.setVolume(volume);
         }
 
-        for (MediaPlayer sound: soundList) {
+        for (MediaPlayer sound : soundList) {
             sound.setVolume(volume);
         }
     }
 
     public void setMusicVolume(double volume) {
-        for (MediaPlayer music: musicList) {
+        for (MediaPlayer music : musicList) {
             music.setVolume(volume);
         }
     }
 
     public void setSoundVolume(double volume) {
-        for (MediaPlayer sound: soundList) {
+        for (MediaPlayer sound : soundList) {
             sound.setVolume(volume);
         }
     }

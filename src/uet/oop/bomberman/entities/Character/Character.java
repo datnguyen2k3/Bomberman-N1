@@ -15,9 +15,8 @@ import uet.oop.bomberman.utils.State;
 
 public abstract class Character extends Entity {
 
-    private int delayTime = 600 ;
+    private int delayTime = 600;
     protected boolean isDead = false;
-    protected boolean isEnd = false;
     protected int worldX;
     protected int worldY;
     public static final int TIME_ANIMATION_RUNNING = 60;
@@ -38,7 +37,19 @@ public abstract class Character extends Entity {
 
     protected boolean running, goNorth, goSouth, goEast, goWest;
     protected boolean passBrick = false;
+    protected boolean passBomb = false;
     protected boolean passFlame = false;
+
+    public Character(int xUnit, int yUnit, Image img, BombermanGame game) {
+        super(xUnit, yUnit, img, game);
+        initSprite();
+        initState();
+        initSolidArea();
+    }
+
+    public Character(int xUnit, int yUnit, BombermanGame game) {
+        super(xUnit, yUnit, game);
+    }
 
     public boolean getPassBrick() {
         return passBrick;
@@ -60,15 +71,8 @@ public abstract class Character extends Entity {
         passFlame = true;
     }
 
-    public Character(int xUnit, int yUnit, Image img, BombermanGame game) {
-        super(xUnit, yUnit, img, game);
-        initSprite();
-        initState();
-        initSolidArea();
-    }
-
-    public Character(int xUnit, int yUnit, BombermanGame game) {
-        super(xUnit, yUnit, game);
+    public void setPassBomb() {
+        passBomb = true;
     }
 
     public int get_xUnitCenter() {
@@ -91,36 +95,6 @@ public abstract class Character extends Entity {
 
     public boolean isDead() {
         return isDead;
-    }
-
-    public boolean isEnd() {
-        return isEnd;
-    }
-
-    public void setRandomSpeed() {
-        if (isEnd)
-            return;
-
-        running = true;
-        int maxSpeed = 2;
-        speed = rand.nextInt(maxSpeed) % maxSpeed + 1;
-        // System.out.println(speed);
-    }
-
-    protected void updateRunning() {
-        if (isImpactWall()) {
-            setRandomSpeed();
-        }
-
-        if (!running) {
-            return;
-        }
-
-        currentTimeRunning++;
-        if (currentTimeRunning > TIME_RUNNING) {
-            currentTimeRunning = 0;
-            running = false;
-        }
     }
 
     /**
@@ -217,21 +191,47 @@ public abstract class Character extends Entity {
     }
 
     public boolean isImpact(int startX, int startY, int endX, int endY) {
+        List<Pair<Integer, Integer>> points = pointsOfRectangle();
+
+        for (Pair<Integer, Integer> point : points) {
+            int xPoint = point.getKey();
+            int yPoint = point.getValue();
+            if (isPointInRectangle(xPoint, yPoint, startX, startY, endX, endY)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isPointInRectangle(int xPoint, int yPoint, int startX, int startY, int endX, int endY) {
+        return startX < xPoint && xPoint < endX && startY < yPoint && yPoint < endY;
+    }
+
+    public boolean isInCell(int xUnit, int yUnit) {
+        List<Pair<Integer, Integer>> points = pointsOfRectangle();
+        int scale = 1;
+        for (Pair<Integer, Integer> point : points) {
+            int xPoint = point.getKey();
+            int yPoint = point.getValue();
+            if (!isPointInRectangle(xPoint, yPoint,
+                    xUnit * Sprite.SCALED_SIZE - scale,
+                    yUnit * Sprite.SCALED_SIZE - scale,
+                    (xUnit + 1) * Sprite.SCALED_SIZE + scale,
+                    (yUnit + 1) * Sprite.SCALED_SIZE + scale)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    protected List<Pair<Integer, Integer>> pointsOfRectangle() {
         List<Pair<Integer, Integer>> points = new ArrayList<>();
         points.add(new Pair<>(solidArea.x + x, solidArea.y + y));
         points.add(new Pair<>(x + solidArea.x + solidArea.width, y + solidArea.y));
         points.add(new Pair<>(x + solidArea.x, y + solidArea.y + solidArea.height));
         points.add(new Pair<>(x + solidArea.x + solidArea.width, y + solidArea.y + solidArea.height));
-
-        for (Pair<Integer, Integer> point : points) {
-            int xPoint = point.getKey();
-            int yPoint = point.getValue();
-            if (startX < xPoint && xPoint < endX
-                    && startY < yPoint && yPoint < endY) {
-                return true;
-            }
-        }
-        return false;
+        return points;
     }
 
     public boolean isImpact(int xUnitOfCell, int yUnitOfCell) {
@@ -245,27 +245,19 @@ public abstract class Character extends Entity {
         if (!isImpactWall()) {
             switch (_state) {
                 case GO_NORTH: {
-
                     y -= speed;
-
                     break;
                 }
                 case GO_SOUTH: {
-
                     y += speed;
-
                     break;
                 }
                 case GO_EAST: {
-
                     x += speed;
-
                     break;
                 }
                 case GO_WEST: {
-
                     x -= speed;
-
                     break;
                 }
             }
@@ -294,5 +286,9 @@ public abstract class Character extends Entity {
         choosingSprite();
         this.img = _sprite.getFxImage();
         super.render(gc);
+    }
+
+    public boolean getPassBomb() {
+        return passBomb;
     }
 }

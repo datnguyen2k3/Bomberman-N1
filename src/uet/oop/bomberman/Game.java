@@ -3,6 +3,7 @@ package uet.oop.bomberman;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -19,19 +20,27 @@ import uet.oop.bomberman.UI.GameUI.LevelGameUI;
 
 import uet.oop.bomberman.UI.Menu.Menu;
 import uet.oop.bomberman.UI.Menu.PauseMenu;
+import uet.oop.bomberman.entities.Score.HighScore;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.graphics.SpriteSheet;
-import uet.oop.bomberman.sound.SoundManager;
-import uet.oop.bomberman.sound.Soundtrack;
+
+import java.io.File;
 
 public class Game extends Application {
-    public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT + Board.HEIGHT;
-    public static final int WIDTH = Sprite.SCALED_SIZE * BombermanGame.HEIGHT;
-    private int maxLevel = 2;
+    public static final int WIDTH_CAMERA = Sprite.SCALED_SIZE * 20;
+    public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT;
+    public static final int WIDTH = WIDTH_CAMERA + Board.WIDTH;
+    private int maxLevel = 4;
+  
     private Canvas canvas;
     private GraphicsContext gc;
-    Group root;
-    private BombermanGame bombermanGame = new BombermanGame(1);
+
+    public Group getRoot() {
+        return root;
+    }
+
+    private Group root;
+    Scene scene;
+    private BombermanGame bombermanGame = new BombermanGame(1, this);
     private LevelGameUI levelGameUI = new LevelGameUI(1);
     private Menu menu;
 //    private PauseMenu pauseMenu;
@@ -40,12 +49,10 @@ public class Game extends Application {
     private boolean isWin = false;
 
     @Override
-    public void start(Stage stage) throws Exception {
-        //Add logo
-        stage.getIcons().add(new Image("file:res/application_logo.png"));
-
+    public void start(Stage stage) {
         // Tao Canvas
-        canvas = new Canvas(WIDTH, HEIGHT);
+        canvas = new Canvas(BombermanGame.WIDTH * Sprite.SCALED_SIZE, BombermanGame.HEIGHT * Sprite.SCALED_SIZE);
+
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
 
@@ -54,14 +61,18 @@ public class Game extends Application {
         root.getChildren().add(canvas);
 
         // Tao scene
-        Scene scene = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
+        scene = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
+        stage.getIcons().add(
+                new Image(
+                        getClass().getResourceAsStream( "/textures/icon.png" )));
         menu = new Menu(scene, this);
 //        pauseMenu = new PauseMenu(scene, this);
 
         // Them scene vao stage
+        stage.setTitle("Bomberman");
         stage.setScene(scene);
         stage.show();
-
+        scene.setCursor(new ImageCursor(new Image(new File("res/sprites/cursor1.png").toURI().toString())));
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -86,9 +97,9 @@ public class Game extends Application {
                 if (bombermanGame.isWin()) {
                     if (bombermanGame.getLevel() == maxLevel) {
                         if (!isWin) {
-
-                            //bombermanGame.getSoundTrack().stopLevelThemeAt(bombermanGame.getLevel());
+                            isWin = true;
                             restartCanvas();
+                            HighScore.addScore(bombermanGame.getBomberScore().getCurrentScore());
                         }
                         if (gameWin.isRun()) {
                             gameWin.run(root);
@@ -96,7 +107,6 @@ public class Game extends Application {
                         }
 
                         setNewGame();
-                        menu.setStart();
                         return;
                         //stage.close();
                     }
@@ -132,8 +142,10 @@ public class Game extends Application {
     }
 
     private void setRestartGame(Group root) {
-        BombermanGame newBombermanGame = new BombermanGame(bombermanGame.getLevel());
-        newBombermanGame.getBomberman().setHP(bombermanGame.getBomberman().getHP());
+        BombermanGame newBombermanGame = new BombermanGame(bombermanGame.getLevel(), this);
+        newBombermanGame.setBomber(bombermanGame.getBomberman());
+        newBombermanGame.getBomberScore().setScore(
+                Math.max(bombermanGame.getBomberScore().getCurrentScore() - 1000, 0));
 
         bombermanGame = newBombermanGame;
         levelGameUI = new LevelGameUI(bombermanGame.getLevel());
@@ -142,19 +154,18 @@ public class Game extends Application {
     }
 
     private void setNextLevel() {
-        BombermanGame newBombermanGame = new BombermanGame(bombermanGame.getLevel() + 1);
-        newBombermanGame.setBomber(bombermanGame.getBomberman());
-
-        bombermanGame = newBombermanGame;
+        bombermanGame = bombermanGame.newLevel(bombermanGame.getLevel() + 1);
         levelGameUI = new LevelGameUI(bombermanGame.getLevel());
-
         restartCanvas();
     }
 
     private void setNewGame() {
-        bombermanGame = new BombermanGame(1);
+        menu = new Menu(scene, this);
+        bombermanGame = new BombermanGame(1, this);
         levelGameUI = new LevelGameUI(1);
-
+        gameOver = new GameOver();
+        gameWin = new GameWin();
+        isWin = false;
         restartCanvas();
     }
 

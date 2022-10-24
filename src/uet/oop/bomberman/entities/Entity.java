@@ -2,14 +2,20 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import uet.oop.bomberman.Game;
+import uet.oop.bomberman.UI.Menu.animationMenu.TextGraphics;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
 
 import java.awt.*;
 import java.util.Random;
 import uet.oop.bomberman.BombermanGame;
+
+import static javafx.scene.paint.Color.WHITE;
+
 public abstract class Entity  {
+
     protected int _animate = 0;
     protected int animateRight = 0;
     protected int animateLeft = 0;
@@ -19,7 +25,7 @@ public abstract class Entity  {
     public static final int MAX_ANIMATION = 7500;
     protected int x; //Tọa độ X tính từ góc trái trên trong Canvas
     protected int y; //Tọa độ Y tính từ góc trái trên trong Canvas
-    protected  int speed = 2;
+    protected  int speed = 4;
 
     protected Image img;
 
@@ -28,6 +34,12 @@ public abstract class Entity  {
     public boolean isCollisionOn;
     protected BombermanGame game;
     public  Random rand = new Random();
+
+    public boolean isEnd() {
+        return isEnd;
+    }
+
+    protected boolean isEnd = false;
 
     public abstract void initSolidArea();
 
@@ -156,31 +168,21 @@ public abstract class Entity  {
     }
 
     public void render(GraphicsContext gc) {
+        render(gc, img, x, y);
+    }
+
+    public int get_xRender(int x) {
         int xRender = x;
-        int yRender = y;
 
-        if (game.getBomberman().getX() > Game.WIDTH / 2) {
-            xRender -= Math.min(game.getBomberman().getX() + game.getBomberman().getSolidArea().x - Game.WIDTH / 2,
-                                BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH);
-
+        if (game.getBomberman().getX() > Game.WIDTH_CAMERA / 2) {
+            xRender -= Math.min(game.getBomberman().getX() + game.getBomberman().getSolidArea().x - Game.WIDTH_CAMERA / 2,
+                    BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH_CAMERA);
         }
-
-
-        gc.drawImage(img, xRender, yRender);
+        return xRender;
     }
 
     public void render(GraphicsContext gc, Image img, int x, int y) {
-        int xRender = x;
-        int yRender = y;
-
-        if (game.getBomberman().getX() > Game.WIDTH / 2) {
-            xRender -= Math.min(game.getBomberman().getX() + game.getBomberman().getSolidArea().x - Game.WIDTH / 2,
-                    BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH);
-        }
-
-        //System.out.println(game.getBomberman().getX() - Game.WIDTH_CAMERA / 2);
-        // System.out.println(xRender);
-        gc.drawImage(img, xRender, yRender);
+        gc.drawImage(img, get_xRender(x), y);
     }
 
     public void chooseSpriteBrick() {

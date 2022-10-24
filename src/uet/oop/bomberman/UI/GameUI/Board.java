@@ -16,6 +16,7 @@ public class Board {
     ArrayList<AnimatedGraphic> symbolList;
     ArrayList<TextGraphics> textList;
 
+
     public Board() {
         symbolList = new ArrayList<>();
         symbolList.add(new AnimatedGraphic("file:res/sprites/heart.png", 0, 0));
@@ -25,6 +26,7 @@ public class Board {
         symbolList.add(new AnimatedGraphic("file:res/sprites/powerup_flames.png", 0, 0));
         setSymbol();
 
+
         textSize = new TextGraphics("MMM").getWidth();
         textList = new ArrayList<>();
         textList.add(new TextGraphics("x"));
@@ -33,6 +35,7 @@ public class Board {
         textList.add(new TextGraphics("x"));
         textList.add(new TextGraphics("x"));
         setText();
+
     }
 
     private void setSymbol() {
@@ -88,6 +91,7 @@ public class Board {
             TextGraphics text = (TextGraphics) o;
             text.setY(HEIGHT / 2 + (int) text.getHeight() / 2);
         }
+
     }
 
     public void clear() {

@@ -1,37 +1,50 @@
 package uet.oop.bomberman.entities.Character.Enemy;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.UI.Menu.animationMenu.TextGraphics;
 import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Character.Character;
+import uet.oop.bomberman.entities.Score.Score;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
 
 import java.awt.*;
 
 public abstract class Enemy extends Character {
+    private boolean addBonustime = false;
     public static final char balloomDiagram = '1';
     public static final char onealDiagram = '2';
     public static final char dollDiagram = '3';
     public static final char minvoDiagram = '4';
     public static final char doraDiagram = '5';
-    public static char lastEnemy = '5';
+    public static final char catDiagram = '6';
+    public static final char coinDiagram = '7';
+    public static final char ghostDiagram = '8';
+    public static final char redCoinDiagram = '9';
+    public static final int lastEnemyDiagram = '9';
 
-    Bomber bomber = game.getBomberman();
+    protected int TIME_RANDOM_STATE = 300;
+    private int currentTimeRandomState = 0;
+    protected int score = 0;
+
+    private Bomber bomber = game.getBomberman();
 
     public Enemy(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
         this.speed = 1;
     }
 
+
     @Override
     public void initSolidArea() {
-        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 15 * Sprite.SCALE , 15 * Sprite.SCALE);
+        solidArea = new Rectangle(0 * Sprite.SCALE, 0 * Sprite.SCALE, 15 * Sprite.SCALE, 15 * Sprite.SCALE);
     }
 
 
     public static boolean isEnemy(char diagram) {
-        return '1' <= diagram && diagram <= lastEnemy;
+        return '1' <= diagram && diagram <= lastEnemyDiagram;
     }
 
     @Override
@@ -40,11 +53,31 @@ public abstract class Enemy extends Character {
     }
 
     public void setRandomState() {
-        if(isEnd)
+        if (isEnd)
             return;
 
         int choice = rand.nextInt(4);
         this._state = State.values()[choice];
+    }
+
+    @Override
+    protected void updateCurrentState() {
+        if (isImpactWall()) {
+            setState();
+        }
+
+        updateRandomStateByTime();
+    }
+
+    public void updateRandomStateByTime() {
+        if (isDead)
+            return;
+        currentTimeRandomState++;
+
+        if (currentTimeRandomState > TIME_RANDOM_STATE) {
+            currentTimeRandomState = 0;
+            setRandomState();
+        }
     }
 
     public void setState() {
@@ -54,18 +87,21 @@ public abstract class Enemy extends Character {
     @Override
     public void update() {
         super.update();
-
-
-        if (isImpactWall()) {
-            setState();
-        }
-
-        if(isDead) {
+        updateCurrentState();
+        if (isDead) {
             currentTimeDead++;
-            if(currentTimeDead >= TIME_DEAD) {
+            if (currentTimeDead >= TIME_DEAD) {
                 isEnd = true;
             }
         }
+        if (_state == State.DEAD) {
+            if (!addBonustime) {
+                addBonustime = true;
+                // update bonus time
 
+            }
+        }
     }
+
+
 }

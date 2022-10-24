@@ -4,7 +4,10 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.sound.Soundtrack;
 
+import javax.sound.sampled.SourceDataLine;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -149,10 +152,12 @@ public class TextGraphicsList {
         switch (keyEvent.getCode()) {
             case W:
             case UP:
+                Soundtrack.playSwitchButtonSound();
                 mainIndex = (mainIndex == 0) ? textGraphicsList.size() - 1 : mainIndex - 1;
                 break;
             case S:
             case DOWN:
+                Soundtrack.playSwitchButtonSound();
                 mainIndex = (mainIndex == textGraphicsList.size() - 1) ? 0 : mainIndex + 1;
                 break;
         }

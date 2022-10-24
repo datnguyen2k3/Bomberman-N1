@@ -1,5 +1,6 @@
 package uet.oop.bomberman.entities.Algorithm;
 
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Character.Character;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -16,7 +17,7 @@ public class CanGo {
 
         return xUnit * Sprite.SCALED_SIZE < character.getX()
                 && (xUnit + 1) * Sprite.SCALED_SIZE > character.getX() + character.getSolidArea().width
-                && MinPath.isCanMove(map[yUnit - 1][xUnit]);
+                && MinPath.isCanMove(xUnit, yUnit - 1, BombermanGame.diagramMap, character);
     }
 
     public static boolean isCanGoDown(Character character, char[][] map) {
@@ -27,7 +28,7 @@ public class CanGo {
 
         return xUnit * Sprite.SCALED_SIZE < character.getX()
                 && (xUnit + 1) * Sprite.SCALED_SIZE > character.getX() + character.getSolidArea().width
-                && MinPath.isCanMove(map[yUnit + 1][xUnit]);
+                && MinPath.isCanMove(xUnit, yUnit + 1, BombermanGame.diagramMap, character);
     }
 
     public static boolean isCanGoLeft(Character character, char[][] map) {
@@ -36,7 +37,7 @@ public class CanGo {
 
         return yUnit * Sprite.SCALED_SIZE < character.getY()
                 && (yUnit + 1) * Sprite.SCALED_SIZE > character.getY() + character.getSolidArea().height
-                && MinPath.isCanMove(map[yUnit][xUnit - 1]);
+                && MinPath.isCanMove(xUnit - 1, yUnit, BombermanGame.diagramMap, character);
     }
 
     public static boolean isCanGoRight(Character character, char[][] map) {
@@ -45,7 +46,7 @@ public class CanGo {
 
         return yUnit * Sprite.SCALED_SIZE < character.getY()
                 && (yUnit + 1) * Sprite.SCALED_SIZE > character.getY() + character.getSolidArea().height
-                && MinPath.isCanMove(map[yUnit][xUnit + 1]);
+                && MinPath.isCanMove(xUnit + 1, yUnit, BombermanGame.diagramMap, character);
     }
 
 

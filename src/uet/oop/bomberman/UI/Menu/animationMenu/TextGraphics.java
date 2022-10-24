@@ -19,6 +19,7 @@ public class TextGraphics {
 
     public void setText(String text) {
         textGraphics.setText(text);
+
     }
 
     public void setColor(Color color) {
@@ -45,6 +46,7 @@ public class TextGraphics {
     public void setOpacity(double opacity) {
         textGraphics.setOpacity(opacity);
     }
+
     public double getWidth() {
         return textGraphics.getLayoutBounds().getWidth();
     }
@@ -80,4 +82,6 @@ public class TextGraphics {
         gc.setFill(prePaint);
         gc.setGlobalAlpha(preAlpha);
     }
+
+
 }

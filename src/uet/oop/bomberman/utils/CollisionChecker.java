@@ -1,6 +1,5 @@
 package uet.oop.bomberman.utils;
 
-import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.StillObject.Wall;
@@ -16,7 +15,8 @@ public class CollisionChecker {
     }
 
     private boolean isBomb(int xUnit, int yUnit, Entity e) {
-        return !game.getBombManagement().isCanMoveThroughBomb(xUnit, yUnit, (Character) e);
+        return game.getBomberBombManagement().isCharacterCanMoveThroughBomb(xUnit, yUnit, (Character) e)
+                || game.getEnemyBombManagement().isCharacterCanMoveThroughBomb(xUnit, yUnit, (Character) e);
         // return game.getBombManagement().isBomb(xUnit, yUnit, e);
     }
 
