@@ -13,12 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uet.oop.bomberman.UI.GameUI.Board;
+import uet.oop.bomberman.UI.MiniInfo.MiniInfoManagement;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.entities.Character.Enemy.EnemyManagement;
 import uet.oop.bomberman.entities.Item.Item;
 import uet.oop.bomberman.entities.Item.ItemManagement;
+import uet.oop.bomberman.entities.Score.Score;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.StillObject.Grass;
 import uet.oop.bomberman.entities.StillObject.Wall;
@@ -42,6 +44,17 @@ public class BombermanGame {
     private int currentTimeAddEnemy = 0;
     private static final int NUM_ENEMIES_IS_ADDED = 15;
     private int currentNumEnemiesIsAdded = 0;
+
+    public Score getBomberScore() {
+        return bomberScore;
+    }
+
+    private Score bomberScore = new Score();
+
+    public Game getGame() {
+        return game;
+    }
+
     private Game game;
     private Canvas canvas;
     private GraphicsContext gc;
@@ -53,22 +66,28 @@ public class BombermanGame {
     private List<Entity> stillObjects = new ArrayList<>();
     private ItemManagement itemManagement = new ItemManagement();
     private EnemyManagement enemyManagement = new EnemyManagement();
-    private BombManagement bomberBombManagement = new BombManagement(1, 1, this);
+    private BombManagement bomberBombManagement = new BombManagement(4, 3, this);
     private BombManagement enemyBombManagement = new BombManagement(50, 6, this);
+
+    private MiniInfoManagement miniInfoManagement = new MiniInfoManagement();
+
     private boolean isRun = true;
     private boolean isAdd = false;
-
     private boolean isWin = false;
+
     private boolean isLose = false;
     private int levelDone = 0;
     private int justDie = 0;
-
     public Soundtrack getSoundTrack() {
         return soundTrack;
     }
 
     public List<Entity> getStillObjects() {
         return stillObjects;
+    }
+
+    public MiniInfoManagement getMiniInfoManagement() {
+        return miniInfoManagement;
     }
 
     public void findBrickAndDelete(int xUnit, int yUnit) {
@@ -119,11 +138,6 @@ public class BombermanGame {
 
     public int getRealCurrentTimeGame() {
         return currentTimeGame;
-    }
-
-    public void updateCurrentTimeGame(int timeAfterBonus) {
-        currentTimeGame += timeAfterBonus * 60;
-        currentTimeGame /= 60;
     }
 
     private void updateCurrentTimeGame() {
@@ -218,10 +232,11 @@ public class BombermanGame {
         enemyManagement.update();
         board.update(bomberman.getHP(), enemyManagement.getNumEnemies(),
                 bomberBombManagement.getLeftBomb(), bomberBombManagement.getFlame(),
-                bomberman.getSpeed(), getCurrentTimeGame());
+                bomberman.getSpeed(), getCurrentTimeGame(), bomberScore.getCurrentScore());
         updateCurrentTimeGame();
         bomberBombManagement.update();
         enemyBombManagement.update();
+        miniInfoManagement.update();
     }
 
     public void updateInput(Scene scene) {
@@ -261,17 +276,17 @@ public class BombermanGame {
         enemyManagement.updateEnemyIsKilledByBomb(bomberman.getBombManagement());
         enemyManagement.updateEnemyIsKilledByBomb(enemyBombManagement);
 
-//        // Bomb kill bomber
-//        if (bomberman.getBombManagement().isDestroyEnemy(bomberman)
-//                || enemyBombManagement.isDestroyEnemy(bomberman)) {
-//            bomberman.setDead();
-//        }
+        // Bomb kill bomber
+        if (bomberman.getBombManagement().isDestroyCharacter(bomberman)
+                || enemyBombManagement.isDestroyCharacter(bomberman)) {
+            bomberman.setDead();
+        }
 
 
         // Enemy kill bomber
-//        if (enemyManagement.isEnemyKillCharacter(bomberman)) {
-//            bomberman.setDead();
-//        }
+        if (enemyManagement.isEnemyKillCharacter(bomberman)) {
+            bomberman.setDead();
+        }
 
         // Bomber kill all enemies
         bomberman.updateBombermanKillAllEnemies(enemyManagement);
@@ -311,6 +326,7 @@ public class BombermanGame {
         enemyBombManagement.render(gc);
         enemyManagement.render(gc);
         bomberman.render(gc);
+        miniInfoManagement.render(gc);
     }
 
     public void run(Canvas canvas, GraphicsContext gc, Scene scene, Group root) {

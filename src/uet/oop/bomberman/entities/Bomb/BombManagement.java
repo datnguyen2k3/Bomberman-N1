@@ -87,12 +87,18 @@ public class BombManagement extends Management<Bomb> {
         return false;
     }
 
-    public void add(Bomb b) {
+    public void add(int xUnit, int yUnit) {
         if (list.size() == maxBomb)
             return;
         game.getSoundTrack().playPlaceBomb();
+        Bomb b = new Bomb(xUnit, yUnit, this, game);
         list.add(b);
-        BombermanGame.diagramMap[b.get_yUnit()][b.get_xUnit()] = Bomb.bombDiagram;
+    }
+
+    public Bomb getLastBomb() {
+        if (list.size() == 0)
+            return null;
+        return list.get(list.size() - 1);
     }
 
     public boolean isCharacterCanMoveThroughBomb(int xUnit, int yUnit, Character other) {
@@ -128,8 +134,7 @@ public class BombManagement extends Management<Bomb> {
                     || game.getBomberBombManagement().isBomb(bomb_xUnit, bomb_yUnit)) {
                 return;
             }
-            Bomb b = new Bomb(bomb_xUnit, bomb_yUnit, game.getBomberBombManagement(), game);
-            game.getBomberBombManagement().add(b);
+            game.getBomberBombManagement().add(bomb_xUnit, bomb_yUnit);
         }
     }
 
@@ -137,27 +142,6 @@ public class BombManagement extends Management<Bomb> {
         if (event.getCode() ==  KeyCode.SPACE) {
             isPressSpace = false;
         }
-    }
-
-    @Override
-    public void update() {
-        super.update();
-        updateRemoveBomb();
-    }
-
-    private void updateRemoveBomb() {
-        if (list.size() == 0)
-            return;
-
-        List<Bomb> newList = new ArrayList<>();
-        for (Bomb b : list) {
-            if (!b.isEnd()) {
-                newList.add(b);
-            } else {
-                BombermanGame.diagramMap[b.get_yUnit()][b.get_xUnit()] = ' ';
-            }
-        }
-        list = newList;
     }
 
     public boolean isDestroyBrick(Brick brick) {
@@ -186,7 +170,6 @@ public class BombManagement extends Management<Bomb> {
                         bomb_yUnit * Sprite.SCALED_SIZE,
                         bomb_xUnit * Sprite.SCALED_SIZE + Sprite.SCALED_SIZE,
                         bomb_yUnit * Sprite.SCALED_SIZE + Sprite.SCALED_SIZE)) {
-                    // System.out.println(enemy.getX() + " " + enemy.getY());
                     return true;
                 }
             }

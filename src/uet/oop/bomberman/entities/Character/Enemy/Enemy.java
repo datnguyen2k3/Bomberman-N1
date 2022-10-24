@@ -6,14 +6,13 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.UI.Menu.animationMenu.TextGraphics;
 import uet.oop.bomberman.entities.Character.Bomber;
 import uet.oop.bomberman.entities.Character.Character;
+import uet.oop.bomberman.entities.Score.Score;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
 
 import java.awt.*;
 
 public abstract class Enemy extends Character {
-
-
     private boolean addBonustime = false;
     public static final char balloomDiagram = '1';
     public static final char onealDiagram = '2';
@@ -28,6 +27,7 @@ public abstract class Enemy extends Character {
 
     protected int TIME_RANDOM_STATE = 300;
     private int currentTimeRandomState = 0;
+    protected int score = 0;
 
     private Bomber bomber = game.getBomberman();
 
@@ -35,6 +35,7 @@ public abstract class Enemy extends Character {
         super(xUnit, yUnit, img, game);
         this.speed = 1;
     }
+
 
     @Override
     public void initSolidArea() {
@@ -97,8 +98,6 @@ public abstract class Enemy extends Character {
             if (!addBonustime) {
                 addBonustime = true;
                 // update bonus time
-                int bonusTime = Integer.parseInt(deadPoint.getText());
-                game.updateCurrentTimeGame(game.getRealCurrentTimeGame() + bonusTime * 60 );
             }
         }
     }

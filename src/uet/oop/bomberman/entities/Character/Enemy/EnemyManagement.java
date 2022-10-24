@@ -1,5 +1,7 @@
 package uet.oop.bomberman.entities.Character.Enemy;
 
+import uet.oop.bomberman.Game;
+import uet.oop.bomberman.UI.MiniInfo.PlusScore;
 import uet.oop.bomberman.entities.Bomb.BombManagement;
 import uet.oop.bomberman.entities.Character.Character;
 import uet.oop.bomberman.entities.Character.Enemy.BlueEnemy.Dora;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EnemyManagement extends Management<Enemy> {
+    BombermanGame game;
     private List<Enemy> addLater = new ArrayList<>();
     public int getNumEnemies() {
         return list.size();
@@ -29,6 +32,7 @@ public class EnemyManagement extends Management<Enemy> {
 
     public void add(int xUnit, int yUnit, char enemyDiagram, BombermanGame game) {
         Enemy enemy = getEnemy(xUnit, yUnit, enemyDiagram, game);
+        this.game = game;
         if (enemy != null) {
             list.add(enemy);
         }
@@ -72,16 +76,10 @@ public class EnemyManagement extends Management<Enemy> {
         for (Enemy enemy : list) {
             if (!enemy.isDead() && bombManagement.isDestroyCharacter(enemy)) {
                 enemy.setDead();
-            }
-        }
-    }
-
-    public void updateRemoveEnemy() {
-        for (int i = 0; i < list.size(); i++) {
-            Enemy enemy = list.get(i);
-            if (enemy.isEnd()) {
-                list.remove(i);
-                i--;
+                game.getMiniInfoManagement().add(
+                        new PlusScore(game, enemy)
+                );
+                game.getBomberScore().addScore(enemy);
             }
         }
     }
@@ -102,7 +100,6 @@ public class EnemyManagement extends Management<Enemy> {
     @Override
     public void update() {
         super.update();
-        updateRemoveEnemy();
         updateAddEnemyLater();
     }
 }

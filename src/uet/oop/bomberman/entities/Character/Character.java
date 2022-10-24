@@ -17,7 +17,6 @@ public abstract class Character extends Entity {
 
     private int delayTime = 600 ;
     protected boolean isDead = false;
-    protected boolean isEnd = false;
     protected int worldX;
     protected int worldY;
     public static final int TIME_ANIMATION_RUNNING = 60;
@@ -96,10 +95,6 @@ public abstract class Character extends Entity {
 
     public boolean isDead() {
         return isDead;
-    }
-
-    public boolean isEnd() {
-        return isEnd;
     }
 
     /**

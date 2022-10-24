@@ -2,20 +2,15 @@ package uet.oop.bomberman.entities.Character.Enemy.YellowEnemy;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import org.w3c.dom.Text;
-import uet.oop.bomberman.UI.Menu.animationMenu.TextGraphics;
 import uet.oop.bomberman.entities.Character.Enemy.Enemy;
+import uet.oop.bomberman.entities.Score.Score;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.awt.*;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.utils.Badge;
-import uet.oop.bomberman.utils.State;
 
 public class Balloom extends Enemy {
     public Balloom(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
-        deadPoint = Badge.balloomPoint;
     }
 
     @Override

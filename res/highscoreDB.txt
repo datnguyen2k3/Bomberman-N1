@@ -1,6 +1,0 @@
-Player 98
-Player 34
-Player 20
-Player 5
-Player 0
-new 30

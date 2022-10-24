@@ -38,13 +38,11 @@ public class ItemManagement extends Management<Item> {
         }
     }
 
-
-
-
     // Combat
-    public void removeItem(Bomber bomber) {
+    @Override
+    public void updateRemove() {
         for (Item item : list) {
-            if (!item.isTaken()) {
+            if (item.isTaken()) {
                 list.remove(item);
                 break;
             }

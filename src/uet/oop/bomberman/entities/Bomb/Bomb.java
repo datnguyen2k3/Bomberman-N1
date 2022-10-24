@@ -31,7 +31,6 @@ public class Bomb extends Entity {
     private int brickDestroyCounterLeft = 0;
     private int canDestroyBrick = 0;
     private BombManagement bombManagement;
-    private boolean isEnd = false;
     private boolean isWaitedToExploding = false;
     private boolean isExploded = false;
     public int TIME_WAIT_TO_EXPLODING = 60 * 2;
@@ -80,8 +79,8 @@ public class Bomb extends Entity {
         this.game = game;
         findFirstBrickAt4Side();
         initCharacterInBomb();
-
         explodedLength = bombManagement.getExplodedLength();
+        BombermanGame.diagramMap[get_yUnit()][get_xUnit()] = Bomb.bombDiagram;
     }
 
     private void initCharacterInBomb() {
@@ -143,10 +142,6 @@ public class Bomb extends Entity {
 
     public boolean isExploded() {
         return isExploded;
-    }
-
-    public boolean isEnd() {
-        return isEnd;
     }
 
     private void waitToExploding() {
@@ -254,6 +249,11 @@ public class Bomb extends Entity {
         currentTimeExploding--;
     }
 
+    protected void setEnd() {
+        isEnd = true;
+        BombermanGame.diagramMap[get_yUnit()][get_xUnit()] = ' ';
+    }
+
     private void running() {
         waitToExploding();
         if (currentTimeWaitToExploding > 0)
@@ -265,7 +265,7 @@ public class Bomb extends Entity {
 
 
         if (explodedBrick.isEmpty()) {
-            isEnd = true;
+            setEnd();
         }
 
     }
@@ -773,8 +773,9 @@ public class Bomb extends Entity {
             }
         }
         if (explodedBrick.size() == 0 && canDestroyBrick == 1) {
-            isEnd = true;
+            setEnd();
         }
+
         if (explodedBrick.size() != 0) {
             explodedBrick.clear();
             findFirstBrickAt4Side();

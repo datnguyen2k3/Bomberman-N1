@@ -2,15 +2,14 @@ package uet.oop.bomberman.entities.Character.Enemy.RedEnemy;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Score.Score;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.utils.Badge;
 
-public class Ghost extends Doll {
+public class Ghost extends AI_Enemy {
     public Ghost(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
         this.speed = 2;
         setPassBrick();
-        deadPoint = Badge.ghostPoint;
     }
 
     @Override

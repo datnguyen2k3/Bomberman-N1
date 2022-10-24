@@ -2,23 +2,18 @@ package uet.oop.bomberman.entities.Character.Enemy.BlueEnemy;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Character.Enemy.Enemy;
+import uet.oop.bomberman.entities.Score.Score;
 import uet.oop.bomberman.graphics.Sprite;
 
-import uet.oop.bomberman.utils.Badge;
-import uet.oop.bomberman.utils.State;
-
-import java.awt.*;
 import java.util.Random;
 
 import uet.oop.bomberman.BombermanGame;
-public class Oneal extends Enemy {
-    protected int TimeChangeSpeed = 240;
-    protected int currentTimeChangeSpeed = 0;
+public class Oneal extends Speed_Change_Enemy {
 
     public Oneal(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
-        deadPoint = Badge.onealPoint;
     }
+
 
     @Override
     protected void initSprite() {
@@ -53,28 +48,7 @@ public class Oneal extends Enemy {
         this.sprite_character_dead_3 = Sprite.mob_dead3;
     }
 
-    public void setRandomSpeed() {
-        Random random = new Random();
-        speed = random.nextInt(3) + 1;
-    }
 
-    @Override
-    public void update() {
-        super.update();
-        updateSpeed();
-    }
-
-    protected void updateSpeed() {
-        if (isImpactWall()) {
-            setRandomSpeed();
-        }
-        currentTimeChangeSpeed++;
-        if (currentTimeChangeSpeed > TimeChangeSpeed) {
-            currentTimeChangeSpeed = 0;
-            setRandomSpeed();
-        }
-
-    }
 
 
 }

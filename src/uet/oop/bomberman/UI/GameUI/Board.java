@@ -9,11 +9,15 @@ import uet.oop.bomberman.Game;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Board {
     public static int WIDTH = 4 * Sprite.SCALED_SIZE;
     Rectangle rectangle = new Rectangle();
     int size = 15;
+    List<Text> texts = new ArrayList<>();
     Font font = Font.loadFont("file:res/Font/game_font.ttf", size);
     Text hpText;
     Text enemyText;
@@ -21,6 +25,7 @@ public class Board {
     Text bombText;
     Text flameText;
     Text timeText;
+    Text scoreText;
     boolean isAdd = false;
 
     public Board() {
@@ -36,6 +41,7 @@ public class Board {
         bombText = initText(4);
         flameText = initText(5);
         timeText = initText(6);
+        scoreText = initText(7);
     }
 
     private Text initText(int order) {
@@ -47,13 +53,14 @@ public class Board {
         return text;
     }
 
-    public void update(int hp, int enemies, int bomb, int flame, int speed, int time) {
+    public void update(int hp, int enemies, int bomb, int flame, int speed, int time, int score) {
         hpText.setText("HP:" + hp);
         enemyText.setText("Enemy:" + enemies);
         bombText.setText("Bomb:" + bomb);
         flameText.setText("Flame:" + flame);
         speedText.setText("Speed:" + speed);
         timeText.setText("Time:" + time);
+        scoreText.setText("Score:\n\n" + score);
     }
 
     public void pushInRoot(Group root) {
@@ -64,6 +71,7 @@ public class Board {
         root.getChildren().add(speedText);
         root.getChildren().add(bombText);
         root.getChildren().add(timeText);
+        root.getChildren().add(scoreText);
     }
 
     public void popInRoot(Group root) {
@@ -74,6 +82,7 @@ public class Board {
         root.getChildren().remove(speedText);
         root.getChildren().remove(bombText);
         root.getChildren().remove(timeText);
+        root.getChildren().remove(scoreText);
     }
 
 }

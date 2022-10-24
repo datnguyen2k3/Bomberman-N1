@@ -1,12 +1,11 @@
 package uet.oop.bomberman.entities.Character.Enemy.YellowEnemy;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Bomb.Bomb;
 import uet.oop.bomberman.entities.Character.Enemy.Enemy;
+import uet.oop.bomberman.entities.Score.Score;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.utils.Badge;
 
 public class Cat extends Enemy {
     protected boolean isExplodeBomb = false;
@@ -15,22 +14,16 @@ public class Cat extends Enemy {
 
     public Cat(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
-        deadPoint = Badge.catPoint;
     }
 
     private void updateExplodingBombAfterDead() {
         if (isDead && !isExplodeBomb) {
             isExplodeBomb = true;
-            //game.getBombManagement().setMaxBomb(game.getBombManagement().getMaxBomb() + 1);
-            Bomb b = new Bomb(get_xUnitCenter(), get_yUnitCenter(), game.getEnemyBombManagement(), game);
-            b.setCurrentTimeWaitToExploding(1);
-            game.getEnemyBombManagement().add(b);
+
+            game.getEnemyBombManagement().add(get_xUnitCenter(), get_yUnitCenter());
+            game.getEnemyBombManagement().getLastBomb().setCurrentTimeWaitToExploding(1);
         }
 
-//        if (b != null && b.isEnd() && !removeBomb) {
-//            game.getBombManagement().setMaxBomb(game.getBombManagement().getMaxBomb() - 1);
-//            removeBomb = true;
-//        }
     }
 
     @Override

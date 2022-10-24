@@ -16,10 +16,22 @@ public abstract class Management<T extends Entity> {
             e.render(gc);
         }
     }
+
+    public void updateRemove() {
+        List<T> newList = new ArrayList<>();
+        for(T t : list) {
+            if (!t.isEnd()) {
+                newList.add(t);
+            }
+        }
+        list = newList;
+    }
+
     public void update() {
         for(T e : list) {
             e.update();
         }
+        updateRemove();
     }
 
 }

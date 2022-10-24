@@ -16,8 +16,6 @@ import static javafx.scene.paint.Color.WHITE;
 
 public abstract class Entity  {
 
-    protected TextGraphics deadPoint = new TextGraphics("10");
-
     protected int _animate = 0;
     protected int animateRight = 0;
     protected int animateLeft = 0;
@@ -29,8 +27,6 @@ public abstract class Entity  {
     protected int y; //Tọa độ Y tính từ góc trái trên trong Canvas
     protected  int speed = 4;
 
-    private int worldX;
-    private int worldY;
     protected Image img;
 
     public Rectangle solidArea;
@@ -38,6 +34,12 @@ public abstract class Entity  {
     public boolean isCollisionOn;
     protected BombermanGame game;
     public  Random rand = new Random();
+
+    public boolean isEnd() {
+        return isEnd;
+    }
+
+    protected boolean isEnd = false;
 
     public abstract void initSolidArea();
 
@@ -166,35 +168,20 @@ public abstract class Entity  {
     }
 
     public void render(GraphicsContext gc) {
-        int xRender = x;
-        int yRender = y;
+        render(gc, img, x, y);
+    }
 
+    public int get_xRender(int x) {
+        int xRender = x;
         if (game.getBomberman().getX() > Game.WIDTH_CAMERA / 2) {
             xRender -= Math.min(game.getBomberman().getX() + game.getBomberman().getSolidArea().x - Game.WIDTH_CAMERA / 2,
                     BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH_CAMERA);
-
         }
-
-        if (_state == State.DEAD) {
-            deadPoint.setX(xRender + Sprite.SCALED_SIZE);
-            deadPoint.setY(yRender);
-            deadPoint.render(gc);
-        }
-        gc.drawImage(img, xRender, yRender);
+        return xRender;
     }
 
     public void render(GraphicsContext gc, Image img, int x, int y) {
-        int xRender = x;
-        int yRender = y;
-
-        if (game.getBomberman().getX() > Game.WIDTH_CAMERA / 2) {
-            xRender -= Math.min(game.getBomberman().getX() + game.getBomberman().getSolidArea().x - Game.WIDTH_CAMERA / 2,
-                    BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH_CAMERA);
-        }
-
-        //System.out.println(game.getBomberman().getX() - Game.WIDTH_CAMERA / 2);
-        // System.out.println(xRender);
-        gc.drawImage(img, xRender, yRender);
+        gc.drawImage(img, get_xRender(x), y);
     }
 
     public void chooseSpriteBrick() {

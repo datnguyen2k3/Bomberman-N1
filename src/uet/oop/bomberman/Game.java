@@ -2,7 +2,6 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -10,7 +9,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -22,22 +20,23 @@ import uet.oop.bomberman.UI.GameUI.LevelGameUI;
 
 import uet.oop.bomberman.UI.Menu.Menu;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.graphics.SpriteSheet;
-import uet.oop.bomberman.sound.SoundManager;
-import uet.oop.bomberman.sound.Soundtrack;
 
 import java.io.File;
 
 public class Game extends Application {
-
     public static final int WIDTH_CAMERA = Sprite.SCALED_SIZE * 20;
     public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT;
     public static final int WIDTH = WIDTH_CAMERA + Board.WIDTH;
     private int maxLevel = 4;
     private Canvas canvas;
     private GraphicsContext gc;
-    Group root;
-    private BombermanGame bombermanGame = new BombermanGame(4, this);
+
+    public Group getRoot() {
+        return root;
+    }
+
+    private Group root;
+    private BombermanGame bombermanGame = new BombermanGame(1, this);
     private LevelGameUI levelGameUI = new LevelGameUI(1);
     private Menu menu;
     private GameOver gameOver = new GameOver();
@@ -60,7 +59,7 @@ public class Game extends Application {
         Scene scene = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
         stage.getIcons().add(
                 new Image(
-                        getClass().getResourceAsStream( "/bomb2.png" )));
+                        getClass().getResourceAsStream( "/textures/icon.png" )));
         menu = new Menu(scene, this);
         // Them scene vao stage
         stage.setTitle("Bomberman");
