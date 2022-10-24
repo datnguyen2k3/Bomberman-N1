@@ -98,6 +98,7 @@ public abstract class Enemy extends Character {
             if (!addBonustime) {
                 addBonustime = true;
                 // update bonus time
+
             }
         }
     }

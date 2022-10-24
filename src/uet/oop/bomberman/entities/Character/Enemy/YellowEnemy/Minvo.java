@@ -9,6 +9,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public class Minvo extends Enemy {
     public int currentTimeMinvoDead = 0;
+
     public Minvo(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
         this.speed = 3;

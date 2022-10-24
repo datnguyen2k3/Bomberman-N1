@@ -16,7 +16,7 @@ public class TextGraphics {
         textGraphics.setFont(Font.loadFont("file:res/Font/game_font.ttf", defaultSize));
     }
 
-    public TextGraphics(String text,Color color, double size) {
+    public TextGraphics(String text, Color color, double size) {
         this(text);
         setColor(color);
         setSize(size);
@@ -27,7 +27,7 @@ public class TextGraphics {
         textGraphics.setFont(Font.loadFont("file:res/Font/game_font.ttf", defaultSize));
     }
 
-    public TextGraphics(String text, int x, int y,Color color) {
+    public TextGraphics(String text, int x, int y, Color color) {
         this(text, x, y);
         setColor(color);
     }
@@ -56,6 +56,7 @@ public class TextGraphics {
     public void setOpacity(double opacity) {
         textGraphics.setOpacity(opacity);
     }
+
     public double getWidth() {
         return textGraphics.getLayoutBounds().getWidth();
     }
