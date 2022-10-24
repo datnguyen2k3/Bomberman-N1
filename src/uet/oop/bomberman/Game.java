@@ -17,6 +17,7 @@ import uet.oop.bomberman.UI.GameUI.GameWin;
 import uet.oop.bomberman.UI.GameUI.LevelGameUI;
 
 import uet.oop.bomberman.UI.Menu.Menu;
+import uet.oop.bomberman.UI.Menu.PauseMenu;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.SpriteSheet;
 import uet.oop.bomberman.sound.SoundManager;
@@ -32,6 +33,7 @@ public class Game extends Application {
     private BombermanGame bombermanGame = new BombermanGame(1);
     private LevelGameUI levelGameUI = new LevelGameUI(1);
     private Menu menu;
+//    private PauseMenu pauseMenu;
     private GameOver gameOver = new GameOver();
     private GameWin gameWin = new GameWin();
     private boolean isWin = false;
@@ -50,6 +52,7 @@ public class Game extends Application {
         // Tao scene
         Scene scene = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
         menu = new Menu(scene, this);
+//        pauseMenu = new PauseMenu(scene, this);
 
         // Them scene vao stage
         stage.setScene(scene);

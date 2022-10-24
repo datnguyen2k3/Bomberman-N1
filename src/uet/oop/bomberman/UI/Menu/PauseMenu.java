@@ -9,31 +9,27 @@ import javafx.stage.Stage;
 
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.UI.Menu.animationMenu.AnimatedGraphic;
-import uet.oop.bomberman.UI.Menu.animationMenu.MenuList.MenuLists;
 import uet.oop.bomberman.UI.Menu.animationMenu.Background;
 
+import uet.oop.bomberman.UI.Menu.animationMenu.PauseList.PauseLists;
 import uet.oop.bomberman.sound.SoundManager;
 
-public class Menu {
+public class PauseMenu {
     private boolean isRun = true;
     private Game game;
     private static final int WIDTH = 31;
     private static final int HEIGHT = 13;
-    private AnimatedGraphic animatedGraphic;
-    private AnimatedGraphic background;
-    private MenuLists menuLists;
+    private Background background;
+    private PauseLists pauseLists;
+    //RESUME GAME, OPTIONS, MAIN MENU
 
-    public Menu(Scene scene, Game game) {
-        this.game = game;
-
-        menuLists = new MenuLists(Game.WIDTH, Game.HEIGHT, scene, this);
+    public PauseMenu(Scene scene, Game game) {
+        pauseLists = new PauseLists(Game.WIDTH, Game.HEIGHT, scene);
 
         //Add background and animation
-        background = new Background("file:res/Background/mountain.png",
+        background = new Background("file:res/Background/sunset.jpg",
                 0, 0, 2, Game.WIDTH, Game.HEIGHT);
-        animatedGraphic = new AnimatedGraphic("file:res/textures/menu_logo.png", 0, 50);
-        animatedGraphic.resize(0.25);
-        animatedGraphic.setCenterHorizontal(Game.WIDTH);
+        background.setMove(false);
 
         //Add music
         SoundManager.getSoundManager().addMusicInfinite(SoundManager.mainMusicFilepath);
@@ -45,8 +41,7 @@ public class Menu {
 
     public void update(Stage stage) {
         SoundManager.getSoundManager().update();
-        animatedGraphic.update();
-        menuLists.update(stage);
+        pauseLists.update(stage);
         background.update();
     }
 
@@ -60,8 +55,7 @@ public class Menu {
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         background.render(gc);
-        animatedGraphic.render(gc);
-        menuLists.render(gc);
+        pauseLists.render(gc);
     }
 
     public void run(Canvas canvas, GraphicsContext gc, Stage stage) {
