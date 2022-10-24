@@ -19,6 +19,7 @@ import uet.oop.bomberman.UI.GameUI.GameWin;
 import uet.oop.bomberman.UI.GameUI.LevelGameUI;
 
 import uet.oop.bomberman.UI.Menu.Menu;
+import uet.oop.bomberman.UI.Menu.PauseMenu;
 import uet.oop.bomberman.entities.Score.HighScore;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -29,6 +30,7 @@ public class Game extends Application {
     public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT;
     public static final int WIDTH = WIDTH_CAMERA + Board.WIDTH;
     private int maxLevel = 4;
+  
     private Canvas canvas;
     private GraphicsContext gc;
 
@@ -41,6 +43,7 @@ public class Game extends Application {
     private BombermanGame bombermanGame = new BombermanGame(1, this);
     private LevelGameUI levelGameUI = new LevelGameUI(1);
     private Menu menu;
+//    private PauseMenu pauseMenu;
     private GameOver gameOver = new GameOver();
     private GameWin gameWin = new GameWin();
     private boolean isWin = false;
@@ -63,6 +66,8 @@ public class Game extends Application {
                 new Image(
                         getClass().getResourceAsStream( "/textures/icon.png" )));
         menu = new Menu(scene, this);
+//        pauseMenu = new PauseMenu(scene, this);
+
         // Them scene vao stage
         stage.setTitle("Bomberman");
         stage.setScene(scene);

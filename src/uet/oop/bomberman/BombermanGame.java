@@ -72,7 +72,9 @@ public class BombermanGame {
     private MiniInfoManagement miniInfoManagement = new MiniInfoManagement();
 
     private boolean isRun = true;
+
     private boolean isAdd = false;
+
     private boolean isWin = false;
 
     private boolean isLose = false;
@@ -335,6 +337,8 @@ public class BombermanGame {
         bomberBombManagement.render(gc);
         enemyBombManagement.render(gc);
         enemyManagement.render(gc);
+
+        board.render(gc);
         bomberman.render(gc);
         miniInfoManagement.render(gc);
     }
@@ -347,7 +351,7 @@ public class BombermanGame {
         if (isWin) {
             currentTimeWin++;
             if (currentTimeWin > TIME_WIN) {
-                setEnd(root);
+                setEnd();
             }
             return;
         }
@@ -363,16 +367,16 @@ public class BombermanGame {
         if (!isAdd) {
             setAdd(root);
         }
-
         render(canvas, gc);
         update();
         updateInput(scene);
         updateCombat(scene);
 
         if (bomberman.isEnd()) {
-            setEnd(root);
+            setEnd();
         }
     }
+
 
     private void setAdd(Group root) {
         isAdd = true;

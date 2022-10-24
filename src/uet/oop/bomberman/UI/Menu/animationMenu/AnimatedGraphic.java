@@ -22,10 +22,12 @@ public class AnimatedGraphic {
     public AnimatedGraphic(String filepath, int x, int y) {
         if (filepath != null) {
             this.img = new Image(filepath);
-            this.width = this.spriteWidth =  (int) img.getWidth();
-            this.height = this.spriteHeight = (int) img.getHeight();
-            this.x = x;
-            this.y =y;
+            if (img != null) {
+                this.width = this.spriteWidth =  (int) img.getWidth();
+                this.height = this.spriteHeight = (int) img.getHeight();
+                this.x = x;
+                this.y = y;
+            }
         }
     }
     public AnimatedGraphic(String filepath, int x, int y, int spriteWidth, int spriteHeight) {
@@ -47,7 +49,6 @@ public class AnimatedGraphic {
     private WritableImage cropImage() {
         PixelReader pixelReader = img.getPixelReader();
         return new WritableImage(pixelReader, spriteXPos, spriteYPos, spriteWidth, spriteHeight);
-//        return new WritableImage(pixelReader, 0, 1683 - 150, 280, 146);
     }
 
     public void resize(int width, int height) {
@@ -86,5 +87,29 @@ public class AnimatedGraphic {
                 }
             }
         }
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 }

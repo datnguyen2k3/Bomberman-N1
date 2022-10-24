@@ -173,6 +173,7 @@ public abstract class Entity  {
 
     public int get_xRender(int x) {
         int xRender = x;
+
         if (game.getBomberman().getX() > Game.WIDTH_CAMERA / 2) {
             xRender -= Math.min(game.getBomberman().getX() + game.getBomberman().getSolidArea().x - Game.WIDTH_CAMERA / 2,
                     BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH_CAMERA);

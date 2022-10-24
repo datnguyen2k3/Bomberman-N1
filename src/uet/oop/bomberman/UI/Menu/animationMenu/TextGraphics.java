@@ -2,6 +2,7 @@ package uet.oop.bomberman.UI.Menu.animationMenu;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -16,20 +17,9 @@ public class TextGraphics {
         textGraphics.setFont(Font.loadFont("file:res/Font/game_font.ttf", defaultSize));
     }
 
-    public TextGraphics(String text, Color color, double size) {
-        this(text);
-        setColor(color);
-        setSize(size);
-    }
+    public void setText(String text) {
+        textGraphics.setText(text);
 
-    public TextGraphics(String text, int x, int y) {
-        textGraphics = new Text(x, y, text);
-        textGraphics.setFont(Font.loadFont("file:res/Font/game_font.ttf", defaultSize));
-    }
-
-    public TextGraphics(String text, int x, int y, Color color) {
-        this(text, x, y);
-        setColor(color);
     }
 
     public void setColor(Color color) {
@@ -75,6 +65,7 @@ public class TextGraphics {
 
     public void render(GraphicsContext gc) {
         //Set Color
+        Paint prePaint = gc.getFill();
         gc.setFill(color);
 
         //Set Font
@@ -87,7 +78,8 @@ public class TextGraphics {
         //Draw Text
         gc.fillText(textGraphics.getText(), textGraphics.getX(), textGraphics.getY());
 
-        //Set to old opacity after draw
+        //Set to old paint and opacity after draw
+        gc.setFill(prePaint);
         gc.setGlobalAlpha(preAlpha);
     }
 

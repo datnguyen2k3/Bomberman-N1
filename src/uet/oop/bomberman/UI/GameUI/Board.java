@@ -1,88 +1,101 @@
 package uet.oop.bomberman.UI.GameUI;
 
-import javafx.scene.Group;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import uet.oop.bomberman.Game;
-import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.UI.Menu.animationMenu.AnimatedGraphic;
+import uet.oop.bomberman.UI.Menu.animationMenu.TextGraphics;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class Board {
-    public static int WIDTH = 4 * Sprite.SCALED_SIZE;
-    Rectangle rectangle = new Rectangle();
-    int size = 15;
-    List<Text> texts = new ArrayList<>();
-    Font font = Font.loadFont("file:res/Font/game_font.ttf", size);
-    Text hpText;
-    Text enemyText;
-    Text speedText;
-    Text bombText;
-    Text flameText;
-    Text timeText;
-    Text scoreText;
-    boolean isAdd = false;
+    public static int HEIGHT = Sprite.SCALED_SIZE; //48
+    double textSize;
+    ArrayList<AnimatedGraphic> symbolList;
+    ArrayList<TextGraphics> textList;
+
 
     public Board() {
-        rectangle.setX(Game.WIDTH - Board.WIDTH);
-        rectangle.setY(0);
-        rectangle.setWidth(WIDTH);
-        rectangle.setHeight(Game.HEIGHT);
-        rectangle.setFill(Color.DARKGREY);
+        symbolList = new ArrayList<>();
+        symbolList.add(new AnimatedGraphic("file:res/sprites/heart.png", 0, 0));
+        symbolList.add(new AnimatedGraphic("file:res/sprites/enemy.png", 0, 0));
+        symbolList.add(new AnimatedGraphic("file:res/sprites/powerup_speed.png", 0, 0));
+        symbolList.add(new AnimatedGraphic("file:res/sprites/powerup_bombs.png", 0, 0));
+        symbolList.add(new AnimatedGraphic("file:res/sprites/powerup_flames.png", 0, 0));
+        setSymbol();
 
-        enemyText = initText(1);
-        hpText = initText(2);
-        speedText = initText(3);
-        bombText = initText(4);
-        flameText = initText(5);
-        timeText = initText(6);
-        scoreText = initText(7);
+
+        textSize = new TextGraphics("MMM").getWidth();
+        textList = new ArrayList<>();
+        textList.add(new TextGraphics("x"));
+        textList.add(new TextGraphics("x"));
+        textList.add(new TextGraphics("x"));
+        textList.add(new TextGraphics("x"));
+        textList.add(new TextGraphics("x"));
+        setText();
+
     }
 
-    private Text initText(int order) {
-        Text text = new Text(rectangle.getX() + Sprite.SCALED_SIZE / 2,
-                rectangle.getY() + Sprite.SCALED_SIZE * (1 + order), "");
-        text.setFont(font);
-        text.setFill(Color.BLACK);
-
-        return text;
+    private void setSymbol() {
+        int spaceWithScreen = 100;
+        int space = 30 + 30 + (int) textSize + 120;
+        int index = 0;
+        //symbol (30px) - 30px - text - 120px - symbol
+        for (AnimatedGraphic symbol: symbolList) {
+            symbol.resize(30, 30);
+            setCenterVertically(symbol);
+            symbol.setX(spaceWithScreen + (space) * index);
+            index++;
+        }
     }
 
-    public void update(int hp, int enemies, int bomb, int flame, int speed, int time, int score) {
-        hpText.setText("HP:" + hp);
-        enemyText.setText("Enemy:" + enemies);
-        bombText.setText("Bomb:" + bomb);
-        flameText.setText("Flame:" + flame);
-        speedText.setText("Speed:" + speed);
-        timeText.setText("Time:" + time);
-        scoreText.setText("Score:\n\n" + score);
+    private void setText() {
+        for (int i = 0; i < textList.size(); i++) {
+            textList.get(i).setSize(15);
+            textList.get(i).setColor(Color.WHITE);
+            textList.get(i).setX(symbolList.get(i).getX() + 40);
+            textList.get(i).setOpacity(1);
+            setCenterVertically(textList.get(i));
+        }
     }
 
-    public void pushInRoot(Group root) {
-        root.getChildren().add(rectangle);
-        root.getChildren().add(hpText);
-        root.getChildren().add(enemyText);
-        root.getChildren().add(flameText);
-        root.getChildren().add(speedText);
-        root.getChildren().add(bombText);
-        root.getChildren().add(timeText);
-        root.getChildren().add(scoreText);
+    public void update(int hp, int enemies, int bomb, int flame, int speed) {
+        for (AnimatedGraphic symbol: symbolList) {
+            symbol.update();
+        }
+        int[] info = {hp, enemies, speed, bomb, flame};
+        for (int i = 0; i < textList.size(); i++) {
+            textList.get(i).setText("x" + info[i]);
+        }
     }
 
-    public void popInRoot(Group root) {
-        root.getChildren().remove(rectangle);
-        root.getChildren().remove(hpText);
-        root.getChildren().remove(enemyText);
-        root.getChildren().remove(flameText);
-        root.getChildren().remove(speedText);
-        root.getChildren().remove(bombText);
-        root.getChildren().remove(timeText);
-        root.getChildren().remove(scoreText);
+    public void render(GraphicsContext gc) {
+        gc.setFill(Color.DARKGREY);
+        gc.fillRect(0, 0, Game.WIDTH, Board.HEIGHT);
+        for (AnimatedGraphic symbol: symbolList) {
+            symbol.render(gc);
+        }
+        for (TextGraphics text: textList) {
+            text.render(gc);
+        }
     }
 
+    public void setCenterVertically(Object o) {
+        if (o.getClass() == AnimatedGraphic.class) {
+            AnimatedGraphic symbol = (AnimatedGraphic) o;
+            symbol.setY(HEIGHT / 2 - symbol.getHeight() / 2);
+        }
+        if (o.getClass() == TextGraphics.class) {
+            TextGraphics text = (TextGraphics) o;
+            text.setY(HEIGHT / 2 + (int) text.getHeight() / 2);
+        }
+
+    }
+
+    public void clear() {
+
+    }
 }
+
