@@ -48,11 +48,4 @@ public class Balloom extends Enemy {
         this.sprite_character_down_1 = Sprite.balloom_left2;
         this.sprite_character_down_2 = Sprite.balloom_left3;
     }
-
-    @Override
-    public void render(GraphicsContext gc) {
-        super.render(gc);
-    }
-
-
 }

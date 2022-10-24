@@ -62,7 +62,6 @@ public class BombermanGame {
 
     public CollisionChecker collisionChecker = new CollisionChecker(this);
     public Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), this);
-    private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
     private ItemManagement itemManagement = new ItemManagement();
     private EnemyManagement enemyManagement = new EnemyManagement();
@@ -232,7 +231,6 @@ public class BombermanGame {
     }
 
     public void update() {
-        entities.forEach(Entity::update);
         bomberman.update();
         for (Entity entity : stillObjects) {
             if (entity instanceof Brick) {
@@ -244,7 +242,7 @@ public class BombermanGame {
         enemyManagement.update();
         board.update(bomberman.getHP(), enemyManagement.getNumEnemies(),
                 bomberBombManagement.getLeftBomb(), bomberBombManagement.getFlame(),
-                bomberman.getSpeed(), getCurrentTimeGame(), bomberScore.getCurrentScore());
+                bomberman.getSpeed());
         updateCurrentTimeGame();
         bomberBombManagement.update();
         enemyBombManagement.update();
@@ -332,7 +330,6 @@ public class BombermanGame {
     public void render(Canvas canvas, GraphicsContext gc) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
-        entities.forEach(g -> g.render(gc));
         itemManagement.render(gc);
         bomberBombManagement.render(gc);
         enemyBombManagement.render(gc);
@@ -351,7 +348,7 @@ public class BombermanGame {
         if (isWin) {
             currentTimeWin++;
             if (currentTimeWin > TIME_WIN) {
-                setEnd();
+                setEnd(root);
             }
             return;
         }
@@ -373,18 +370,16 @@ public class BombermanGame {
         updateCombat(scene);
 
         if (bomberman.isEnd()) {
-            setEnd();
+            setEnd(root);
         }
     }
 
 
     private void setAdd(Group root) {
         isAdd = true;
-        board.pushInRoot(root);
     }
 
     private void setEnd(Group root) {
-        board.popInRoot(root);
         miniInfoManagement.clear();
         isRun = false;
     }

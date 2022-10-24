@@ -4,6 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import uet.oop.bomberman.Game;
+import uet.oop.bomberman.UI.GameUI.Board;
 import uet.oop.bomberman.UI.Menu.animationMenu.TextGraphics;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.utils.State;
@@ -167,6 +168,13 @@ public abstract class Entity  {
         return this._state;
     }
 
+    public void render(GraphicsContext gc, Image img, int x, int y) {
+        if (y == Game.HEIGHT - Sprite.SCALED_SIZE * 2) {
+            // gc.drawImage(img, get_xRender(x), y);
+        }
+        gc.drawImage(img, get_xRender(x), y + Board.HEIGHT);
+    }
+
     public void render(GraphicsContext gc) {
         render(gc, img, x, y);
     }
@@ -179,10 +187,6 @@ public abstract class Entity  {
                     BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH_CAMERA);
         }
         return xRender;
-    }
-
-    public void render(GraphicsContext gc, Image img, int x, int y) {
-        gc.drawImage(img, get_xRender(x), y);
     }
 
     public void chooseSpriteBrick() {

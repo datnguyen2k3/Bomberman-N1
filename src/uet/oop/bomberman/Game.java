@@ -27,8 +27,8 @@ import java.io.File;
 
 public class Game extends Application {
     public static final int WIDTH_CAMERA = Sprite.SCALED_SIZE * 20;
-    public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT;
-    public static final int WIDTH = WIDTH_CAMERA + Board.WIDTH;
+    public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT + Board.HEIGHT;
+    public static final int WIDTH = WIDTH_CAMERA;
     private int maxLevel = 4;
   
     private Canvas canvas;
@@ -51,7 +51,7 @@ public class Game extends Application {
     @Override
     public void start(Stage stage) {
         // Tao Canvas
-        canvas = new Canvas(BombermanGame.WIDTH * Sprite.SCALED_SIZE, BombermanGame.HEIGHT * Sprite.SCALED_SIZE);
+        canvas = new Canvas(WIDTH, HEIGHT);
 
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
@@ -72,10 +72,12 @@ public class Game extends Application {
         stage.setTitle("Bomberman");
         stage.setScene(scene);
         stage.show();
+        //stage.setResizable(false);
         scene.setCursor(new ImageCursor(new Image(new File("res/sprites/cursor1.png").toURI().toString())));
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
+
                 if (menu.isRun()) {
                     menu.run(canvas, gc, stage);
                     return;
