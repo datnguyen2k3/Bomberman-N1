@@ -243,7 +243,7 @@ public class BombermanGame {
         enemyManagement.update();
         board.update(bomberman.getHP(), enemyManagement.getNumEnemies(),
                 bomberBombManagement.getLeftBomb(), bomberBombManagement.getFlame(),
-                bomberman.getSpeed());
+                bomberman.getSpeed(), getCurrentTimeGame(), bomberScore.getCurrentScore());
         updateCurrentTimeGame();
         bomberBombManagement.update();
         enemyBombManagement.update();
@@ -331,7 +331,7 @@ public class BombermanGame {
         }
     }
 
-    public void render(Canvas canvas, GraphicsContext gc) {
+    public void render(Canvas canvas, GraphicsContext gc, GraphicsContext boardGc) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         itemManagement.render(gc);
@@ -339,12 +339,12 @@ public class BombermanGame {
         enemyBombManagement.render(gc);
         enemyManagement.render(gc);
 
-        board.render(gc);
+        board.render(boardGc);
         bomberman.render(gc);
         miniInfoManagement.render(gc);
     }
 
-    public void run(Canvas canvas, GraphicsContext gc, Scene scene, Group root) {
+    public void run(Canvas canvas, GraphicsContext gc, GraphicsContext boardGc, Scene scene, Group root) {
         if (!isRun) {
             return;
         }
@@ -352,7 +352,7 @@ public class BombermanGame {
         if (isWin) {
             currentTimeWin++;
             if (currentTimeWin > TIME_WIN) {
-                setEnd(root);
+                setEnd();
             }
             return;
         }
@@ -360,30 +360,31 @@ public class BombermanGame {
         if (isLose) {
             currentTimeLose++;
             if (currentTimeLose > TIME_LOSE) {
-                setEnd(root);
+                setEnd();
             }
         }
 
 
         if (!isAdd) {
-            setAdd(root);
+            setAdd();
         }
-        render(canvas, gc);
+        render(canvas, gc, boardGc);
         update();
         updateInput(scene);
         updateCombat(scene);
 
         if (bomberman.isEnd()) {
-            setEnd(root);
+            setEnd();
         }
     }
 
 
-    private void setAdd(Group root) {
+    private void setAdd() {
         isAdd = true;
     }
 
-    public void setEnd(Group root) {
+
+    public void setEnd() {
         miniInfoManagement.clear();
         isRun = false;
         soundTrack.stopLevelThemeAt(level);

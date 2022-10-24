@@ -61,7 +61,7 @@ public class Board {
         }
     }
 
-    public void update(int hp, int enemies, int bomb, int flame, int speed) {
+    public void update(int hp, int enemies, int bomb, int flame, int speed, int time, int score) {
         for (AnimatedGraphic symbol: symbolList) {
             symbol.update();
         }

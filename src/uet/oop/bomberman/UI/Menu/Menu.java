@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 
 import uet.oop.bomberman.Game;
+import uet.oop.bomberman.UI.GameUI.Board;
 import uet.oop.bomberman.UI.Menu.animationMenu.AnimatedGraphic;
 import uet.oop.bomberman.UI.Menu.animationMenu.MenuList.MenuLists;
 import uet.oop.bomberman.UI.Menu.animationMenu.Background;
@@ -31,6 +32,7 @@ public class Menu {
         //Add background and animation
         background = new Background("file:res/Background/mountain.png",
                 0, 0, 2, Game.WIDTH, Game.HEIGHT);
+
         animatedGraphic = new AnimatedGraphic("file:res/textures/menu_logo.png", 0, 50);
         animatedGraphic.resize(0.25);
         animatedGraphic.setCenterHorizontal(Game.WIDTH);
@@ -55,6 +57,7 @@ public class Menu {
     }
 
     public void render(Canvas canvas, GraphicsContext gc) {
+        gc.moveTo(0, 0);
         SoundManager.getSoundManager().play();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.BLACK);

@@ -43,7 +43,7 @@ public class PauseLists {
             if (currentIndex == 3) { //BACK TO MENU
                 currentIndex = 0;
                 pauseMenu.setEnd();
-                pauseMenu.getGame().getBombermanGame().setEnd(pauseMenu.getGame().getRoot());
+                pauseMenu.getGame().getBombermanGame().setEnd();
                 pauseMenu.getGame().setNewGame();
             }
             //Exit from the old list
