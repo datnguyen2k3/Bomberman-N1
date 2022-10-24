@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -40,6 +41,9 @@ public class Game extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        //Add logo
+        stage.getIcons().add(new Image("file:res/application_logo.png"));
+
         // Tao Canvas
         canvas = new Canvas(WIDTH, HEIGHT);
         gc = canvas.getGraphicsContext2D();
