@@ -23,10 +23,8 @@ import uet.oop.bomberman.sound.SoundManager;
 import uet.oop.bomberman.sound.Soundtrack;
 
 public class Game extends Application {
-
-    public static final int WIDTH_CAMERA = Sprite.SCALED_SIZE * 16;
-    public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT;
-    public static final int WIDTH = WIDTH_CAMERA + Board.WIDTH;
+    public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT + Board.HEIGHT;
+    public static final int WIDTH = Sprite.SCALED_SIZE * BombermanGame.WIDTH;
     private int maxLevel = 2;
     private Canvas canvas;
     private GraphicsContext gc;
@@ -38,13 +36,10 @@ public class Game extends Application {
     private GameWin gameWin = new GameWin();
     private boolean isWin = false;
 
-
-
-
     @Override
     public void start(Stage stage) throws Exception {
         // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * BombermanGame.WIDTH, Sprite.SCALED_SIZE * BombermanGame.HEIGHT);
+        canvas = new Canvas(WIDTH, HEIGHT);
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
 

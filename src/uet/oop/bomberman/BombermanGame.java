@@ -42,7 +42,6 @@ public class BombermanGame {
     private EnemyManagement enemyManagement = new EnemyManagement();
     private BombManagement bombManagement = bomberman.getBombManagement();
     private boolean isRun = true;
-    private boolean isAdd = false;
 
     private boolean isWin = false;
     private int levelDone = 0;
@@ -233,6 +232,7 @@ public class BombermanGame {
         itemManagement.render(gc);
         bomberman.render(gc);
         enemyManagement.render(gc);
+        board.render(gc);
     }
 
     public void run(Canvas canvas, GraphicsContext gc, Scene scene, Group root) {
@@ -248,14 +248,10 @@ public class BombermanGame {
             soundTrack.stopLevelThemeAt(level);
             currentTimeWin++;
             if (currentTimeWin > TIME_WIN) {
-                setEnd(root);
+                setEnd();
             }
 
             return;
-        }
-
-        if (!isAdd) {
-            setAdd(root);
         }
 
         render(canvas, gc);
@@ -264,17 +260,11 @@ public class BombermanGame {
         updateCombat(scene);
 
         if (bomberman.isEnd()) {
-            setEnd(root);
+            setEnd();
         }
     }
 
-    private void setAdd(Group root) {
-        isAdd = true;
-        board.pushInRoot(root);
-    }
-
-    private void setEnd(Group root) {
-        board.popInRoot(root);
+    private void setEnd() {
         isRun = false;
     }
 }

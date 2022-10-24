@@ -159,9 +159,9 @@ public abstract class Entity  {
         int xRender = x;
         int yRender = y;
 
-        if (game.getBomberman().getX() > Game.WIDTH_CAMERA / 2) {
-            xRender -= Math.min(game.getBomberman().getX() + game.getBomberman().getSolidArea().x - Game.WIDTH_CAMERA / 2,
-                                BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH_CAMERA);
+        if (game.getBomberman().getX() > Game.WIDTH / 2) {
+            xRender -= Math.min(game.getBomberman().getX() + game.getBomberman().getSolidArea().x - Game.WIDTH / 2,
+                                BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH);
 
         }
 
@@ -173,9 +173,9 @@ public abstract class Entity  {
         int xRender = x;
         int yRender = y;
 
-        if (game.getBomberman().getX() > Game.WIDTH_CAMERA / 2) {
-            xRender -= Math.min(game.getBomberman().getX() + game.getBomberman().getSolidArea().x - Game.WIDTH_CAMERA / 2,
-                    BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH_CAMERA);
+        if (game.getBomberman().getX() > Game.WIDTH / 2) {
+            xRender -= Math.min(game.getBomberman().getX() + game.getBomberman().getSolidArea().x - Game.WIDTH / 2,
+                    BombermanGame.WIDTH * Sprite.SCALED_SIZE - Game.WIDTH);
         }
 
         //System.out.println(game.getBomberman().getX() - Game.WIDTH_CAMERA / 2);
