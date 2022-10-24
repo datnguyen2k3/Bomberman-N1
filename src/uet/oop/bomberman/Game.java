@@ -26,11 +26,10 @@ import uet.oop.bomberman.graphics.Sprite;
 import java.io.File;
 
 public class Game extends Application {
-    public static final int WIDTH_CAMERA = Sprite.SCALED_SIZE * 20;
-    public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT;
-    public static final int WIDTH = WIDTH_CAMERA + Board.WIDTH;
+    public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT + Board.HEIGHT;
+    public static final int WIDTH = Sprite.SCALED_SIZE * BombermanGame.WIDTH;
     private int maxLevel = 4;
-  
+    private Canvas boardCanvas;
     private Canvas canvas;
     private GraphicsContext gc;
 
@@ -51,14 +50,16 @@ public class Game extends Application {
     @Override
     public void start(Stage stage) {
         // Tao Canvas
-        canvas = new Canvas(BombermanGame.WIDTH * Sprite.SCALED_SIZE, BombermanGame.HEIGHT * Sprite.SCALED_SIZE);
-
+        boardCanvas = new Canvas(Game.WIDTH, HEIGHT);
+        canvas = new Canvas(Game.WIDTH, HEIGHT);
+        canvas.setTranslateY(Board.HEIGHT);
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
 
         // Tao root container
         root = new Group();
         root.getChildren().add(canvas);
+        root.getChildren().add(boardCanvas);
 
         // Tao scene
         scene = new Scene(root, WIDTH, HEIGHT, Color.BLACK);
@@ -77,12 +78,13 @@ public class Game extends Application {
             @Override
             public void handle(long l) {
                 if (menu.isRun()) {
-                    menu.run(canvas, gc, stage);
+                    menu.run(canvas, boardCanvas.getGraphicsContext2D(), stage);
                     return;
                 }
 
                 if (levelGameUI.isRun()) {
                     menu.stop(stage);
+                    restartCanvas();
                     bombermanGame.getSoundTrack().playStageStart();
                     levelGameUI.run(root);
                     return;
@@ -90,7 +92,7 @@ public class Game extends Application {
 
                 if (bombermanGame.isRun()) {
                     bombermanGame.getSoundTrack().playLevelThemeAt(bombermanGame.getLevel());
-                    bombermanGame.run(canvas, gc, scene, root);
+                    bombermanGame.run(canvas, gc, boardCanvas.getGraphicsContext2D(), scene, root);
                     return;
                 }
 
@@ -136,7 +138,10 @@ public class Game extends Application {
     }
 
     private void setCanvas() {
-        canvas = new Canvas(Sprite.SCALED_SIZE * BombermanGame.WIDTH, Sprite.SCALED_SIZE * BombermanGame.HEIGHT);
+        boardCanvas = new Canvas(WIDTH, HEIGHT);
+        boardCanvas.getGraphicsContext2D().setFill(Color.BLACK);
+        canvas = new Canvas(WIDTH, HEIGHT);
+        canvas.setTranslateY(Board.HEIGHT);
         gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
     }
@@ -171,7 +176,9 @@ public class Game extends Application {
 
     public void restartCanvas() {
         root.getChildren().remove(canvas);
+        root.getChildren().remove(boardCanvas);
         setCanvas();
+        root.getChildren().add(boardCanvas);
         root.getChildren().add(canvas);
     }
 

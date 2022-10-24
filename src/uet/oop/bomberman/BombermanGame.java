@@ -244,7 +244,7 @@ public class BombermanGame {
         enemyManagement.update();
         board.update(bomberman.getHP(), enemyManagement.getNumEnemies(),
                 bomberBombManagement.getLeftBomb(), bomberBombManagement.getFlame(),
-                bomberman.getSpeed(), getCurrentTimeGame(), bomberScore.getCurrentScore());
+                bomberman.getSpeed());
         updateCurrentTimeGame();
         bomberBombManagement.update();
         enemyBombManagement.update();
@@ -329,7 +329,7 @@ public class BombermanGame {
         }
     }
 
-    public void render(Canvas canvas, GraphicsContext gc) {
+    public void render(Canvas canvas, GraphicsContext gc, GraphicsContext boardGc) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
@@ -338,12 +338,12 @@ public class BombermanGame {
         enemyBombManagement.render(gc);
         enemyManagement.render(gc);
 
-        board.render(gc);
+        board.render(boardGc);
         bomberman.render(gc);
         miniInfoManagement.render(gc);
     }
 
-    public void run(Canvas canvas, GraphicsContext gc, Scene scene, Group root) {
+    public void run(Canvas canvas, GraphicsContext gc, GraphicsContext boardGc, Scene scene, Group root) {
         if (!isRun) {
             return;
         }
@@ -359,15 +359,15 @@ public class BombermanGame {
         if (isLose) {
             currentTimeLose++;
             if (currentTimeLose > TIME_LOSE) {
-                setEnd(root);
+                setEnd();
             }
         }
 
 
         if (!isAdd) {
-            setAdd(root);
+            setAdd();
         }
-        render(canvas, gc);
+        render(canvas, gc, boardGc);
         update();
         updateInput(scene);
         updateCombat(scene);
@@ -378,13 +378,11 @@ public class BombermanGame {
     }
 
 
-    private void setAdd(Group root) {
+    private void setAdd() {
         isAdd = true;
-        board.pushInRoot(root);
     }
 
-    private void setEnd(Group root) {
-        board.popInRoot(root);
+    private void setEnd() {
         miniInfoManagement.clear();
         isRun = false;
     }
