@@ -117,6 +117,8 @@ public class Game extends Application {
                 }
 
                 if (bombermanGame.isWin()) {
+
+
                     if (bombermanGame.getLevel() == maxLevel) {
                         if (!isWin) {
                             isWin = true;
