@@ -26,7 +26,7 @@ import uet.oop.bomberman.sound.Soundtrack;
 
 public class Game extends Application {
     public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT + Board.HEIGHT;
-    public static final int WIDTH = Sprite.SCALED_SIZE * BombermanGame.WIDTH;
+    public static final int WIDTH = Sprite.SCALED_SIZE * BombermanGame.HEIGHT;
     private int maxLevel = 2;
     private Canvas canvas;
     private GraphicsContext gc;
