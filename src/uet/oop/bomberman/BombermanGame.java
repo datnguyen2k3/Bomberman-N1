@@ -5,6 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 
@@ -255,6 +256,9 @@ public class BombermanGame {
             public void handle(KeyEvent event) {
                 bomberman.updatePressKey(event);
                 bomberBombManagement.updatePressKey(event);
+                if (event.getCode() == KeyCode.ESCAPE) {
+                    game.getPauseMenu().setStart();
+                }
             }
         });
 
@@ -379,9 +383,10 @@ public class BombermanGame {
         isAdd = true;
     }
 
-    private void setEnd(Group root) {
+    public void setEnd(Group root) {
         miniInfoManagement.clear();
         isRun = false;
+        soundTrack.stopLevelThemeAt(level);
     }
 
     private void setLose() {

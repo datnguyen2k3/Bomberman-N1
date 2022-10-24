@@ -40,10 +40,20 @@ public class Game extends Application {
 
     private Group root;
     Scene scene;
+
+    public BombermanGame getBombermanGame() {
+        return bombermanGame;
+    }
+
     private BombermanGame bombermanGame = new BombermanGame(1, this);
     private LevelGameUI levelGameUI = new LevelGameUI(1);
     private Menu menu;
-//    private PauseMenu pauseMenu;
+
+    public PauseMenu getPauseMenu() {
+        return pauseMenu;
+    }
+
+    private PauseMenu pauseMenu;
     private GameOver gameOver = new GameOver();
     private GameWin gameWin = new GameWin();
     private boolean isWin = false;
@@ -66,7 +76,7 @@ public class Game extends Application {
                 new Image(
                         getClass().getResourceAsStream( "/textures/icon.png" )));
         menu = new Menu(scene, this);
-//        pauseMenu = new PauseMenu(scene, this);
+        pauseMenu = new PauseMenu(scene, this);
 
         // Them scene vao stage
         stage.setTitle("Bomberman");
@@ -77,6 +87,11 @@ public class Game extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
+
+                if (pauseMenu.isRun()) {
+                    pauseMenu.run(canvas, gc, stage);
+                    return;
+                }
 
                 if (menu.isRun()) {
                     menu.run(canvas, gc, stage);
@@ -161,8 +176,9 @@ public class Game extends Application {
         restartCanvas();
     }
 
-    private void setNewGame() {
+    public void setNewGame() {
         menu = new Menu(scene, this);
+        pauseMenu = new PauseMenu(scene, this);
         bombermanGame = new BombermanGame(1, this);
         levelGameUI = new LevelGameUI(1);
         gameOver = new GameOver();

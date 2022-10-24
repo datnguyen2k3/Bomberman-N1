@@ -15,12 +15,14 @@ import java.util.Objects;
 public class PauseLists {
     private static final String[] listTypes = {"MAIN", "OPTIONS", "RESUME", "MENU"};
     private List<TextGraphicsList> pauseLists;
+    private PauseMenu pauseMenu;
     private int currentIndex = 0;
 
-    public PauseLists(int screenWidth, int screenHeight, Scene scene) {
+    public PauseLists(int screenWidth, int screenHeight, Scene scene, PauseMenu pauseMenu) {
         pauseLists = new ArrayList<>();
         pauseLists.add(new MainPauseList(screenWidth, screenHeight, scene));
         pauseLists.add(new OptionList(screenWidth, screenHeight, scene));
+        this.pauseMenu = pauseMenu;
     }
 
     public void render(GraphicsContext gc) {
@@ -36,9 +38,13 @@ public class PauseLists {
             currentIndex = getCurrentIndex((pauseLists.get(currentIndex).isExiting()));
             if (currentIndex == 2) { //RESUME TO GAME
                 currentIndex = 0;
+                pauseMenu.setEnd();
             }
             if (currentIndex == 3) { //BACK TO MENU
                 currentIndex = 0;
+                pauseMenu.setEnd();
+                pauseMenu.getGame().getBombermanGame().setEnd(pauseMenu.getGame().getRoot());
+                pauseMenu.getGame().setNewGame();
             }
             //Exit from the old list
             pauseLists.get(oldIndex).exit();
