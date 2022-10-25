@@ -30,7 +30,7 @@ public class Game extends Application {
     public static final int HEIGHT = Sprite.SCALED_SIZE * BombermanGame.HEIGHT + Board.HEIGHT;
     public static final int WIDTH = WIDTH_CAMERA;
 
-    private int maxLevel = 4;
+    private int maxLevel = 5;
     private Canvas boardCanvas;
     private Canvas canvas;
     private GraphicsContext gc;
@@ -86,12 +86,11 @@ public class Game extends Application {
         stage.setTitle("Bomberman");
         stage.setScene(scene);
         stage.show();
-        //stage.setResizable(false);
+        stage.setResizable(false);
         scene.setCursor(new ImageCursor(new Image(new File("res/sprites/cursor1.png").toURI().toString())));
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-
                 if (pauseMenu.isRun()) {
                     pauseMenu.run(canvas, gc, stage);
                     return;
@@ -173,6 +172,9 @@ public class Game extends Application {
         newBombermanGame.setBomber(bombermanGame.getBomberman());
         newBombermanGame.getBomberScore().setScore(
                 Math.max(bombermanGame.getBomberScore().getCurrentScore() - 1000, 0));
+        newBombermanGame.getBomberman().setPassFlame(false);
+        newBombermanGame.getBomberman().setPassBomb(false);
+        newBombermanGame.getBomberman().setPassBrick(false);
 
         bombermanGame = newBombermanGame;
         levelGameUI = new LevelGameUI(bombermanGame.getLevel());

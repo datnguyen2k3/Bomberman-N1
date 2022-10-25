@@ -8,8 +8,8 @@ import uet.oop.bomberman.graphics.Sprite;
 public class RedCoin extends AI_Enemy{
     public RedCoin(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
-        setPassBrick();
-        setPassBomb();
+        setPassBrick(true);
+        setPassBomb(true);
         this.speed = 4;
     }
 

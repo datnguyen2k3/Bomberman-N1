@@ -67,8 +67,11 @@ public class Brick extends Entity {
             currentTimeDead++;
         }
 
-        if (currentTimeDead >= timeDead)
+        if (currentTimeDead >= timeDead) {
             _state = State.BE_DESTROYED;
+            isEnd = true;
+            BombermanGame.diagramMap[get_yUnit()][get_xUnit()] = ' ';
+        }
 
     }
 

@@ -37,6 +37,7 @@ public class Bomber extends Character {
 
     public Bomber(int x, int y, Image img, BombermanGame game) {
         super(x, y, img, game);
+        this.speed = 2;
         MAX_TIME_STOP = 20;
     }
 
@@ -293,14 +294,20 @@ public class Bomber extends Character {
                 }
                 break;
             case Item.passBrickDiagram:
-                setPassBrick();
+                setPassBrick(true);
                 break;
             case Item.flamePassDiagram:
-                setPassFlame();
+                setPassFlame(true);
                 break;
             case Item.bombPassDiagram:
-                setPassBomb();
+                setPassBomb(true);
                 break;
+        }
+    }
+
+    private void updateMaxBombWhenPassFlame() {
+        if (passFlame && game.getBomberBombManagement().getMaxBomb() > 3) {
+            game.getBomberBombManagement().setMaxBomb(3);
         }
     }
 
@@ -323,6 +330,7 @@ public class Bomber extends Character {
 
         updateCurrentState();
         smoothMovement();
+        updateMaxBombWhenPassFlame();
     }
 
     @Override

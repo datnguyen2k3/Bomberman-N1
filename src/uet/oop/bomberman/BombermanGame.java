@@ -66,7 +66,7 @@ public class BombermanGame {
     private List<Entity> stillObjects = new ArrayList<>();
     private ItemManagement itemManagement = new ItemManagement();
     private EnemyManagement enemyManagement = new EnemyManagement();
-    private BombManagement bomberBombManagement = new BombManagement(4, 3, this);
+    private BombManagement bomberBombManagement = new BombManagement(1, 1, this);
     private BombManagement enemyBombManagement = new BombManagement(50, 6, this);
 
     private MiniInfoManagement miniInfoManagement = new MiniInfoManagement();
@@ -160,13 +160,13 @@ public class BombermanGame {
         this.bomberman.getBombManagement().setMaxBomb(bomberman.getBombManagement().getMaxBomb());
         this.bomberman.getBombManagement().setFlame(bomberman.getBombManagement().getFlame());
         if (bomberman.getPassBrick()) {
-            this.bomberman.setPassBrick();
+            this.bomberman.setPassBrick(true);
         }
         if (bomberman.getPassBomb()) {
-            this.bomberman.setPassBomb();
+            this.bomberman.setPassBomb(true);
         }
         if (bomberman.getPassFlame()) {
-            this.bomberman.setPassFlame();
+            this.bomberman.setPassFlame(true);
         }
     }
 
@@ -216,6 +216,7 @@ public class BombermanGame {
                     object = new Wall(i, j, this);
                 } else if (Brick.isBrick(currentDiagramObject)) {
                     object = new Brick(i, j, this);
+
                 } else if (Item.isItem(currentDiagramObject)) {
                     object = new Brick(i, j, this);
                     itemManagement.add(i, j, currentDiagramObject, this);
@@ -274,14 +275,23 @@ public class BombermanGame {
     public void updateCombat(Scene scene) {
 
         // destroy brick
+        List<Entity> newStillObjects = new ArrayList<>();
         for (Entity e : stillObjects) {
+            newStillObjects.add(e);
             if (e instanceof Brick) {
                 if (bomberman.getBombManagement().isDestroyBrick((Brick) e)) {
                     ((Brick) e).setDestroyed();
                     itemManagement.setItemIfBrickIsDestroyed((Brick) e);
                 }
+
+                if (((Brick) e).isEnd()) {
+                    newStillObjects.add(new Grass(e.get_xUnit(), e.get_yUnit(), this));
+                    newStillObjects.remove(e);
+                }
             }
         }
+        stillObjects = newStillObjects;
+
 
         // Bomber take item
         itemManagement.updateBomberTakeItem(bomberman);
