@@ -37,6 +37,7 @@ public class Bomber extends Character {
 
     public Bomber(int x, int y, Image img, BombermanGame game) {
         super(x, y, img, game);
+        this.speed = 2;
         MAX_TIME_STOP = 20;
     }
 

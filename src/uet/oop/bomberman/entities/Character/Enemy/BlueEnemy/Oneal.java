@@ -12,6 +12,7 @@ public class Oneal extends Speed_Change_Enemy {
 
     public Oneal(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
+        this.TIME_RANDOM_STATE = 120;
     }
 
 

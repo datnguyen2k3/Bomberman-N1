@@ -66,7 +66,7 @@ public class BombermanGame {
     private List<Entity> stillObjects = new ArrayList<>();
     private ItemManagement itemManagement = new ItemManagement();
     private EnemyManagement enemyManagement = new EnemyManagement();
-    private BombManagement bomberBombManagement = new BombManagement(4, 3, this);
+    private BombManagement bomberBombManagement = new BombManagement(2, 1, this);
     private BombManagement enemyBombManagement = new BombManagement(50, 6, this);
 
     private MiniInfoManagement miniInfoManagement = new MiniInfoManagement();
@@ -280,7 +280,6 @@ public class BombermanGame {
             newStillObjects.add(e);
             if (e instanceof Brick) {
                 if (bomberman.getBombManagement().isDestroyBrick((Brick) e)) {
-                    System.out.println(122);
                     ((Brick) e).setDestroyed();
                     itemManagement.setItemIfBrickIsDestroyed((Brick) e);
                 }

@@ -46,7 +46,7 @@ public class Game extends Application {
         return bombermanGame;
     }
 
-    private BombermanGame bombermanGame = new BombermanGame(1, this);
+    private BombermanGame bombermanGame = new BombermanGame(4, this);
     private LevelGameUI levelGameUI = new LevelGameUI(1);
     private Menu menu;
 
@@ -86,7 +86,7 @@ public class Game extends Application {
         stage.setTitle("Bomberman");
         stage.setScene(scene);
         stage.show();
-        //stage.setResizable(false);
+        stage.setResizable(false);
         scene.setCursor(new ImageCursor(new Image(new File("res/sprites/cursor1.png").toURI().toString())));
         AnimationTimer timer = new AnimationTimer() {
             @Override

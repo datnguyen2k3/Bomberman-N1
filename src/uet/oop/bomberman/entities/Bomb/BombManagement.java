@@ -210,6 +210,5 @@ public class BombManagement extends Management<Bomb> {
             bomb.activeExploding();
             dfsBomb(bomb);
         }
-
     }
 }
