@@ -92,12 +92,15 @@ public class Game extends Application {
             @Override
             public void handle(long l) {
                 if (pauseMenu.isRun()) {
-                    pauseMenu.run(canvas, gc, stage);
+                    restartCanvas();
+                    pauseMenu.run(boardCanvas, boardCanvas.getGraphicsContext2D(), stage);
+                    bombermanGame.getSoundTrack().updateSoundtrack(bombermanGame.getLevel());
                     return;
                 }
 
                 if (menu.isRun()) {
-                    menu.run(canvas, boardCanvas.getGraphicsContext2D(), stage);
+                    restartCanvas();
+                    menu.run(boardCanvas, boardCanvas.getGraphicsContext2D(), stage);
                     return;
                 }
 
@@ -116,8 +119,6 @@ public class Game extends Application {
                 }
 
                 if (bombermanGame.isWin()) {
-
-
                     if (bombermanGame.getLevel() == maxLevel) {
                         if (!isWin) {
                             isWin = true;

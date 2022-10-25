@@ -7,7 +7,8 @@ import javafx.scene.media.MediaPlayer;
 import java.io.File;
 
 public class Soundtrack {
-
+    public static double musicVolume = 1;
+    public static double soundVolume = 1;
     private MediaPlayer ending = null;
     private AudioClip explosion = null;
     private AudioClip nextLevel = null;
@@ -18,13 +19,8 @@ public class Soundtrack {
     private AudioClip levelDone = null;
     private AudioClip takeItem = null;
     private static AudioClip switchButton = null;
-
     private MediaPlayer themeSong = null;
     private MediaPlayer stageStart = null;
-    private MediaPlayer firstLevelTheme = null;
-
-    private MediaPlayer secondLevelTheme = null;
-
     private MediaPlayer[] levelThemeAt = new MediaPlayer[6];
     private int playTheme = 0;
 
@@ -52,62 +48,69 @@ public class Soundtrack {
         takeItem = new AudioClip(new File("res/Sounds/cddata_00325.wav").toURI().toString());
         switchButton = new AudioClip(new File("res/Sounds/button.mp3").toURI().toString());
 
-
-
+        justDie.setVolume(0.4);
+        levelDone.setVolume(0.5);
+        switchButton.setVolume(0.1);
     }
 
     public void playTakeItem() {
-        takeItem.setVolume(5);
+        takeItem.setVolume(soundVolume);
         takeItem.play();
     }
 
     public void playJustDie() {
-        justDie.setVolume(0.4);
+        justDie.setVolume(soundVolume);
         justDie.play();
     }
 
     public void playLevelDone() {
-        levelDone.setVolume(0.5);
+        levelDone.setVolume(soundVolume);
         levelDone.play();
     }
 
     public void playEnding() {
+        ending.setVolume(musicVolume);
         ending.play();
     }
 
     public void playExplosion() {
-        explosion.setVolume(1);
+        explosion.setVolume(soundVolume);
         explosion.play();
     }
 
     public void playNextLevel() {
+        nextLevel.setVolume(soundVolume);
         nextLevel.play();
     }
 
     public void playPlaceBomb() {
-        placeBomb.setVolume(1);
+        placeBomb.setVolume(soundVolume);
         placeBomb.play();
     }
 
     public void playPlayerDie() {
+        playerDie.setVolume(soundVolume);
         playerDie.play();
     }
 
     public void playPowerUp() {
+        powerUp.setVolume(soundVolume);
         powerUp.play();
     }
 
     public void playThemeSong() {
+        themeSong.setVolume(musicVolume);
         themeSong.play();
     }
 
     public void playStageStart() {
-        stageStart.setVolume(60);
+        stageStart.setVolume(soundVolume);
         stageStart.play();
     }
 
     public void stopPreviousTheme(int level) {
         if (level >= 2) {
+            levelThemeAt[level - 1].setVolume(musicVolume);
             levelThemeAt[level - 1].stop();
         }
     }
@@ -120,7 +123,7 @@ public class Soundtrack {
         stopPreviousTheme(level);
         if (playTheme == 0) {
             playTheme = 1;
-            levelThemeAt[level].setVolume(20);
+            levelThemeAt[level].setVolume(musicVolume);
             levelThemeAt[level].play();
         }
 
@@ -128,8 +131,31 @@ public class Soundtrack {
     }
 
     public static void playSwitchButtonSound() {
-        switchButton.setVolume(0.1);
+        switchButton.setVolume(soundVolume * 0.1);
         switchButton.play();
+    }
+
+    public void updateSoundtrack(int level) {
+        themeSong.setVolume(musicVolume);
+        levelThemeAt[level].setVolume(musicVolume);
+
+        stageStart.setVolume(soundVolume);
+        ending.setVolume(soundVolume);
+        explosion.setVolume(soundVolume);
+        nextLevel.setVolume(soundVolume);
+        placeBomb.setVolume(soundVolume);
+        playerDie.setVolume(soundVolume);
+        justDie.setVolume(soundVolume);
+        levelDone.setVolume(soundVolume);
+        takeItem.setVolume(soundVolume);
+        switchButton.setVolume(soundVolume);
+    }
+    public static void setMusicVolume(double volume) {
+        musicVolume = volume;
+    }
+
+    public static void setSoundVolume(double volume) {
+        soundVolume = volume;
     }
 }
 

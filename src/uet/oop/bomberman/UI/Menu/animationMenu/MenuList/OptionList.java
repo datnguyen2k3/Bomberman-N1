@@ -5,6 +5,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.UI.Menu.animationMenu.TextGraphicsList;
 import uet.oop.bomberman.sound.SoundManager;
+import uet.oop.bomberman.sound.Soundtrack;
+
+import static uet.oop.bomberman.sound.Soundtrack.setMusicVolume;
+import static uet.oop.bomberman.sound.Soundtrack.setSoundVolume;
 
 public class OptionList extends TextGraphicsList {
     private static final String[] options = {"MASTER VOLUME","MUSIC VOLUME", "SOUND VOLUME" ,"RESET HIGHSCORE", "BACK"};
@@ -15,9 +19,6 @@ public class OptionList extends TextGraphicsList {
 
     public OptionList(int screenWidth, int screenHeight, Scene scene) {
         super(options, screenWidth, screenHeight, scene);
-        setVolume(0, defaultVolume);
-        setVolume(1, defaultVolume);
-        setVolume(2, defaultVolume);
     }
 
     private void setVolume(int type, int volume) {
@@ -25,16 +26,20 @@ public class OptionList extends TextGraphicsList {
         if (type == 0) {
             //MASTER VOLUME
             SoundManager.getSoundManager().setMasterVolume((double) volume / 100);
+            setMusicVolume(volume);
+            setSoundVolume(volume);
             masterVolume = volume;
             volumeString = "MASTER VOLUME: " + masterVolume + "%";
         }
         if (type == 1) {
             SoundManager.getSoundManager().setMusicVolume((double) volume / 100);
+            setMusicVolume(volume);
             musicVolume = volume;
             volumeString = "MUSIC VOLUME: " + musicVolume + "%";
         }
         if (type == 2) {
             SoundManager.getSoundManager().setSoundVolume((double) volume / 100);
+            setSoundVolume(volume);
             soundVolume = volume;
             volumeString = "SOUND VOLUME: " + soundVolume + "%";
         }
