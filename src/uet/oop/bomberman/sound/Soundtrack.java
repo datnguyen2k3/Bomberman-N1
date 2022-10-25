@@ -124,6 +124,7 @@ public class Soundtrack {
         if (playTheme == 0) {
             playTheme = 1;
             levelThemeAt[level].setVolume(musicVolume);
+            levelThemeAt[level].setCycleCount(MediaPlayer.INDEFINITE);
             levelThemeAt[level].play();
         }
 
