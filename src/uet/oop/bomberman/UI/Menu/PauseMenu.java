@@ -32,9 +32,8 @@ public class PauseMenu {
         pauseLists = new PauseLists(Game.WIDTH, Game.HEIGHT, scene, this);
 
         //Add background and animation
-        background = new Background("file:res/Background/sunset.jpg",
+        background = new Background("file:res/Background/mountain.png",
                 0, 0, 2, Game.WIDTH, Game.HEIGHT);
-        background.setMove(false);
         this.game = game;
         //Add music
         SoundManager.getSoundManager().addMusicInfinite(SoundManager.mainMusicFilepath);
