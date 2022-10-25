@@ -9,7 +9,7 @@ import uet.oop.bomberman.graphics.Sprite;
 public class Coin extends Enemy {
     public Coin(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
-        setPassBrick();
+        setPassBrick(true);
         this.speed = 4;
         this.TIME_RANDOM_STATE = 120;
     }

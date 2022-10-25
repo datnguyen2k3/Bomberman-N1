@@ -207,8 +207,12 @@ public class BombManagement extends Management<Bomb> {
                 continue;
             }
             Bomb bomb = waitBombMap[yUnit][xUnit];
-            bomb.activeExploding();
-            dfsBomb(bomb);
+            if (bomb.getCurrentTimeWaitToExploding() > 10)
+                bomb.setCurrentTimeWaitToExploding(10);
+            else {
+                bomb.activeExploding();
+                dfsBomb(bomb);
+            }
         }
     }
 }

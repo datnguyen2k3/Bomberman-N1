@@ -9,7 +9,7 @@ public class Ghost extends AI_Enemy {
     public Ghost(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
         this.speed = 2;
-        setPassBrick();
+        setPassBrick(true);
     }
 
     @Override

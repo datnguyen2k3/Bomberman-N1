@@ -8,7 +8,7 @@ import uet.oop.bomberman.graphics.Sprite;
 public class Dora extends Speed_Change_Enemy{
     public Dora(int xUnit, int yUnit, Image img, BombermanGame game) {
         super(xUnit, yUnit, img, game);
-        setPassBrick();
+        setPassBrick(true);
     }
 
 

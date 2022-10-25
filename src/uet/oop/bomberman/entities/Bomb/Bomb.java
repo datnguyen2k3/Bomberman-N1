@@ -39,6 +39,11 @@ public class Bomb extends Entity {
     public int TIME_WAIT_TO_EXPLODING = 60 * 2;
     public int TIME_EXPLODING = 30;
     public int timeRefresh = TIME_EXPLODING + TIME_WAIT_TO_EXPLODING;
+
+    public int getCurrentTimeWaitToExploding() {
+        return currentTimeWaitToExploding;
+    }
+
     private int currentTimeWaitToExploding = TIME_WAIT_TO_EXPLODING;
     private int currentTimeExploding = TIME_EXPLODING;
     private int timeBrickCollapse = 100;

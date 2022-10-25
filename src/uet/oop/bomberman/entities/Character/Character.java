@@ -59,20 +59,16 @@ public abstract class Character extends Entity {
         return passFlame;
     }
 
-    public void setPassBrick() {
-        if (passBrick)
-            return;
-        passBrick = true;
+    public void setPassBrick(boolean passBrick) {
+        this.passBrick = passBrick;
     }
 
-    public void setPassFlame() {
-        if (passFlame)
-            return;
-        passFlame = true;
+    public void setPassFlame(boolean passFlame) {
+        this.passFlame = passFlame;
     }
 
-    public void setPassBomb() {
-        passBomb = true;
+    public void setPassBomb(boolean passBomb) {
+        this.passBomb = passBomb;
     }
 
     public int get_xUnitCenter() {

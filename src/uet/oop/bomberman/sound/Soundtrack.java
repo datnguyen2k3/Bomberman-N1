@@ -25,7 +25,7 @@ public class Soundtrack {
 
     private MediaPlayer secondLevelTheme = null;
 
-    private MediaPlayer[] levelThemeAt = new MediaPlayer[5];
+    private MediaPlayer[] levelThemeAt = new MediaPlayer[6];
     private int playTheme = 0;
 
     public Soundtrack() {
@@ -45,6 +45,7 @@ public class Soundtrack {
         levelThemeAt[2] = new MediaPlayer(new Media(new File("res/Sounds/level_theme2.mp3").toURI().toString()));
         levelThemeAt[1] = new MediaPlayer(new Media(new File("res/Sounds/level_theme2.mp3").toURI().toString()));
         levelThemeAt[4] = new MediaPlayer(new Media(new File("res/Sounds/level_theme1.mp3").toURI().toString()));
+        levelThemeAt[5] = new MediaPlayer(new Media(new File("res/Sounds/level_theme2.mp3").toURI().toString()));
 
         justDie = new AudioClip(new File("res/Sounds/died.mp3").toURI().toString());
         levelDone = new AudioClip(new File("res/Sounds/level_done.mp3").toURI().toString());

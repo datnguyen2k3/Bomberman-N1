@@ -66,7 +66,7 @@ public class BombermanGame {
     private List<Entity> stillObjects = new ArrayList<>();
     private ItemManagement itemManagement = new ItemManagement();
     private EnemyManagement enemyManagement = new EnemyManagement();
-    private BombManagement bomberBombManagement = new BombManagement(2, 1, this);
+    private BombManagement bomberBombManagement = new BombManagement(1, 1, this);
     private BombManagement enemyBombManagement = new BombManagement(50, 6, this);
 
     private MiniInfoManagement miniInfoManagement = new MiniInfoManagement();
@@ -160,13 +160,13 @@ public class BombermanGame {
         this.bomberman.getBombManagement().setMaxBomb(bomberman.getBombManagement().getMaxBomb());
         this.bomberman.getBombManagement().setFlame(bomberman.getBombManagement().getFlame());
         if (bomberman.getPassBrick()) {
-            this.bomberman.setPassBrick();
+            this.bomberman.setPassBrick(true);
         }
         if (bomberman.getPassBomb()) {
-            this.bomberman.setPassBomb();
+            this.bomberman.setPassBomb(true);
         }
         if (bomberman.getPassFlame()) {
-            this.bomberman.setPassFlame();
+            this.bomberman.setPassFlame(true);
         }
     }
 
