@@ -14,6 +14,7 @@ public class Wall extends Entity {
     public Wall(int xUnit, int yUnit, BombermanGame game) {
         super(xUnit, yUnit, game);
         initSolidArea();
+        isEnd = false;
     }
 
     @Override

@@ -21,7 +21,7 @@ public class Cat extends Enemy {
             isExplodeBomb = true;
 
             game.getEnemyBombManagement().add(get_xUnitCenter(), get_yUnitCenter());
-            game.getEnemyBombManagement().getLastBomb().setCurrentTimeWaitToExploding(1);
+            game.getEnemyBombManagement().getLastBomb().setCurrentTimeWaitToExploding(0);
         }
 
     }

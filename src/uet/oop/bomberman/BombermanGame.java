@@ -216,6 +216,7 @@ public class BombermanGame {
                     object = new Wall(i, j, this);
                 } else if (Brick.isBrick(currentDiagramObject)) {
                     object = new Brick(i, j, this);
+
                 } else if (Item.isItem(currentDiagramObject)) {
                     object = new Brick(i, j, this);
                     itemManagement.add(i, j, currentDiagramObject, this);
@@ -274,14 +275,24 @@ public class BombermanGame {
     public void updateCombat(Scene scene) {
 
         // destroy brick
+        List<Entity> newStillObjects = new ArrayList<>();
         for (Entity e : stillObjects) {
+            newStillObjects.add(e);
             if (e instanceof Brick) {
                 if (bomberman.getBombManagement().isDestroyBrick((Brick) e)) {
+                    System.out.println(122);
                     ((Brick) e).setDestroyed();
                     itemManagement.setItemIfBrickIsDestroyed((Brick) e);
                 }
+
+                if (((Brick) e).isEnd()) {
+                    newStillObjects.add(new Grass(e.get_xUnit(), e.get_yUnit(), this));
+                    newStillObjects.remove(e);
+                }
             }
         }
+        stillObjects = newStillObjects;
+
 
         // Bomber take item
         itemManagement.updateBomberTakeItem(bomberman);

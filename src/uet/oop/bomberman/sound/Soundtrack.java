@@ -43,7 +43,7 @@ public class Soundtrack {
         stageStart = new MediaPlayer(new Media(new File("res/Sounds/stage_start.wav").toURI().toString()));
         levelThemeAt[3] = new MediaPlayer(new Media(new File("res/Sounds/level_theme1.mp3").toURI().toString()));
         levelThemeAt[2] = new MediaPlayer(new Media(new File("res/Sounds/level_theme2.mp3").toURI().toString()));
-        levelThemeAt[1] = new MediaPlayer(new Media(new File("res/newSound/wibu.mp3").toURI().toString()));
+        levelThemeAt[1] = new MediaPlayer(new Media(new File("res/Sounds/level_theme2.mp3").toURI().toString()));
         levelThemeAt[4] = new MediaPlayer(new Media(new File("res/Sounds/level_theme1.mp3").toURI().toString()));
 
         justDie = new AudioClip(new File("res/Sounds/died.mp3").toURI().toString());
@@ -56,7 +56,7 @@ public class Soundtrack {
     }
 
     public void playTakeItem() {
-        takeItem.setVolume(1);
+        takeItem.setVolume(5);
         takeItem.play();
     }
 
@@ -75,7 +75,7 @@ public class Soundtrack {
     }
 
     public void playExplosion() {
-        explosion.setVolume(0.1);
+        explosion.setVolume(1);
         explosion.play();
     }
 
@@ -84,7 +84,7 @@ public class Soundtrack {
     }
 
     public void playPlaceBomb() {
-        placeBomb.setVolume(0.3);
+        placeBomb.setVolume(1);
         placeBomb.play();
     }
 
@@ -119,7 +119,7 @@ public class Soundtrack {
         stopPreviousTheme(level);
         if (playTheme == 0) {
             playTheme = 1;
-            levelThemeAt[level].setVolume(0.1);
+            levelThemeAt[level].setVolume(20);
             levelThemeAt[level].play();
         }
 

@@ -21,7 +21,7 @@ public abstract class Intro {
 
     public Intro() {
         initTitle();
-        text = new Text(100, 100, title);
+        text = new Text(150, 350, title);
         text.setFont(Font.loadFont("file:res/Font/game_font.ttf", 60));
         text.setFill(Color.WHITE);
         text.setScaleX(1);

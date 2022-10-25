@@ -18,6 +18,9 @@ public class Bomb extends Entity {
 
     public static final char bombDiagram = '@';
     List<Coordinate> explodedBrick = new ArrayList<>();
+    public static boolean isBombWaitToExplode(int xUnit, int yUnit) {
+        return BombermanGame.diagramMap[yUnit][xUnit] == '@';
+    }
 
     private int animateFlameRight = 0;
     private int animateFlameLeft = 0;
@@ -31,7 +34,7 @@ public class Bomb extends Entity {
     private int brickDestroyCounterLeft = 0;
     private int canDestroyBrick = 0;
     private BombManagement bombManagement;
-    private boolean isWaitedToExploding = false;
+    private boolean isWaitedToExploding = true;
     private boolean isExploded = false;
     public int TIME_WAIT_TO_EXPLODING = 60 * 2;
     public int TIME_EXPLODING = 30;
@@ -40,7 +43,6 @@ public class Bomb extends Entity {
     private int currentTimeExploding = TIME_EXPLODING;
     private int timeBrickCollapse = 100;
     private List<Character> charactersInBomb = new ArrayList<>();
-    private List<Bomb> bombList = new ArrayList<>();
     private int explodedLength;
 
 
@@ -132,8 +134,11 @@ public class Bomb extends Entity {
     }
 
     public void activeExploding() {
+        isWaitedToExploding = false;
+        isExploded= true;
+        BombManagement.waitBombMap[get_yUnit()][get_xUnit()] = null;
         this._state = State.EXPLODING;
-        isWaitedToExploding = true;
+        setExplodedCells();
     }
 
     public boolean isWaitedToExploding() {
@@ -146,107 +151,27 @@ public class Bomb extends Entity {
 
     private void waitToExploding() {
         if (!isWaitedToExploding) {
-            img = Sprite.bomb.getFxImage();
-            isWaitedToExploding = true;
-            _state = State.WAITING_EXPLODING;
+            return;
         }
+
         currentTimeWaitToExploding--;
-    }
 
-    public boolean isOnCurrentAreaExploding(Bomb b) {
-        System.out.println(explodedLength);
-        if (b.get_yUnit() == get_yUnit() && b.get_xUnit() > get_xUnit()) {
-            if (firstBrickRight.get_xUnit() == get_xUnit() + explodedLength) {
-                if ((b.get_xUnit() <= get_xUnit() + explodedLength && b.get_xUnit() > get_xUnit())) {
-                    return true;
-                }
-            } else {
-                if (b.get_xUnit() != get_xUnit()
-                        && get_yUnit() == b.get_yUnit()
-                        && (b.get_xUnit() <= firstBrickRight.getX() && b.get_xUnit() >= get_xUnit())) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        if (b.get_yUnit() == get_yUnit() && b.get_xUnit() < get_xUnit()) {
-            if (firstBrickLeft.get_xUnit() == get_xUnit() - explodedLength) {
-                if ((b.get_xUnit() < get_xUnit() && b.get_xUnit() >= get_xUnit() - explodedLength)) {
-                    return true;
-                }
-            } else {
-                if (b.get_xUnit() != get_xUnit()
-                        && get_yUnit() == b.get_yUnit()
-                        && (b.get_xUnit() >= firstBrickLeft.getX()  && b.get_xUnit() < get_xUnit())) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        if (b.get_xUnit() == get_xUnit() && b.get_yUnit() < get_yUnit()) {
-
-            if (firstBrickTop.get_yUnit() == get_yUnit() - explodedLength) {
-                if ((b.get_yUnit() < get_yUnit() && b.get_yUnit() >= get_yUnit() - explodedLength)) {
-                    return true;
-                }
-            } else {
-                if (b.get_yUnit() != get_yUnit()
-                        && get_xUnit() == b.get_xUnit()
-                        && (b.get_yUnit() >= firstBrickTop.get_yUnit()  && b.get_yUnit() < get_yUnit())) {
-                    System.out.println("Bomb on top");
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        if (b.get_xUnit() == get_xUnit() && b.get_yUnit() > get_yUnit()) {
-            if (firstBrickDown.get_yUnit() == get_yUnit() + explodedLength) {
-                if ((b.get_yUnit() <= get_yUnit() + explodedLength && b.get_yUnit() >= get_yUnit())) {
-                    return true;
-                }
-            } else {
-                if (b.get_yUnit() != get_yUnit()
-                        && get_xUnit() == b.get_xUnit()
-                        && (b.get_yUnit() <= firstBrickDown.get_yUnit() && b.get_yUnit() > get_yUnit())) {
-                    return true;
-                }
-            }
-        }
-
-//        if (b.get_yUnit() != get_yUnit()
-//                && get_xUnit() == b.get_xUnit()
-//                && (b.get_yUnit() >= get_yUnit() - explodedLength && b.get_yUnit() <= get_yUnit() + explodedLength)) {
-//            return true;
-//        }
-        return false;
-
-    }
-
-    public void setAdjacentBombExplode() {
-        for (Entity e : bombList) {
-            if (e instanceof Bomb) {
-                if (_state == State.EXPLODING
-                        && e.get_state() == State.WAITING_EXPLODING
-                        && this.isOnCurrentAreaExploding((Bomb) e)) {
-                    System.out.println(true);
-                    ((Bomb) e).activeExploding();
-                    ((Bomb) e).explode();
-                }
-            }
+        if (currentTimeWaitToExploding <= 0) {
+            isWaitedToExploding = false;
+            activeExploding();
         }
     }
 
     private void explode() {
         if (!isExploded) {
-            img = Sprite.bomb_exploded.getFxImage();
-            _state = State.EXPLODING;
-            isExploded = true;
-            setExplodedCells();
+            return;
         }
         currentTimeExploding--;
+
+        if (currentTimeExploding <= 0) {
+            isExploded = false;
+            setEnd();
+        }
     }
 
     protected void setEnd() {
@@ -255,19 +180,21 @@ public class Bomb extends Entity {
     }
 
     private void running() {
-        waitToExploding();
-        if (currentTimeWaitToExploding > 0)
+        if (isEnd) {
             return;
-
-        explode();
-        if (currentTimeExploding > 0)
-            return;
-
-
-        if (explodedBrick.isEmpty()) {
-            setEnd();
         }
 
+        if (isWaitedToExploding) {
+            waitToExploding();
+            return;
+        }
+
+        if (isExploded) {
+            explode();
+            return;
+        }
+
+        setEnd();
     }
 
     private boolean setExplodedCell(int xUnit, int yUnit) {
@@ -283,6 +210,7 @@ public class Bomb extends Entity {
 
 
     // get the first brick to be destroyed, we need render from bomb location to this brick location, not render over.
+
     private Coordinate firstBrickToBeDestroyed(int startXUnit, int startYUnit, String direction) {
 
         Coordinate res = new Coordinate(0, 0);
@@ -399,7 +327,6 @@ public class Bomb extends Entity {
 
 
     }
-
 
     private void setExplodedCells() {
         setExplodedCell(get_xUnit(), get_yUnit());
@@ -648,13 +575,11 @@ public class Bomb extends Entity {
         animateFlameTop = animate(animateFlameTop);
         animateFlameDown = animate(animateFlameDown);
 
-        bombList = bombManagement.getList();
         animateExploding = animate(animateExploding);
         animateWaitingToExplode = animate(animateWaitingToExplode);
         animate();
         running();
         updateCharacterInBomb();
-        setAdjacentBombExplode();
     }
 
     @Override
@@ -783,4 +708,76 @@ public class Bomb extends Entity {
 
     }
 
+
+    public boolean isOnCurrentAreaExploding(Bomb b) {
+        //System.out.println(explodedLength);
+        if (b.get_yUnit() == get_yUnit() && b.get_xUnit() > get_xUnit()) {
+            if (firstBrickRight.get_xUnit() == get_xUnit() + explodedLength) {
+                if ((b.get_xUnit() <= get_xUnit() + explodedLength && b.get_xUnit() > get_xUnit())) {
+                    return true;
+                }
+            } else {
+                if (b.get_xUnit() != get_xUnit()
+                        && get_yUnit() == b.get_yUnit()
+                        && (b.get_xUnit() <= firstBrickRight.getX() && b.get_xUnit() >= get_xUnit())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        if (b.get_yUnit() == get_yUnit() && b.get_xUnit() < get_xUnit()) {
+            if (firstBrickLeft.get_xUnit() == get_xUnit() - explodedLength) {
+                if ((b.get_xUnit() < get_xUnit() && b.get_xUnit() >= get_xUnit() - explodedLength)) {
+                    return true;
+                }
+            } else {
+                if (b.get_xUnit() != get_xUnit()
+                        && get_yUnit() == b.get_yUnit()
+                        && (b.get_xUnit() >= firstBrickLeft.getX()  && b.get_xUnit() < get_xUnit())) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        if (b.get_xUnit() == get_xUnit() && b.get_yUnit() < get_yUnit()) {
+
+            if (firstBrickTop.get_yUnit() == get_yUnit() - explodedLength) {
+                if ((b.get_yUnit() < get_yUnit() && b.get_yUnit() >= get_yUnit() - explodedLength)) {
+                    return true;
+                }
+            } else {
+                if (b.get_yUnit() != get_yUnit()
+                        && get_xUnit() == b.get_xUnit()
+                        && (b.get_yUnit() >= firstBrickTop.get_yUnit()  && b.get_yUnit() < get_yUnit())) {
+                    System.out.println("Bomb on top");
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        if (b.get_xUnit() == get_xUnit() && b.get_yUnit() > get_yUnit()) {
+            if (firstBrickDown.get_yUnit() == get_yUnit() + explodedLength) {
+                if ((b.get_yUnit() <= get_yUnit() + explodedLength && b.get_yUnit() >= get_yUnit())) {
+                    return true;
+                }
+            } else {
+                if (b.get_yUnit() != get_yUnit()
+                        && get_xUnit() == b.get_xUnit()
+                        && (b.get_yUnit() <= firstBrickDown.get_yUnit() && b.get_yUnit() > get_yUnit())) {
+                    return true;
+                }
+            }
+        }
+
+//        if (b.get_yUnit() != get_yUnit()
+//                && get_xUnit() == b.get_xUnit()
+//                && (b.get_yUnit() >= get_yUnit() - explodedLength && b.get_yUnit() <= get_yUnit() + explodedLength)) {
+//            return true;
+//        }
+        return false;
+
+    }
 }

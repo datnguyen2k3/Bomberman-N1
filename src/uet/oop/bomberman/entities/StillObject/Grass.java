@@ -16,6 +16,7 @@ public class Grass extends Entity {
     public Grass(int x, int y, BombermanGame game) {
         super(x, y, game);
         initSolidArea();
+        isEnd = false;
         BombermanGame.diagramMap[get_yUnit()][get_xUnit()] = ' ';
     }
 

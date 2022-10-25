@@ -3,8 +3,6 @@ package uet.oop.bomberman.entities.Bomb;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Pair;
-import uet.oop.bomberman.entities.Character.Bomber;
-import uet.oop.bomberman.entities.Character.Enemy.Enemy;
 import uet.oop.bomberman.entities.StillObject.Brick;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Management;
@@ -12,13 +10,20 @@ import uet.oop.bomberman.entities.StillObject.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.entities.Character.Character;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.utils.State;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BombManagement extends Management<Bomb> {
     private BombermanGame game;
+    public static Bomb[][] waitBombMap = new Bomb[50][50];
+
+    public static void updateWaitBombMap() {
+        for(int row = 0; row < BombermanGame.HEIGHT; row++) {
+            for (int col = 0; col < BombermanGame.WIDTH; col++) {
+                if (BombermanGame.diagramMap[row][col] != Bomb.bombDiagram) {
+                    waitBombMap[row][col] = null;
+                }
+            }
+        }
+    }
 
     //    private int explodedLength = 1;
     private int explodedLength = 1;
@@ -92,6 +97,7 @@ public class BombManagement extends Management<Bomb> {
             return;
         game.getSoundTrack().playPlaceBomb();
         Bomb b = new Bomb(xUnit, yUnit, this, game);
+        waitBombMap[yUnit][xUnit] = b;
         list.add(b);
     }
 
@@ -176,5 +182,34 @@ public class BombManagement extends Management<Bomb> {
         }
 
         return false;
+    }
+
+    @Override
+    public void update() {
+        updateWaitBombMap();
+        updateAdjBombExplode();
+        super.update();
+    }
+
+    public void updateAdjBombExplode() {
+        for (Bomb b : list) {
+            if (b.isExploded()) {
+                dfsBomb(b);
+            }
+        }
+    }
+
+    public void dfsBomb(Bomb b) {
+        for (Pair<Integer, Integer> p : b.explodedCells) {
+            int xUnit = p.getKey();
+            int yUnit = p.getValue();
+            if (waitBombMap[yUnit][xUnit] == null || waitBombMap[yUnit][xUnit].isExploded()) {
+                continue;
+            }
+            Bomb bomb = waitBombMap[yUnit][xUnit];
+            bomb.activeExploding();
+            dfsBomb(bomb);
+        }
+
     }
 }
