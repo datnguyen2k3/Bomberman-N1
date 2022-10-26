@@ -46,7 +46,7 @@ public class Game extends Application {
         return bombermanGame;
     }
 
-    private BombermanGame bombermanGame = new BombermanGame(1, this);
+    private BombermanGame bombermanGame = new BombermanGame(4, this);
     private LevelGameUI levelGameUI = new LevelGameUI(1);
     private Menu menu;
 
