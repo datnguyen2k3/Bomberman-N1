@@ -69,10 +69,43 @@ Xem comment ở starter project
 - Cây thừa kế:
    + Entity:
    ![image](https://user-images.githubusercontent.com/87682863/198335404-03900aaf-76a7-4b79-abd0-fc2395f07448.png)
-   + Intro game:
-   ![image](https://user-images.githubusercontent.com/87682863/198335541-b8d510c3-e9a7-4f8b-b186-dfede0449b46.png)
-   + Menu graphics:
-   ![image](https://user-images.githubusercontent.com/87682863/198335655-94853f4e-76f6-4245-9604-3ab3c730dcd7.png)
+   
    + Entity Management:
    ![image](https://user-images.githubusercontent.com/87682863/198336221-825db4b7-c367-4189-afc2-df589ab678b0.png)
    
+   + Map control:
+   ![image](https://user-images.githubusercontent.com/87682863/198338895-d9cc6005-fbaf-424a-a67c-fdfd65f504d9.png)
+   
+   + Game combat:
+   ![image](https://user-images.githubusercontent.com/87682863/198338474-3e815c33-9561-42a6-b061-fe4011da6bd5.png)
+   
+   + Game graphics:
+   ![image](https://user-images.githubusercontent.com/87682863/198338952-d655fab7-f853-4e07-bd9b-3c65ef39d4e1.png)
+   
+   + Intro game:
+   ![image](https://user-images.githubusercontent.com/87682863/198335541-b8d510c3-e9a7-4f8b-b186-dfede0449b46.png)
+   
+   + Menu graphics:
+   ![image](https://user-images.githubusercontent.com/87682863/198335655-94853f4e-76f6-4245-9604-3ab3c730dcd7.png)
+   
+   + Menu:
+   ![image](https://user-images.githubusercontent.com/87682863/198339026-8c9b4986-9873-46f2-8a31-6ce43fdf6a2d.png)
+   
+   + Menu list:
+   ![image](https://user-images.githubusercontent.com/87682863/198339758-6a4399bb-23f7-412b-89ca-484c3604c3c8.png)
+
+   + Algorithm:
+   ![image](https://user-images.githubusercontent.com/87682863/198337736-020df08e-f4fa-4e6f-b090-2faacb20e217.png)
+   
+   + High score:
+   ![image](https://user-images.githubusercontent.com/87682863/198338823-4e27165d-aa5b-467f-ab82-136406a642ec.png)
+   
+   + Background Menu:
+   ![image](https://user-images.githubusercontent.com/87682863/198337976-dd582054-304b-4a0e-8466-995c52de4be4.png)
+
+   + Sound:
+   ![image](https://user-images.githubusercontent.com/87682863/198338349-ec1c7f0d-73b6-4589-aac9-8212436935a9.png)
+   
+   + Whole game: 
+   ![image](https://user-images.githubusercontent.com/87682863/198338557-8944d289-c861-4c62-b766-df89f26f5c65.png)
+ 
