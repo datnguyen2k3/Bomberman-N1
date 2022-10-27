@@ -65,3 +65,14 @@ Xem comment ở starter project
 3. Xử lý hiệu ứng âm thanh (thêm music & sound effects) +1đ
 4. Phát triển hệ thống server-client để nhiều người có thể cùng chơi qua mạng LAN hoặc Internet +1đ
 5. Những ý tưởng khác sẽ được đánh giá và cộng điểm theo mức tương ứng
+
+- Cây thừa kế:
+   + Entity:
+   ![image](https://user-images.githubusercontent.com/87682863/198335404-03900aaf-76a7-4b79-abd0-fc2395f07448.png)
+   + Intro game:
+   ![image](https://user-images.githubusercontent.com/87682863/198335541-b8d510c3-e9a7-4f8b-b186-dfede0449b46.png)
+   + Menu graphics:
+   ![image](https://user-images.githubusercontent.com/87682863/198335655-94853f4e-76f6-4245-9604-3ab3c730dcd7.png)
+   + Entity Management:
+   ![image](https://user-images.githubusercontent.com/87682863/198336221-825db4b7-c367-4189-afc2-df589ab678b0.png)
+   
